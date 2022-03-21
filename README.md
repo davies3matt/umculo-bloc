@@ -23,6 +23,6 @@ Using:
 
 From root directory
 
-`yarn start`
+`yarn && yarn start`
 
 
