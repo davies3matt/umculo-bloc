@@ -1,0 +1,26 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-houseboard-staging-174025-authRole",
+      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-staging-174025-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-staging-174025-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-houseboard-staging-174025-deployment",
+      "UnauthRoleName": "amplify-houseboard-staging-174025-unauthRole",
+      "StackName": "amplify-houseboard-staging-174025",
+      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-staging-174025/d4fadec0-a3bd-11ec-8daa-062bddbfb735",
+      "AmplifyAppId": "d3u0wbebujmtc0"
+    },
+    "categories": {
+      "function": {
+        "cognitoPostConfirmation": {
+          "deploymentBucketName": "amplify-houseboard-staging-174025-deployment",
+          "s3Key": "amplify-builds/cognitoPostConfirmation-34776d43474d4945616f-build.zip"
+        }
+      },
+      "auth": {
+        "houseboard52ff8a69": {}
+      }
+    }
+  }
+}

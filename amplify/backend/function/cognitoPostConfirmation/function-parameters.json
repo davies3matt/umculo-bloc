@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "api": {
+      "houseboard": [
+        "Query",
+        "Mutation"
+      ]
+    },
+    "auth": {
+      "houseboard52ff8a69": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

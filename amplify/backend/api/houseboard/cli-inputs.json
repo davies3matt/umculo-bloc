@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "houseboard",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/mattdavies/Documents/side-projects/house-board/amplify/backend/api/houseboard/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}
