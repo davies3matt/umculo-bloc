@@ -1,7 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import Profile from '../containers/Profile';
+import Groups from '../containers/Groups';
 import { Image } from 'native-base';
+import AddGroup from '../containers/Groups/addGroup';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +22,8 @@ const AuthStack:React.FC = () => {
     return (
     <Stack.Navigator>
         <Stack.Screen name='Profile' component={Profile} options={{ headerTitle: () => <LogoTitle/>}}/>
+        <Stack.Screen name="Groups" component={Groups} options={{ headerTitle: () => <LogoTitle/> }}/>
+        <Stack.Screen name='AddGroup' component={AddGroup} options={{ headerTitle: () => <LogoTitle/>}}/>
     </Stack.Navigator>
     )
 }
