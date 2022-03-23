@@ -10,6 +10,7 @@ Amplify Params - DO NOT EDIT */
 
 const aws = require('aws-sdk');
 const docClient = new aws.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+const cognitoidentityserviceprovider = new aws.CognitoIdentityServiceProvider({ apiVersion: '2016-04-18' });
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
@@ -26,6 +27,13 @@ exports.handler = async (event, context, callback) => {
   const environment = process.env.ENV;
   const GraphQLAPIIdOutput = process.env.API_HOUSEBOARD_GRAPHQLAPIIDOUTPUT;
   try {
+    // attatch cognito group to cognito user
+    const addUserParams = {
+      GroupName: 'User',
+      UserPoolId: event.userPoolId,
+      Username: event.userName,
+    };
+    await cognitoidentityserviceprovider.adminAddUserToGroup(addUserParams).promise();
     // create user object and put record in DynamoDB
     const userParams = {
       TableName: `User-${GraphQLAPIIdOutput}-${environment}`,
