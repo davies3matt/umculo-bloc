@@ -28,14 +28,15 @@ const SignUp: React.FC<Props> = ({navigation}) => {
     const handleSignUp = async (values: SignUpProps) => {
         const { phoneNumber, email , password } = values;
         try {
-            await Auth.signUp({
-                username: formatPhoneNumber(phoneNumber),
+            const user = await Auth.signUp({
+                username: phoneNumber,
                 password: password,
                 attributes: {
-                    email: 'mdldavies@gmail.com',
-
+                    email: email,
+                    phone_number: phoneNumber
                 }
             });
+            console.log(user);
             navigation.navigate('VerifyCode', {username: phoneNumber});
         } catch (err) {
             console.log(err);
