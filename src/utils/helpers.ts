@@ -41,7 +41,7 @@ export const validateToken = (token: any): boolean => {
  * @param {string} text 
  * @returns {string}
  */
- export const formatEnums = (label: string): string => (label ? label.replace(/_/g, ' ') : '');
+ export const formatEnums = (label: string): string => (label ? label.replaceAll(/_/g, ' ') : '');
 
  /**
  * helper function for formatting words into title case

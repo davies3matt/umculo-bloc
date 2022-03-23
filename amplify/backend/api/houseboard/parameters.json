@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "houseboard",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authhouseboard52ff8a69",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

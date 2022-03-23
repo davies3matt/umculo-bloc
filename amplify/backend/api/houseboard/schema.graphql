@@ -1,23 +1,24 @@
-# This "input" configures a global authorization rule to enable public access to
-# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
-input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+# # This "input" configures a global authorization rule to enable public access to
+# # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+# input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type User @model {
+type User @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [read, update] }]) {
   id: ID!
   name: String
   phoneNumber: String
   email: String
-  groups: [Group] @manyToMany(relationName: "UserGroups")
+  groups: [Group] @manyToMany(relationName: "UsersGroups")
 }
 
-type Group @model {
+type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
   id: ID!
   name: String
-  users: [User] @manyToMany(relationName: "UserGroups")
+  type: GroupType
+  users: [User] @manyToMany(relationName: "UsersGroups")
   items: [Item] @hasMany(indexName: "GroupItems", fields: ["id"])
 }
 
-type Item @model {
+type Item @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
   id: ID! 
   itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
   name: String
@@ -30,4 +31,11 @@ enum Category {
   BATHROOM
   LIVING_AREA
   MISC
+}
+
+enum GroupType {
+  HOUSE_SHARE
+  DIGS
+  FAMILY
+  COMMUNE
 }
