@@ -25,19 +25,26 @@
   },
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-houseboard-dev-213918-authRole",
-      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-213918-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-213918-authRole",
+      "AuthRoleName": "amplify-houseboard-dev-193210-authRole",
+      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-193210-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-193210-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-houseboard-dev-213918-deployment",
-      "UnauthRoleName": "amplify-houseboard-dev-213918-unauthRole",
-      "StackName": "amplify-houseboard-dev-213918",
-      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-dev-213918/fbc5c040-aae0-11ec-91fa-0668fed26e59",
+      "DeploymentBucketName": "amplify-houseboard-dev-193210-deployment",
+      "UnauthRoleName": "amplify-houseboard-dev-193210-unauthRole",
+      "StackName": "amplify-houseboard-dev-193210",
+      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-dev-193210/8907ef20-ab98-11ec-82bc-02c4c431dd4d",
       "AmplifyAppId": "d3u0wbebujmtc0"
     },
     "categories": {
       "function": {
-        "cognitoPostConfirmation": {}
+        "cognitoPostConfirmation": {
+          "deploymentBucketName": "amplify-houseboard-dev-193210-deployment",
+          "s3Key": "amplify-builds/cognitoPostConfirmation-32624f3648494d36667a-build.zip"
+        },
+        "customFunction": {
+          "deploymentBucketName": "amplify-houseboard-dev-193210-deployment",
+          "s3Key": "amplify-builds/customFunction-656251444b623365596a-build.zip"
+        }
       },
       "auth": {
         "houseboard52ff8a69": {}

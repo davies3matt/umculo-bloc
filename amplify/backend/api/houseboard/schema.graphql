@@ -8,6 +8,7 @@ type User @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [r
   phoneNumber: String
   email: String
   groups: [Group] @manyToMany(relationName: "UsersGroups")
+  pendingGroups: [ID] 
 }
 
 type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
@@ -15,6 +16,7 @@ type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [
   name: String
   type: GroupType
   users: [User] @manyToMany(relationName: "UsersGroups")
+  pendingUsers: [ID]
   items: [Item] @hasMany(indexName: "GroupItems", fields: ["id"])
 }
 
@@ -38,4 +40,12 @@ enum GroupType {
   DIGS
   FAMILY
   COMMUNE
+}
+
+input InviteDetails {
+  email: String
+  phoneNumber: String
+}
+type Mutation {
+  inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
 }
