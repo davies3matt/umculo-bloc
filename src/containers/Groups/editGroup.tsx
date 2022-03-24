@@ -1,6 +1,6 @@
 import { Button, Center, Heading, Spinner, VStack, Box, Select, FormControl, Input } from 'native-base';
 import React, { useState } from 'react';
-import { Category, Item, useCreateItemMutation, useGetGroupQuery } from '../../generated/graphql';
+import { Category, Item, useCreateItemMutation, useGetGroupQuery, useInviteUsersToGroupMutation } from '../../generated/graphql';
 import uuid from 'react-native-uuid';
 
 interface Props {
@@ -13,12 +13,17 @@ interface Props {
     }
 }
 const EditGroup: React.FC<Props> = (props) => {
+    const groupId = props.route.params.groupId
     const { data, loading, refetch } = useGetGroupQuery({
         variables: {
-            id: props.route.params.groupId
+            id: groupId
         },
         fetchPolicy: 'network-only'
     })
+    const [inviteUser] = useInviteUsersToGroupMutation({
+        onCompleted: dataC => console.log('jaja', dataC),
+        onError: err => console.log(err)
+    });
 
     const [postItem, { loading: loadingCreateItem }] = useCreateItemMutation({
         onCompleted: () => refetch(),
@@ -48,6 +53,20 @@ const EditGroup: React.FC<Props> = (props) => {
             }
         })
     }
+
+    const submitInviteUser = async (user: UserDetails) => {
+        console.log(user);
+        await inviteUser({
+            variables: {
+                groupId: groupId,
+                users: [user]
+            }
+        })
+    }
+
+    React.useEffect(() => {
+        console.log('awdawd');
+    }, [data])
 
     const [item, setItem] = useState<ItemDetails>({});
     const [user, setUser] = useState<UserDetails>({});
@@ -82,13 +101,13 @@ const EditGroup: React.FC<Props> = (props) => {
                 <Box marginTop={'20px'} backgroundColor='pink.100'>
                 <FormControl>
                 <FormControl.Label>email</FormControl.Label>
-                <Input placeholder="piet@gmail.com" onChangeText={val => setItem({...item, name: val})} value={item?.name as string} />
+                <Input placeholder="piet@gmail.com" onChangeText={val => setUser({...item, email: val})} value={item?.name as string} />
                 </FormControl>
                 <FormControl>
                 <FormControl.Label>phone number</FormControl.Label>
-                <Input placeholder="+27834636516" onChangeText={val => setItem({...item, name: val})} value={item?.name as string} />
+                <Input placeholder="+27834636516" onChangeText={val => setUser({...item, phoneNumber: val})} value={item?.name as string} />
                 </FormControl>
-                    <Button isLoading={loadingCreateItem} onPress={() => createItem(item)}>Add User</Button>
+                    <Button isLoading={loadingCreateItem} onPress={() => submitInviteUser(user)}>Add User</Button>
                 </Box>
                 </Center>
             </VStack>
