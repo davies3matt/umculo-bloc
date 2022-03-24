@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "amplify:tsc": "cd amplify/backend/function/customFunction/src && yarn && tsc"
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
