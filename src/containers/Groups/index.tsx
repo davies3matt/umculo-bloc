@@ -30,7 +30,7 @@ const Groups: React.FC<Props> = ({navigation}) => {
     }, [data])
     return (
         <SlideRightView>
-            <Box >
+            <Box>
                 <Button 
                     style={{margin: 20, marginBottom: 0, alignSelf: 'flex-end'}} 
                     size='lg' 
@@ -40,7 +40,14 @@ const Groups: React.FC<Props> = ({navigation}) => {
                     >
                     Add Group
                 </Button>
-                {groups?.map(item => <Heading>{item.group.name}</Heading>)}
+                {groups?.map(item => <Box 
+                    backgroundColor={'pink.100'} 
+                    key={item.id}
+                    padding='20'    
+                >
+                    <Heading>{item.group.name}</Heading>
+                    <Button onPress={() => navigation.navigate('EditGroup', {groupId: item.groupID})}>View Group</Button>
+                </Box>)}
             </Box>
         </SlideRightView>
     )
