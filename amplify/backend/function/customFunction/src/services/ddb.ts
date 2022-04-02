@@ -112,3 +112,13 @@ const ddb = new DynamoDB({
       .promise()
       .then(recs => recs.Items.map(rec => unmarshall(rec)));
   };
+
+  export const listUsers = async () => {
+    const params = {
+      TableName: `User-${tableSuffix}`,
+    };
+    return ddb
+      .scan(params)
+      .promise()
+      .then(recs => recs.Items.map(rec => unmarshall(rec)));
+  };

@@ -62,7 +62,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.list = exports.update = exports.get = void 0;
+exports.listUsers = exports.list = exports.update = exports.get = void 0;
 var aws_sdk_1 = require("aws-sdk");
 var ddb = new aws_sdk_1.DynamoDB({
     apiVersion: '2012-10-08',
@@ -163,4 +163,17 @@ var list = function (table, filter) { return __awaiter(void 0, void 0, void 0, f
     });
 }); };
 exports.list = list;
+var listUsers = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var params;
+    return __generator(this, function (_a) {
+        params = {
+            TableName: "User-" + tableSuffix
+        };
+        return [2 /*return*/, ddb
+                .scan(params)
+                .promise()
+                .then(function (recs) { return recs.Items.map(function (rec) { return unmarshall(rec); }); })];
+    });
+}); };
+exports.listUsers = listUsers;
 //# sourceMappingURL=ddb.js.map

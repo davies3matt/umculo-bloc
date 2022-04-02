@@ -1,6 +1,6 @@
 import { Button, Center, Heading, Spinner, VStack, Box, Select, FormControl, Input } from 'native-base';
 import React, { useState } from 'react';
-import { Category, Item, useCreateItemMutation, useGetGroupQuery, useInviteUsersToGroupMutation } from '../../generated/graphql';
+import { Category, useCreateItemMutation, useGetGroupQuery, useInviteUsersToGroupMutation } from '../../generated/graphql';
 import uuid from 'react-native-uuid';
 
 interface Props {

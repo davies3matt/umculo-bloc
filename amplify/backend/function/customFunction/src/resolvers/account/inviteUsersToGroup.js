@@ -42,6 +42,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
 };
 exports.__esModule = true;
 var ddb_1 = require("../../services/ddb");
+// this function receives a group id + list of users to invite to the group belonging to that id
 exports["default"] = (function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, groupId, users, group;
     return __generator(this, function (_b) {
@@ -51,19 +52,27 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
                 return [4 /*yield*/, ddb_1.get('Group', groupId)];
             case 1:
                 group = _b.sent();
-                console.log('group', group);
                 return [4 /*yield*/, Promise.all(__spreadArray([], users.map(function (user) { return __awaiter(void 0, void 0, void 0, function () {
-                        var thisUser;
+                        var allUsers, invitedUser, pendingGroups, pendingUsers;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
-                                case 0: return [4 /*yield*/, ddb_1.list('User', { phoneNumber: user.phoneNumber })[0]];
+                                case 0: return [4 /*yield*/, ddb_1.listUsers()];
                                 case 1:
-                                    thisUser = _a.sent();
-                                    console.log('This User', thisUser);
-                                    return [4 /*yield*/, ddb_1.update('Group', groupId, { pendingUsers: __spreadArray(__spreadArray([], group.pendingUsers), [thisUser.id]) })];
+                                    allUsers = _a.sent();
+                                    console.log(allUsers);
+                                    invitedUser = allUsers.find(function (invitedUser) { return invitedUser.phoneNumber === user.phoneNumber; });
+                                    console.log('invitedUser', invitedUser);
+                                    pendingGroups = invitedUser.pendingGroups ? invitedUser.pendingGroups : [];
+                                    pendingUsers = group.pendingUsers ? group.pendingUsers : [];
+                                    console.log('pendingGroups', pendingGroups);
+                                    console.log('pendingUsers', pendingUsers);
+                                    return [4 /*yield*/, ddb_1.update('Group', groupId, { pendingUsers: __spreadArray(__spreadArray([], pendingUsers), [invitedUser.id]) })
+                                        // add group id to user's pending groups
+                                    ];
                                 case 2:
                                     _a.sent();
-                                    return [2 /*return*/, ddb_1.update('User', thisUser.id, { pendingGroups: __spreadArray(__spreadArray([], thisUser.pendingGroups), [groupId]) })];
+                                    // add group id to user's pending groups
+                                    return [2 /*return*/, ddb_1.update('User', invitedUser.id, { pendingGroups: __spreadArray(__spreadArray([], pendingGroups), [groupId]) })];
                             }
                         });
                     }); })))];

@@ -24,13 +24,19 @@ interface LoginDetails {
 }
 const Login: React.FC<Props> = ({navigation}) => {
 
+    // context
     const { signIn } = useAuthContext();
+
+    // states
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [visibility, setVisibility] = React.useState(false);
     const [loginDetails, setLoginDetails] = React.useState<LoginDetails>({
         username: '',
         password: '',
     });
-    const [isLoading, setIsLoading] = React.useState(false);
 
+    // use effect that watches the isLoading state to trigger a loading state 
+    // while awaiting the cognito sign in request
     React.useEffect(() => {
         if (isLoading) {
             signIn(({
@@ -40,7 +46,7 @@ const Login: React.FC<Props> = ({navigation}) => {
         }
     },[isLoading])
 
-    const [visibility, setVisibility] = React.useState(false);
+    // screen
     return (
         <SlideRightView style={styles.container}>
             <TouchableWithoutFeedback
