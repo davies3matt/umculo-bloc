@@ -36,34 +36,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-/* Amplify Params - DO NOT EDIT
-    API_HOUSEBOARD_GRAPHQLAPIENDPOINTOUTPUT
-    API_HOUSEBOARD_GRAPHQLAPIIDOUTPUT
-    API_HOUSEBOARD_GRAPHQLAPIKEYOUTPUT
-    API_HOUSEBOARD_GROUPTABLE_ARN
-    API_HOUSEBOARD_GROUPTABLE_NAME
-    API_HOUSEBOARD_ITEMTABLE_ARN
-    API_HOUSEBOARD_ITEMTABLE_NAME
-    API_HOUSEBOARD_USERTABLE_ARN
-    API_HOUSEBOARD_USERTABLE_NAME
-    AUTH_HOUSEBOARD52FF8A69_USERPOOLID
-    ENV
-    FUNCTION_COGNITOPOSTCONFIRMATION_NAME
-    REGION
-Amplify Params - DO NOT EDIT */
-var index_1 = require("./resolvers/index");
-exports.handler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+var ddb_1 = require("../../services/ddb");
+exports["default"] = (function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
+    var user;
     return __generator(this, function (_a) {
-        console.log("EVENT: " + JSON.stringify(event, context));
-        switch (event.fieldName) {
-            case 'inviteUsersToGroup':
-                return [2 /*return*/, index_1.inviteUsersToGroup(event, context)];
-            case 'getUserProfile':
-                return [2 /*return*/, index_1.getUserProfile(event, context)];
-            default:
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, ddb_1.get('User', context.identity.sub)];
+            case 1:
+                user = _a.sent();
+                console.log('User', user);
+                return [2 /*return*/, user];
         }
-        context.done(null, 'Hello World'); // SUCCESS with message
-        return [2 /*return*/];
     });
-}); };
-//# sourceMappingURL=index.js.map
+}); });
+//# sourceMappingURL=getUserProfile.js.map

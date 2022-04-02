@@ -13,12 +13,17 @@
 	FUNCTION_COGNITOPOSTCONFIRMATION_NAME
 	REGION
 Amplify Params - DO NOT EDIT */
-import {inviteUsersToGroup} from './resolvers/index';
+import {
+	inviteUsersToGroup,
+	getUserProfile
+} from './resolvers/index';
 exports.handler = async (event, context) => {
     console.log(`EVENT: ${JSON.stringify(event, context)}`);
 	switch (event.fieldName) {
 		case 'inviteUsersToGroup': 
-		return inviteUsersToGroup(event, context);
+			return inviteUsersToGroup(event, context);
+		case 'getUserProfile':
+			return getUserProfile(event, context);
 		default:
 	}
     context.done(null, 'Hello World'); // SUCCESS with message

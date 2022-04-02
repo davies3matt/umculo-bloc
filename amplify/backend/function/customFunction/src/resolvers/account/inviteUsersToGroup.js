@@ -66,6 +66,7 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
                                     pendingUsers = group.pendingUsers ? group.pendingUsers : [];
                                     console.log('pendingGroups', pendingGroups);
                                     console.log('pendingUsers', pendingUsers);
+                                    if (!!pendingUsers.includes(invitedUser.id)) return [3 /*break*/, 3];
                                     return [4 /*yield*/, ddb_1.update('Group', groupId, { pendingUsers: __spreadArray(__spreadArray([], pendingUsers), [invitedUser.id]) })
                                         // add group id to user's pending groups
                                     ];
@@ -73,6 +74,7 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
                                     _a.sent();
                                     // add group id to user's pending groups
                                     return [2 /*return*/, ddb_1.update('User', invitedUser.id, { pendingGroups: __spreadArray(__spreadArray([], pendingGroups), [groupId]) })];
+                                case 3: return [2 /*return*/];
                             }
                         });
                     }); })))];

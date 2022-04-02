@@ -19,16 +19,17 @@ export default async (event, context) => {
             // find first user that matches phone number
             const invitedUser = allUsers.find(invitedUser => invitedUser.phoneNumber === user.phoneNumber);
             console.log('invitedUser', invitedUser);
-
             // add invited user id to group's invited user list
             const pendingGroups = invitedUser.pendingGroups ? invitedUser.pendingGroups : [];
             const pendingUsers = group.pendingUsers ? group.pendingUsers : [];
             console.log('pendingGroups', pendingGroups);
             console.log('pendingUsers', pendingUsers);
             // check if user is already pending 
-            await update('Group', groupId, { pendingUsers: [...pendingUsers, ...[invitedUser.id]] })
-            // add group id to user's pending groups
-            return update('User', invitedUser.id, { pendingGroups: [...pendingGroups, ...[groupId]] })
+            if (!pendingUsers.includes(invitedUser.id)) {
+                await update('Group', groupId, { pendingUsers: [...pendingUsers, ...[invitedUser.id]] })
+                // add group id to user's pending groups
+                return update('User', invitedUser.id, { pendingGroups: [...pendingGroups, ...[groupId]] })
+            }
         })
     ])
     return await get('Group', groupId);
