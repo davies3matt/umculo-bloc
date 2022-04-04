@@ -5,6 +5,7 @@ import Groups from '../containers/Groups';
 import { Image } from 'native-base';
 import AddGroup from '../containers/Groups/addGroup';
 import EditGroup from '../containers/Groups/editGroup';
+import ViewInvite from '../containers/Groups/viewInvite';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ const AuthStack:React.FC = () => {
         <Stack.Screen name="Groups" component={Groups} options={{ headerTitle: () => <LogoTitle/> }}/>
         <Stack.Screen name='AddGroup' component={AddGroup} options={{ headerTitle: () => <LogoTitle/>}}/>
         <Stack.Screen name='EditGroup' component={EditGroup} options={{ headerTitle: () => <LogoTitle/>}}/>
+        <Stack.Screen name="ViewInvite" component={ViewInvite} options={{ headerTitle: () => <LogoTitle/> }}/>
     </Stack.Navigator>
     )
 }
