@@ -556,6 +556,27 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
+                          "Fn::Sub": "${apihouseboardGraphQLAPIIdOutput}:GetAtt:UsersGroupsTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
                           "Fn::Sub": "${apihouseboardGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
                         }
                       },
