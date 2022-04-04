@@ -122,3 +122,14 @@ const ddb = new DynamoDB({
       .promise()
       .then(recs => recs.Items.map(rec => unmarshall(rec)));
   };
+
+  export const create = async (table, record) => {
+    const params = {
+      TableName: `${table}-${tableSuffix}`,
+      Item: record,
+    };
+    return docClient
+      .put(params)
+      .promise()
+      .then(rec => unmarshall(rec.Attributes));
+  };
