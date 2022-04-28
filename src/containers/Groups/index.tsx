@@ -17,7 +17,8 @@ const Groups: React.FC<Props> = ({navigation}) => {
 
     // user profile query
     const { data: userProfileData } = useGetUserProfileQuery({
-        onError: (err) => console.log(err)
+        onError: (err) => console.log(err),
+        fetchPolicy: 'network-only'
     });
     React.useEffect(() => {
         if (userProfileData?.getUserProfile?.pendingGroups?.length > 0) {

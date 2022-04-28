@@ -15,7 +15,8 @@
 Amplify Params - DO NOT EDIT */
 import {
 	inviteUsersToGroup,
-	getUserProfile
+	getUserProfile,
+	inviteResponse
 } from './resolvers/index';
 exports.handler = async (event, context) => {
     console.log(`EVENT: ${JSON.stringify(event, context)}`);
@@ -24,6 +25,8 @@ exports.handler = async (event, context) => {
 			return inviteUsersToGroup(event, context);
 		case 'getUserProfile':
 			return getUserProfile(event, context);
+		case 'inviteResponse':
+			return inviteResponse(event, context);
 		default:
 	}
     context.done(null, 'Hello World'); // SUCCESS with message

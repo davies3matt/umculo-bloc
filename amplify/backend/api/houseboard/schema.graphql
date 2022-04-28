@@ -48,7 +48,8 @@ input InviteDetails {
 }
 type Mutation {
   inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
+  inviteResponse(groupId: String, accept: Boolean): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
 }
 type Query {
-  getUserProfile: User @function(name: "getUserProfile-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
+  getUserProfile: User @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
 }
