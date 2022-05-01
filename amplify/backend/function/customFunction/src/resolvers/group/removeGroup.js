@@ -71,17 +71,24 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
             case 5:
                 // map through and remove all items
                 _a.sent();
-                return [4 /*yield*/, ddb_1.list("UsersGroups", { groupId: group.id })
+                return [4 /*yield*/, ddb_1.list("UsersGroups", { groupID: group.id })
                     // map through and remove all records affiliated with group
                 ];
             case 6:
                 usersGroups = _a.sent();
                 // map through and remove all records affiliated with group
-                return [4 /*yield*/, Promise.all(__spreadArray([], usersGroups.map(function (usersGroup) {
-                        return ddb_1.remove("UsersGroups", { id: usersGroup.id });
-                    })))];
+                return [4 /*yield*/, Promise.all(__spreadArray([], usersGroups.map(function (item) {
+                        return ddb_1.remove("UsersGroups", item.id);
+                    })))
+                    // remove group
+                ];
             case 7:
                 // map through and remove all records affiliated with group
+                _a.sent();
+                // remove group
+                return [4 /*yield*/, ddb_1.remove("Group", group.id)];
+            case 8:
+                // remove group
                 _a.sent();
                 return [2 /*return*/, "Successfully removed group!"];
         }
