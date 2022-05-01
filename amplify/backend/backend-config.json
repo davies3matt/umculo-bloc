@@ -75,6 +75,36 @@
           ]
         }
       ]
+    },
+    "customFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "houseboard",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "houseboard52ff8a69",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "cognitoPostConfirmation",
+          "attributes": [
+            "Name"
+          ]
+        }
+      ]
     }
   }
 }

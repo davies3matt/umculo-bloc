@@ -21,18 +21,6 @@ const AddGroup: React.FC = () => {
     }
     const onSubmit = async (values: GroupProps) => {
         const groupId = uuid.v4().toString();
-        const input = {
-            id: groupId,
-            name: values.name,
-            type: values.type,
-        }
-        console.log(input);
-        const userInput = {
-            id: uuid.v4().toString(),
-            userID: authData.username,
-            groupID: groupId
-        }
-        console.log(userInput);
         try {
         await addGroup({
             variables: {

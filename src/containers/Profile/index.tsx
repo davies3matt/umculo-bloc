@@ -32,6 +32,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
                 source={require('../../../assets/animations/boat-sailing.json')}
             />
             <Button onPress={() => signOut()}>Logout</Button>
+            <Button onPress={() => navigation.navigate('Groups')}>Groups</Button>
         </SlideRightView>
     )
 }

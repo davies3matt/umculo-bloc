@@ -8,6 +8,8 @@ type User @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [r
   phoneNumber: String
   email: String
   groups: [Group] @manyToMany(relationName: "UsersGroups")
+  items: [Item] @hasMany(indexName: "UserItems", fields: ["id"])
+  pendingGroups: [ID] 
 }
 
 type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
@@ -15,15 +17,18 @@ type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [
   name: String
   type: GroupType
   users: [User] @manyToMany(relationName: "UsersGroups")
+  pendingUsers: [ID]
   items: [Item] @hasMany(indexName: "GroupItems", fields: ["id"])
 }
 
 type Item @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
   id: ID! 
   itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
-  name: String
-  category: Category
-  group: Group @belongsTo(fields: ["itemGroupId"])
+  itemUserId: ID! @index(name: "UserItems", sortKeyFields: ["id"])
+  name: String!
+  category: Category!
+  group: Group! @belongsTo(fields: ["itemGroupId"])
+  assignedTo: User! @belongsTo(fields: ["itemUserId"])
 }
 
 enum Category {
@@ -38,4 +43,16 @@ enum GroupType {
   DIGS
   FAMILY
   COMMUNE
+}
+
+input InviteDetails {
+  email: String
+  phoneNumber: String
+}
+type Mutation {
+  inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
+  inviteResponse(groupId: String, accept: Boolean): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
+}
+type Query {
+  getUserProfile: User @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
 }

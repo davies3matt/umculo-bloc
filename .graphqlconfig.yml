@@ -1,5 +1,5 @@
 projects:
-  todo:
+  houseboard:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.graphql
