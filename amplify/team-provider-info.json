@@ -25,25 +25,25 @@
   },
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-houseboard-dev-193210-authRole",
-      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-193210-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-193210-authRole",
+      "AuthRoleName": "amplify-houseboard-dev-125248-authRole",
+      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-125248-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-125248-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-houseboard-dev-193210-deployment",
-      "UnauthRoleName": "amplify-houseboard-dev-193210-unauthRole",
-      "StackName": "amplify-houseboard-dev-193210",
-      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-dev-193210/8907ef20-ab98-11ec-82bc-02c4c431dd4d",
+      "DeploymentBucketName": "amplify-houseboard-dev-125248-deployment",
+      "UnauthRoleName": "amplify-houseboard-dev-125248-unauthRole",
+      "StackName": "amplify-houseboard-dev-125248",
+      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-dev-125248/dfca4a80-c93c-11ec-9a5f-0ab720d385df",
       "AmplifyAppId": "d3u0wbebujmtc0"
     },
     "categories": {
       "function": {
         "cognitoPostConfirmation": {
-          "deploymentBucketName": "amplify-houseboard-dev-193210-deployment",
+          "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
           "s3Key": "amplify-builds/cognitoPostConfirmation-32624f3648494d36667a-build.zip"
         },
         "customFunction": {
-          "deploymentBucketName": "amplify-houseboard-dev-193210-deployment",
-          "s3Key": "amplify-builds/customFunction-66537a58414c4a527730-build.zip"
+          "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
+          "s3Key": "amplify-builds/customFunction-556e6a756d38716e7848-build.zip"
         }
       },
       "auth": {

@@ -55,7 +55,7 @@ const Groups: React.FC<Props> = ({navigation}) => {
                     Add Group
                 </Button>
                 {pendingGroups?.map(group => {
-                    return <Box>
+                    return <Box key={group.toString()}>
                         <Heading>Pending Group Invite</Heading>
                         <Button onPress={() => navigation.navigate('ViewInvite', { groupId: group })}>View Invite</Button>
                     </Box>

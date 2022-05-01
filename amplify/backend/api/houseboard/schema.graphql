@@ -8,6 +8,7 @@ type User @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [r
   phoneNumber: String
   email: String
   groups: [Group] @manyToMany(relationName: "UsersGroups")
+  items: [Item] @hasMany(indexName: "UserItems", fields: ["id"])
   pendingGroups: [ID] 
 }
 
@@ -23,9 +24,11 @@ type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [
 type Item @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
   id: ID! 
   itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
-  name: String
-  category: Category
-  group: Group @belongsTo(fields: ["itemGroupId"])
+  itemUserId: ID! @index(name: "UserItems", sortKeyFields: ["id"])
+  name: String!
+  category: Category!
+  group: Group! @belongsTo(fields: ["itemGroupId"])
+  assignedTo: User! @belongsTo(fields: ["itemUserId"])
 }
 
 enum Category {
