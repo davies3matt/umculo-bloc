@@ -39,11 +39,11 @@
       "function": {
         "cognitoPostConfirmation": {
           "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
-          "s3Key": "amplify-builds/cognitoPostConfirmation-32624f3648494d36667a-build.zip"
+          "s3Key": "amplify-builds/cognitoPostConfirmation-67307439655048576f6b-build.zip"
         },
         "customFunction": {
           "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
-          "s3Key": "amplify-builds/customFunction-556e6a756d38716e7848-build.zip"
+          "s3Key": "amplify-builds/customFunction-4850664d673348594530-build.zip"
         }
       },
       "auth": {

@@ -49,7 +49,7 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
         switch (_b.label) {
             case 0:
                 _a = event.arguments, groupId = _a.groupId, users = _a.users;
-                return [4 /*yield*/, ddb_1.get('Group', groupId)];
+                return [4 /*yield*/, ddb_1.get("Group", groupId)];
             case 1:
                 group = _b.sent();
                 return [4 /*yield*/, Promise.all(__spreadArray([], users.map(function (user) { return __awaiter(void 0, void 0, void 0, function () {
@@ -61,26 +61,32 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
                                     allUsers = _a.sent();
                                     console.log(allUsers);
                                     invitedUser = allUsers.find(function (invitedUser) { return invitedUser.phoneNumber === user.phoneNumber; });
-                                    console.log('invitedUser', invitedUser);
-                                    pendingGroups = invitedUser.pendingGroups ? invitedUser.pendingGroups : [];
+                                    console.log("invitedUser", invitedUser);
+                                    pendingGroups = invitedUser.pendingGroups
+                                        ? invitedUser.pendingGroups
+                                        : [];
                                     pendingUsers = group.pendingUsers ? group.pendingUsers : [];
-                                    console.log('pendingGroups', pendingGroups);
-                                    console.log('pendingUsers', pendingUsers);
+                                    console.log("pendingGroups", pendingGroups);
+                                    console.log("pendingUsers", pendingUsers);
                                     if (!!pendingUsers.includes(invitedUser.id)) return [3 /*break*/, 3];
-                                    return [4 /*yield*/, ddb_1.update('Group', groupId, { pendingUsers: __spreadArray(__spreadArray([], pendingUsers), [invitedUser.id]) })
+                                    return [4 /*yield*/, ddb_1.update("Group", groupId, {
+                                            pendingUsers: __spreadArray(__spreadArray([], pendingUsers), [invitedUser.id])
+                                        })
                                         // add group id to user's pending groups
                                     ];
                                 case 2:
                                     _a.sent();
                                     // add group id to user's pending groups
-                                    return [2 /*return*/, ddb_1.update('User', invitedUser.id, { pendingGroups: __spreadArray(__spreadArray([], pendingGroups), [groupId]) })];
+                                    return [2 /*return*/, ddb_1.update("User", invitedUser.id, {
+                                            pendingGroups: __spreadArray(__spreadArray([], pendingGroups), [groupId])
+                                        })];
                                 case 3: return [2 /*return*/];
                             }
                         });
                     }); })))];
             case 2:
                 _b.sent();
-                return [4 /*yield*/, ddb_1.get('Group', groupId)];
+                return [4 /*yield*/, ddb_1.get("Group", groupId)];
             case 3: return [2 /*return*/, _b.sent()];
         }
     });

@@ -35,18 +35,56 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 exports.__esModule = true;
 var ddb_1 = require("../../services/ddb");
 exports["default"] = (function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
+    var user, group, items, usersGroups;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, ddb_1.get("User", event.identity.sub)];
             case 1:
                 user = _a.sent();
-                console.log("User", user);
-                return [2 /*return*/, user];
+                if (!!user) return [3 /*break*/, 2];
+                throw new Error("User not found!");
+            case 2: return [4 /*yield*/, ddb_1.get("Group", event.arguments.groupId)];
+            case 3:
+                group = _a.sent();
+                if (!group) {
+                    throw new Error("Group Not Found!");
+                }
+                return [4 /*yield*/, ddb_1.list("Item", { itemGroupId: group.id })
+                    // map through and remove all items
+                ];
+            case 4:
+                items = _a.sent();
+                // map through and remove all items
+                return [4 /*yield*/, Promise.all(__spreadArray([], items.map(function (item) {
+                        return ddb_1.remove("Item", item.id);
+                    })))
+                    // get users-groups records
+                ];
+            case 5:
+                // map through and remove all items
+                _a.sent();
+                return [4 /*yield*/, ddb_1.list("UsersGroups", { groupId: group.id })
+                    // map through and remove all records affiliated with group
+                ];
+            case 6:
+                usersGroups = _a.sent();
+                // map through and remove all records affiliated with group
+                return [4 /*yield*/, Promise.all(__spreadArray([], usersGroups.map(function (usersGroup) {
+                        return ddb_1.remove("UsersGroups", { id: usersGroup.id });
+                    })))];
+            case 7:
+                // map through and remove all records affiliated with group
+                _a.sent();
+                return [2 /*return*/, "Successfully removed group!"];
         }
     });
 }); });
-//# sourceMappingURL=getUserProfile.js.map
+//# sourceMappingURL=removeGroup.js.map
