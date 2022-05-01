@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Box, FormControl, Input, Select, Button, Center } from "native-base"
 import {
   Category,
+  ItemStatus,
   useCreateItemMutation,
   useGetGroupQuery,
 } from "../../generated/graphql"
@@ -56,6 +57,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
         input: {
           id: id,
           itemGroupId: groupId,
+          status: ItemStatus.Pending,
           ...input,
         },
       },
