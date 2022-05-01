@@ -2,17 +2,32 @@
 # # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 # input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type User @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [read, update] }]) {
+type User
+  @model
+  @auth(
+    rules: [{ allow: groups, groups: ["User"], operations: [read, update] }]
+  ) {
   id: ID!
-  name: String
   phoneNumber: String
   email: String
+  name: String
+  image: String
   groups: [Group] @manyToMany(relationName: "UsersGroups")
   items: [Item] @hasMany(indexName: "UserItems", fields: ["id"])
-  pendingGroups: [ID] 
+  pendingGroups: [ID]
 }
 
-type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
+type Group
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["User"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   type: GroupType
@@ -23,14 +38,25 @@ type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [
   description: String
 }
 
-type Item @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
-  id: ID! 
+type Item
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["User"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
   itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
   itemUserId: ID @index(name: "UserItems", sortKeyFields: ["id"])
   name: String!
   category: Category!
   group: Group! @belongsTo(fields: ["itemGroupId"])
   assignedTo: User @belongsTo(fields: ["itemUserId"])
+  status: ItemStatus!
 }
 
 enum Category {
@@ -47,14 +73,28 @@ enum GroupType {
   COMMUNE
 }
 
+enum ItemStatus {
+  PENDING
+  DONE
+}
+
 input InviteDetails {
   email: String
   phoneNumber: String
 }
 type Mutation {
-  inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
-  inviteResponse(groupId: String, accept: Boolean): Group @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
+  inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group
+    @function(name: "customFunction-${env}")
+    @auth(rules: [{ allow: groups, groups: ["User"] }])
+  inviteResponse(groupId: String, accept: Boolean): Group
+    @function(name: "customFunction-${env}")
+    @auth(rules: [{ allow: groups, groups: ["User"] }])
+  removeGroup(groupId: String): String
+    @function(name: "customFunction-${env}")
+    @auth(rules: [{ allow: groups, groups: ["User"] }])
 }
 type Query {
-  getUserProfile: User @function(name: "customFunction-${env}") @auth(rules: [{allow: groups, groups: ["User"]}])
+  getUserProfile: User
+    @function(name: "customFunction-${env}")
+    @auth(rules: [{ allow: groups, groups: ["User"] }])
 }

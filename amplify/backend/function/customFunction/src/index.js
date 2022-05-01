@@ -56,15 +56,17 @@ exports.handler = function (event, context) { return __awaiter(void 0, void 0, v
     return __generator(this, function (_a) {
         console.log("EVENT: " + JSON.stringify(event, context));
         switch (event.fieldName) {
-            case 'inviteUsersToGroup':
+            case "inviteUsersToGroup":
                 return [2 /*return*/, index_1.inviteUsersToGroup(event, context)];
-            case 'getUserProfile':
+            case "getUserProfile":
                 return [2 /*return*/, index_1.getUserProfile(event, context)];
-            case 'inviteResponse':
+            case "inviteResponse":
                 return [2 /*return*/, index_1.inviteResponse(event, context)];
+            case "removeGroup":
+                return [2 /*return*/, index_1.removeGroup(event, context)];
             default:
         }
-        context.done(null, 'Hello World'); // SUCCESS with message
+        context.done(null, "Hello World"); // SUCCESS with message
         return [2 /*return*/];
     });
 }); };
