@@ -14,20 +14,23 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 import {
-	inviteUsersToGroup,
-	getUserProfile,
-	inviteResponse
-} from './resolvers/index';
+  inviteUsersToGroup,
+  getUserProfile,
+  inviteResponse,
+  removeGroup,
+} from "./resolvers/index"
 exports.handler = async (event, context) => {
-    console.log(`EVENT: ${JSON.stringify(event, context)}`);
-	switch (event.fieldName) {
-		case 'inviteUsersToGroup': 
-			return inviteUsersToGroup(event, context);
-		case 'getUserProfile':
-			return getUserProfile(event, context);
-		case 'inviteResponse':
-			return inviteResponse(event, context);
-		default:
-	}
-    context.done(null, 'Hello World'); // SUCCESS with message
-};
+  console.log(`EVENT: ${JSON.stringify(event, context)}`)
+  switch (event.fieldName) {
+    case "inviteUsersToGroup":
+      return inviteUsersToGroup(event, context)
+    case "getUserProfile":
+      return getUserProfile(event, context)
+    case "inviteResponse":
+      return inviteResponse(event, context)
+    case "removeGroup":
+      return removeGroup(event, context)
+    default:
+  }
+  context.done(null, "Hello World") // SUCCESS with message
+}

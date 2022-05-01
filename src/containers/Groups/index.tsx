@@ -6,9 +6,11 @@ import {
   useListUsersGroupsQuery,
   UsersGroups,
   useGetUserProfileQuery,
+  useRemoveGroupMutation,
 } from "../../generated/graphql"
 import { useAuthContext } from "../../contexts/AuthContext"
 import { NavigationProps } from "../Authentication/Login"
+import { useFocusEffect } from "@react-navigation/native"
 
 const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   const { authData } = useAuthContext()
@@ -27,7 +29,7 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   }, [userProfileData])
 
   // user-groups query
-  const { data } = useListUsersGroupsQuery({
+  const { data, refetch } = useListUsersGroupsQuery({
     variables: {
       filter: {
         userID: { eq: authData.username },
@@ -42,6 +44,20 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
       setGroups(data.listUsersGroups.items as UsersGroups[])
     }
   }, [data])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch()
+    }, [refetch])
+  )
+
+  // remove group mutation
+  const [removeGroup, { loading: removingGroupLoading }] =
+    useRemoveGroupMutation({
+      onError: (err) => console.log(err),
+      onCompleted: () => refetch(),
+    })
+
   return (
     <SlideRightView>
       <Box>
@@ -77,6 +93,19 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
               }
             >
               View Group
+            </Button>
+            <Button
+              onPress={() => {
+                removeGroup({
+                  variables: {
+                    groupId: item.groupID,
+                  },
+                })
+              }}
+              isLoading={removingGroupLoading}
+              backgroundColor={"red.500"}
+            >
+              Delete Group
             </Button>
           </Box>
         ))}

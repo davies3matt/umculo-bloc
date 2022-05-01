@@ -42,26 +42,26 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
     var user, groupId, group, accept, userGroupId, updatedPendingGroups, updatedPendingUsers;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, ddb_1.get('User', event.identity.sub)];
+            case 0: return [4 /*yield*/, ddb_1.get("User", event.identity.sub)];
             case 1:
                 user = _a.sent();
-                console.log('User', user);
+                console.log("User", user);
                 if (!user) {
-                    throw new Error('User not found!');
+                    throw new Error("User not found!");
                 }
                 groupId = event.arguments.groupId;
-                return [4 /*yield*/, ddb_1.get('Group', groupId)];
+                return [4 /*yield*/, ddb_1.get("Group", groupId)];
             case 2:
                 group = _a.sent();
-                console.log('Group', group);
+                console.log("Group", group);
                 accept = event.arguments.accept;
                 userGroupId = uuid_1.v4();
                 if (!accept) return [3 /*break*/, 4];
                 // add user to group
-                return [4 /*yield*/, ddb_1.create('UsersGroups', {
+                return [4 /*yield*/, ddb_1.create("UsersGroups", {
                         createdAt: new Date().toISOString(),
                         updatedAt: new Date().toISOString(),
-                        __typeName: 'UsersGroups',
+                        __typename: "UsersGroups",
                         id: userGroupId,
                         userID: user.id,
                         groupID: groupId
@@ -72,16 +72,16 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
                 _a.label = 4;
             case 4:
                 updatedPendingGroups = user.pendingGroups.filter(function (group) { return group !== groupId; });
-                console.log('updatedPendingGroups', updatedPendingGroups);
-                return [4 /*yield*/, ddb_1.update('User', user.id, { pendingGroups: updatedPendingGroups })];
+                console.log("updatedPendingGroups", updatedPendingGroups);
+                return [4 /*yield*/, ddb_1.update("User", user.id, { pendingGroups: updatedPendingGroups })];
             case 5:
                 _a.sent();
                 updatedPendingUsers = group.pendingUsers.filter(function (userId) { return userId !== user.id; });
-                console.log('updatedPendingUsers', updatedPendingUsers);
-                return [4 /*yield*/, ddb_1.update('Group', groupId, { pendingUsers: updatedPendingUsers })];
+                console.log("updatedPendingUsers", updatedPendingUsers);
+                return [4 /*yield*/, ddb_1.update("Group", groupId, { pendingUsers: updatedPendingUsers })];
             case 6:
                 _a.sent();
-                return [4 /*yield*/, ddb_1.get('Group', groupId)];
+                return [4 /*yield*/, ddb_1.get("Group", groupId)];
             case 7: return [2 /*return*/, _a.sent()];
         }
     });

@@ -52,6 +52,13 @@ const EditGroup = ({ navigation, route }: Props): JSX.Element => {
                   )
                 })}
               </Box>
+              <Button
+                onPress={() =>
+                  navigation.navigate("AddItem", { groupId: groupId })
+                }
+              >
+                Add Item
+              </Button>
               {/***************************** INVITE USER **************************************/}
               <Heading marginTop={"50px"}>Invite a User</Heading>
               <Button

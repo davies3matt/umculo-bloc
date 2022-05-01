@@ -62,10 +62,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.create = exports.listUsers = exports.list = exports.update = exports.get = void 0;
+exports.remove = exports.create = exports.listUsers = exports.list = exports.update = exports.get = void 0;
 var aws_sdk_1 = require("aws-sdk");
 var ddb = new aws_sdk_1.DynamoDB({
-    apiVersion: '2012-10-08',
+    apiVersion: "2012-10-08",
     httpOptions: {
         timeout: 65000
     }
@@ -74,7 +74,7 @@ var docClient = new aws_sdk_1.DynamoDB.DocumentClient();
 var unmarshall = aws_sdk_1.DynamoDB.Converter.unmarshall;
 var tableSuffix = process.env.API_HOUSEBOARD_GRAPHQLAPIIDOUTPUT + "-" + process.env.ENV;
 var buildUpdateExpression = function (object) {
-    var UpdateExpression = 'set';
+    var UpdateExpression = "set";
     var ExpressionAttributeNames = {};
     var ExpressionAttributeValues = {};
     Object.keys(object).forEach(function (key) {
@@ -83,18 +83,22 @@ var buildUpdateExpression = function (object) {
         ExpressionAttributeValues[":" + key] = object[key];
     });
     // trim off trailing comma
-    UpdateExpression = UpdateExpression.replace(/,\s*$/, '');
-    return { UpdateExpression: UpdateExpression, ExpressionAttributeNames: ExpressionAttributeNames, ExpressionAttributeValues: ExpressionAttributeValues };
+    UpdateExpression = UpdateExpression.replace(/,\s*$/, "");
+    return {
+        UpdateExpression: UpdateExpression,
+        ExpressionAttributeNames: ExpressionAttributeNames,
+        ExpressionAttributeValues: ExpressionAttributeValues
+    };
 };
 var buildFilterExpression = function (filter) {
-    var FilterExpression = '';
+    var FilterExpression = "";
     var ExpressionAttributeNames = {};
     var ExpressionAttributeValues = {};
     for (var _i = 0, _a = Object.entries(filter); _i < _a.length; _i++) {
         var _b = _a[_i], key = _b[0], value = _b[1];
         FilterExpression += " #" + key + " = :" + key + " and";
         ExpressionAttributeNames["#" + key] = key;
-        if (typeof value === 'boolean') {
+        if (typeof value === "boolean") {
             ExpressionAttributeValues[":" + key] = { BOOL: filter[key] };
         }
         else {
@@ -102,8 +106,12 @@ var buildFilterExpression = function (filter) {
         }
     }
     // trim off trailing 'and'
-    FilterExpression = FilterExpression.replace(/ and\s*$/, '');
-    return { FilterExpression: FilterExpression, ExpressionAttributeNames: ExpressionAttributeNames, ExpressionAttributeValues: ExpressionAttributeValues };
+    FilterExpression = FilterExpression.replace(/ and\s*$/, "");
+    return {
+        FilterExpression: FilterExpression,
+        ExpressionAttributeNames: ExpressionAttributeNames,
+        ExpressionAttributeValues: ExpressionAttributeValues
+    };
 };
 var get = function (table, id) { return __awaiter(void 0, void 0, void 0, function () {
     var params;
@@ -135,7 +143,7 @@ var update = function (table, id, updates) { return __awaiter(void 0, void 0, vo
             UpdateExpression: UpdateExpression,
             ExpressionAttributeNames: ExpressionAttributeNames,
             ExpressionAttributeValues: ExpressionAttributeValues,
-            ReturnValues: 'UPDATED_NEW'
+            ReturnValues: "UPDATED_NEW"
         };
         return [2 /*return*/, docClient
                 .update(params)
@@ -190,4 +198,19 @@ var create = function (table, record) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.create = create;
+var remove = function (table, id) { return __awaiter(void 0, void 0, void 0, function () {
+    var params;
+    return __generator(this, function (_a) {
+        params = {
+            TableName: table + "-" + tableSuffix,
+            Key: {
+                id: id
+            }
+        };
+        return [2 /*return*/, docClient["delete"](params)
+                .promise()
+                .then(function (res) { return res.$response; })];
+    });
+}); };
+exports.remove = remove;
 //# sourceMappingURL=ddb.js.map
