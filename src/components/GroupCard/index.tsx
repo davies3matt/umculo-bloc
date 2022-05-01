@@ -1,20 +1,20 @@
-import { Box, Button, Heading } from 'native-base';
-import React from 'react';
-import { Group } from '../../generated/graphql';
+import { Box, Button, Heading } from "native-base"
+import React from "react"
+import { Group } from "../../generated/graphql"
 
 interface Props {
-    groupData: Group,
-    navigation: {
-        navigate: (s: string) => void
-    }
+  groupData: Group
+  navigation: {
+    navigate: (s: string) => void
+  }
 }
 const GroupCard: React.FC<Props> = ({ navigation, groupData }) => {
-    return(
+  return (
     <Box>
-        <Heading>{groupData.name}</Heading>
-        <Button>View</Button>
+      <Heading>{groupData.name}</Heading>
+      <Button>View</Button>
     </Box>
-    )
+  )
 }
 
-export default GroupCard;
+export default GroupCard
