@@ -1,29 +1,27 @@
-import * as React from 'react';
-/** App config */
-import awsExports from '../aws-exports';
-
-const UserPoolId = awsExports.aws_user_pools_id;
+import * as React from "react"
 
 interface IUserContextInterface {
-  userId: string;
-  updateUserId: React.Dispatch<React.SetStateAction<string>>;
+  userId: string
+  updateUserId: React.Dispatch<React.SetStateAction<string>>
 }
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
-export const HouseBoardUserContext = React.createContext<IUserContextInterface>({
-  userId: '',
-  updateUserId: () => {},
-});
+export const HouseBoardUserContext = React.createContext<IUserContextInterface>(
+  {
+    userId: "",
+    updateUserId: () => {},
+  }
+)
 
-export const HouseBoardUserContextConsumer = HouseBoardUserContext.Consumer;
+export const HouseBoardUserContextConsumer = HouseBoardUserContext.Consumer
 
-export const useUserContext = () => React.useContext(HouseBoardUserContext);
+export const useUserContext = () => React.useContext(HouseBoardUserContext)
 
 const UserContextProvider: React.FC<Props> = ({ children }) => {
-  const [userId, updateUserId] = React.useState('');
+  const [userId, updateUserId] = React.useState("")
   return (
     <HouseBoardUserContext.Provider
       value={{
@@ -33,7 +31,7 @@ const UserContextProvider: React.FC<Props> = ({ children }) => {
     >
       {children}
     </HouseBoardUserContext.Provider>
-  );
-};
+  )
+}
 
-export default UserContextProvider;
+export default UserContextProvider
