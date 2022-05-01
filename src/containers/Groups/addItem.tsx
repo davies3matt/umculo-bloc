@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Box, FormControl, Input, Select, Button, Center } from "native-base"
 import {
   Category,
+  ItemStatus,
   useCreateItemMutation,
   useGetGroupQuery,
 } from "../../generated/graphql"
@@ -24,6 +25,8 @@ interface ItemDetails {
   itemUserId?: String // <<---- userID
 }
 const AddItem = ({ navigation, route }: Props): JSX.Element => {
+  const [item, setItem] = useState<ItemDetails>({})
+
   const groupId = route.params.groupId
   // get group query
   const { data } = useGetGroupQuery({
@@ -36,7 +39,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
 
   // mutation
   const [postItem, { loading: loadingCreateItem }] = useCreateItemMutation({
-    onCompleted: () => navigation.navigate("EditGroup", { groupId: groupId }),
+    onCompleted: () => navigation.navigate("ViewGroup", { groupId: groupId }),
     onError: (err) => console.log(err),
   })
   // create item function
@@ -51,18 +54,18 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
     if (item.itemUserId) {
       input["itemUserId"] = item.itemUserId
     }
+
     await postItem({
       variables: {
         input: {
           id: id,
           itemGroupId: groupId,
+          status: ItemStatus.Pending,
           ...input,
         },
       },
     })
   }
-
-  const [item, setItem] = useState<ItemDetails>({})
   return (
     <Center>
       <Box marginTop={"20px"} backgroundColor="pink.100" w={"200px"}>

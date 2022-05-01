@@ -4,7 +4,7 @@ import Profile from "../containers/Profile"
 import Groups from "../containers/Groups"
 import { Image } from "native-base"
 import AddGroup from "../containers/Groups/addGroup"
-import EditGroup from "../containers/Groups/editGroup"
+import ViewGroup from "../containers/Groups/viewGroup"
 import AddUser from "../containers/Groups/addUser"
 import ViewInvite from "../containers/Groups/viewInvite"
 import AddItem from "../containers/Groups/addItem"
@@ -41,8 +41,8 @@ const AuthStack = (): JSX.Element => {
         options={{ headerTitle: () => <LogoTitle /> }}
       />
       <Stack.Screen
-        name="EditGroup"
-        component={EditGroup}
+        name="ViewGroup"
+        component={ViewGroup}
         options={{ headerTitle: () => <LogoTitle /> }}
       />
       <Stack.Screen
