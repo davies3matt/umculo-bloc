@@ -1,3 +1,4 @@
+import { useFocusEffect } from "@react-navigation/native"
 import {
   Button,
   Center,
@@ -17,12 +18,18 @@ interface Props extends NavigationProps, GroupRouteProps {}
 
 const EditGroup = ({ navigation, route }: Props): JSX.Element => {
   const groupId = route.params.groupId
-  const { data, loading } = useGetGroupQuery({
+  const { data, loading, refetch } = useGetGroupQuery({
     variables: {
       id: groupId,
     },
     fetchPolicy: "network-only",
   })
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch()
+    }, [refetch])
+  )
 
   return (
     <ScrollView>
@@ -41,30 +48,6 @@ const EditGroup = ({ navigation, route }: Props): JSX.Element => {
                       <Heading fontSize="xs">
                         {item?.name} - {item?.category}
                       </Heading>
-                    </Box>
-                  )
-                })}
-              </Box>
-              {/***************************** ADD ITEM **************************************/}
-              <Box marginTop={"20px"} backgroundColor="pink.100" w={"200px"}>
-                <Button
-                  onPress={() =>
-                    navigation.navigate("AddItem", { groupId: groupId })
-                  }
-                >
-                  Add Item
-                </Button>
-              </Box>
-              {/***************************** USERS **************************************/}
-              <Heading marginTop={"50px"}>User List</Heading>
-              <Divider my={2} />
-              <Box>
-                {data?.getGroup?.users?.items?.map((user) => {
-                  return (
-                    <Box marginTop={"10px"} key={user.id}>
-                      <Center>
-                        <Heading fontSize="xs">{user.user.email}</Heading>
-                      </Center>
                     </Box>
                   )
                 })}
