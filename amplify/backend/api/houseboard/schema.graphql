@@ -28,7 +28,7 @@ type Item @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [c
   name: String!
   category: Category!
   group: Group! @belongsTo(fields: ["itemGroupId"])
-  assignedTo: User! @belongsTo(fields: ["itemUserId"])
+  assignedTo: User @belongsTo(fields: ["itemUserId"])
 }
 
 enum Category {
