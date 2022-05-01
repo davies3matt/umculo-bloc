@@ -16,8 +16,9 @@ const AddGroup = ({ navigation }: NavigationProps): JSX.Element => {
   // context
   const { authData } = useAuthContext()
   // states
-  const [addGroup] = useCreateGroupMutation()
-  const [addUserGroup] = useCreateUsersGroupsMutation()
+  const [addGroup, { loading }] = useCreateGroupMutation()
+  const [addUserGroup, { loading: creatingUsersGroups }] =
+    useCreateUsersGroupsMutation()
 
   interface GroupProps {
     name: string
@@ -44,6 +45,7 @@ const AddGroup = ({ navigation }: NavigationProps): JSX.Element => {
           },
         },
       })
+      navigation.navigate("Groups")
     } catch (err) {
       console.log(err)
     }
@@ -83,10 +85,12 @@ const AddGroup = ({ navigation }: NavigationProps): JSX.Element => {
                       />
                     ))}
                   </Select>
-                  {/* <Input onBlur={handleBlur('type')} placeholder="Digs" onChangeText={handleChange('type')} value={values.type} /> */}
                 </FormControl>
-
-                <Button onPress={() => handleSubmit()} colorScheme="pink">
+                <Button
+                  isLoading={creatingUsersGroups || loading}
+                  onPress={() => handleSubmit()}
+                  colorScheme="pink"
+                >
                   Submit
                 </Button>
               </VStack>
