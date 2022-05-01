@@ -57,6 +57,7 @@ type Item
   group: Group! @belongsTo(fields: ["itemGroupId"])
   assignedTo: User @belongsTo(fields: ["itemUserId"])
   status: ItemStatus!
+  isArchived: Boolean
 }
 
 enum Category {
