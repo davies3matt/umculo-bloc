@@ -61,7 +61,7 @@ exports["default"] = (function (event, context) { return __awaiter(void 0, void 
                 return [4 /*yield*/, ddb_1.create("UsersGroups", {
                         createdAt: new Date().toISOString(),
                         updatedAt: new Date().toISOString(),
-                        __typeName: "UsersGroups",
+                        __typename: "UsersGroups",
                         id: userGroupId,
                         userID: user.id,
                         groupID: groupId

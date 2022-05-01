@@ -22,7 +22,7 @@ export default async (event, context) => {
     await create("UsersGroups", {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      __typeName: "UsersGroups",
+      __typename: "UsersGroups",
       id: userGroupId,
       userID: user.id,
       groupID: groupId,

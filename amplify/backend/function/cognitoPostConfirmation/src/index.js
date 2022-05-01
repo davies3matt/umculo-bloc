@@ -43,7 +43,7 @@ exports.handler = async (event, context, callback) => {
       Item: {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        typeName: "USER",
+        typename: "USER",
         id: event.request.userAttributes.sub,
         email: event.request.userAttributes.email,
         phoneNumber: event.request.userAttributes.phone_number,
