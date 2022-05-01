@@ -11,11 +11,15 @@ import {
 import { useAuthContext } from "../../contexts/AuthContext"
 import { NavigationProps } from "../Authentication/Login"
 import { useFocusEffect } from "@react-navigation/native"
+import ConfirmationModal from "../../components/ConfirmationModal"
 
 const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   const { authData } = useAuthContext()
   const [groups, setGroups] = useState<UsersGroups[]>()
   const [pendingGroups, setPendingGroups] = useState<String[]>()
+  const [deleteConfirmationModalVisible, setDeleteConfirmationModalVisible] =
+    useState(false)
+  const [selectedGroup, setSelectedGroup] = useState<UsersGroups>()
 
   // user profile query
   const { data: userProfileData } = useGetUserProfileQuery({
@@ -55,7 +59,10 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   const [removeGroup, { loading: removingGroupLoading }] =
     useRemoveGroupMutation({
       onError: (err) => console.log(err),
-      onCompleted: () => refetch(),
+      onCompleted: () => {
+        refetch()
+        setDeleteConfirmationModalVisible(false)
+      },
     })
 
   return (
@@ -96,11 +103,8 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
             </Button>
             <Button
               onPress={() => {
-                removeGroup({
-                  variables: {
-                    groupId: item.groupID,
-                  },
-                })
+                setSelectedGroup(item)
+                setDeleteConfirmationModalVisible(true)
               }}
               isLoading={removingGroupLoading}
               backgroundColor={"red.500"}
@@ -109,6 +113,23 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
             </Button>
           </Box>
         ))}
+        {/** Deletion Confirmation Modal */}
+        {selectedGroup && (
+          <ConfirmationModal
+            visible={deleteConfirmationModalVisible}
+            onOk={() => {
+              removeGroup({
+                variables: {
+                  groupId: selectedGroup.groupID,
+                },
+              })
+            }}
+            onCancel={() => setDeleteConfirmationModalVisible(false)}
+            header={`Remove Group - ${selectedGroup.group.name}`}
+            description="Are you sure you want to remove this group?"
+            loading={removingGroupLoading}
+          />
+        )}
       </Box>
     </SlideRightView>
   )
