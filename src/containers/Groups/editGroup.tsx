@@ -1,3 +1,4 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { Button, Center, Heading, Spinner, VStack, Box, Divider, ScrollView } from 'native-base';
 import React from 'react';
 import { useGetGroupQuery } from '../../generated/graphql'
@@ -12,12 +13,18 @@ interface Props {
 }
 const EditGroup: React.FC<Props> = (props) => {
     const groupId = props.route.params.groupId
-    const { data, loading } = useGetGroupQuery({
+    const { data, loading, refetch } = useGetGroupQuery({
         variables: {
             id: groupId
         },
         fetchPolicy: 'network-only'
     })
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetch()
+        }, [refetch])
+    );
 
      return(
          <ScrollView>
