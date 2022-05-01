@@ -19,12 +19,14 @@ type Group @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [
   users: [User] @manyToMany(relationName: "UsersGroups")
   pendingUsers: [ID]
   items: [Item] @hasMany(indexName: "GroupItems", fields: ["id"])
+  image: String
+  description: String
 }
 
 type Item @model @auth(rules: [{ allow: groups, groups: ["User"], operations: [create, read, update, delete] }]) {
   id: ID! 
   itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
-  itemUserId: ID! @index(name: "UserItems", sortKeyFields: ["id"])
+  itemUserId: ID @index(name: "UserItems", sortKeyFields: ["id"])
   name: String!
   category: Category!
   group: Group! @belongsTo(fields: ["itemGroupId"])

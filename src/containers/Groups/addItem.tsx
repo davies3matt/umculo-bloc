@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, FormControl, Input, Select, Button, Center} from 'native-base'
 import { Category, useCreateItemMutation, useGetGroupQuery } from '../../generated/graphql';
+import uuid from 'react-native-uuid';
 
 interface Props {
     navigation: any
@@ -13,7 +14,7 @@ interface Props {
 interface ItemDetails {
     name?: string,
     category?: Category,
-    assignedTo?: String // <<---- userID
+    itemUserId?: String // <<---- userID
 }
 const AddItem: React.FC<Props> = ({navigation, route}) => {
     const groupId = route.params.groupId;
@@ -34,16 +35,24 @@ const AddItem: React.FC<Props> = ({navigation, route}) => {
     // create item function
     const createItem = async (item: ItemDetails) => {
         console.log(item);
-        // await postItem({
-        //     variables: {
-        //         input: {
-        //             id: uuid.v4().toString(),
-        //             itemGroupId: props.route.params.groupId,
-        //             name: item.name,
-        //             category: item.category,
-        //         }
-        //     }
-        // })
+        const id = uuid.v4().toString()
+        let input = {
+            name: item.name,
+            category: item.category,
+        }
+        // if assigned to user add to input item
+        if (item.itemUserId) {
+            input['itemUserId'] = item.itemUserId
+        }
+        await postItem({
+            variables: {
+                input: {
+                    id: id,
+                    itemGroupId: groupId,
+                    ...input
+                }
+            }
+        })
     }
 
     const [item, setItem] = useState<ItemDetails>({});
@@ -68,7 +77,7 @@ const AddItem: React.FC<Props> = ({navigation, route}) => {
                 <FormControl>
                     <FormControl.Label>Assigned To</FormControl.Label>
                     <Select
-                        onValueChange={val => setItem({...item, assignedTo: val})}
+                        onValueChange={val => setItem({...item, itemUserId: val})}
                         placeholder='Select User'
                     >
                         {data?.getGroup?.users?.items?.map(user => {
