@@ -1,31 +1,20 @@
 import { Checkbox, HStack, Icon, IconButton, Text } from "native-base"
-import React, { useEffect } from "react"
+import React from "react"
 import { Item, ItemStatus } from "../../generated/graphql"
 import { Entypo } from "@expo/vector-icons"
 
 interface Props {
   item: Item
-  onChange: (d: Item) => void
-  archive: (arg: string) => void
+  index: number
+  onChange: (d: Item, i: number) => void
+  updateIsArchived: (arg: Item) => void
 }
-const GroupItem = ({ item, onChange, archive }: Props): JSX.Element => {
-  const [complete, setComplete] = React.useState(
-    item.status === ItemStatus.Done
-  )
-  const handleChange = () => {
-    setComplete(!complete)
-  }
-  useEffect(() => {
-    if (
-      (item.status === ItemStatus.Done && !complete) ||
-      (item.status === ItemStatus.Pending && complete)
-    ) {
-      onChange({
-        ...item,
-        status: complete ? ItemStatus.Done : ItemStatus.Pending,
-      })
-    }
-  }, [complete])
+const GroupItem = ({
+  item,
+  index,
+  onChange,
+  updateIsArchived,
+}: Props): JSX.Element => {
   return (
     <HStack
       w="80%"
@@ -34,32 +23,49 @@ const GroupItem = ({ item, onChange, archive }: Props): JSX.Element => {
       key={item.id}
     >
       <Checkbox
-        isChecked={complete}
-        onChange={handleChange}
+        isChecked={item.status === ItemStatus.Done}
+        onChange={(val) => {
+          return onChange(
+            {
+              ...item,
+              status: val ? ItemStatus.Done : ItemStatus.Pending,
+            },
+            index
+          )
+        }}
         value={item.name}
-        accessibilityLabel={complete ? "complete" : "incomplete"}
+        accessibilityLabel={
+          item.status === ItemStatus.Done ? "complete" : "incomplete"
+        }
       />
       <Text
         width="100%"
         flexShrink={1}
         textAlign="left"
         mx="2"
-        strikeThrough={complete}
+        strikeThrough={item.status === ItemStatus.Done}
         _light={{
-          color: complete ? "gray.400" : "coolGray.800",
+          color: item.status === ItemStatus.Done ? "gray.400" : "coolGray.800",
         }}
         _dark={{
-          color: complete ? "gray.400" : "coolGray.50",
+          color: item.status === ItemStatus.Done ? "gray.400" : "coolGray.50",
         }}
-        onPress={handleChange}
+        // onPress={handleChange}
       >
         {item.name} | {item.category.toUpperCase()}
       </Text>
       <IconButton
         size="sm"
         colorScheme="trueGray"
-        icon={<Icon as={Entypo} name="minus" size="xs" color="trueGray.400" />}
-        onPress={() => archive(item.id)}
+        icon={
+          <Icon
+            as={Entypo}
+            name={item.isArchived ? "plus" : "minus"}
+            size="xs"
+            color="trueGray.400"
+          />
+        }
+        onPress={() => updateIsArchived(item)}
       />
     </HStack>
   )
