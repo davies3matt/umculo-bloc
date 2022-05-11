@@ -96,7 +96,7 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
             <Heading>{item.group.name}</Heading>
             <Button
               onPress={() =>
-                navigation.navigate("EditGroup", { groupId: item.groupID })
+                navigation.navigate("ViewGroup", { groupId: item.groupID })
               }
             >
               View Group
