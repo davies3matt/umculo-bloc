@@ -55,4 +55,6 @@ Our core functionality runs on AWS Lambda and is written in [Typescript](https:/
 
 `$ yarn start`
 
+> let's gooo 🇵🇰
+
 
