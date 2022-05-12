@@ -2,7 +2,13 @@ import { get, update } from "../../services/ddb"
 import { ItemStatus } from "../../utils/constants"
 
 export default async (event, context) => {
-  const { items, groupId } = event.arguments.itemIdList
+  /**
+   *
+   * TODO - Remove Console Logs Once Succesfully Tested
+   *
+   */
+  const { items, groupId } = event.arguments
+  const identity = event.identity
   if (items && items.length > 0) {
     try {
       const group = await get("Group", groupId)
@@ -30,7 +36,7 @@ export default async (event, context) => {
                  *  The item was marked complete
                  *  record user identity who envoked this mutation
                  */
-                input["completedById"] = event.identity.sub
+                input["completedById"] = identity
               }
               input[field] = updatedItem[field]
             }
