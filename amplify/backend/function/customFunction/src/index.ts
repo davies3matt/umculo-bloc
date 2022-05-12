@@ -18,6 +18,7 @@ import {
   getUserProfile,
   inviteResponse,
   removeGroup,
+  syncItems,
 } from "./resolvers/index"
 exports.handler = async (event, context) => {
   console.log(`EVENT: ${JSON.stringify(event, context)}`)
@@ -30,6 +31,8 @@ exports.handler = async (event, context) => {
       return inviteResponse(event, context)
     case "removeGroup":
       return removeGroup(event, context)
+    case "syncItems":
+      return syncItems(event, context)
     default:
   }
   context.done(null, "Hello World") // SUCCESS with message

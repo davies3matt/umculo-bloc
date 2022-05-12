@@ -62,6 +62,7 @@ type Item
   addedBy: User @belongsTo(fields: ["addedById"])
   assignedTo: User @belongsTo(fields: ["userId"])
   completedBy: User @belongsTo(fields: ["completedById"])
+  logs: [Items] @hasMany(indexName: "ItemLogs", fields: ["id"])
   status: ItemStatus!
   isArchived: Boolean
 }
@@ -78,10 +79,14 @@ type Log
     ]
   ) {
   id: ID!
+  description: String
+  type: LogType
   groupId: ID! @index(name: "GroupLogs", sortKeyFields: ["id"])
   userId: ID! @index(name: "UserLogs", sortKeyFields: ["id"])
+  itemId: ID! @index(name: "ItemLogs", sortKeyFields: ["id"])
   group: Group @belongsTo(fields: ["groupId"])
   user: User @belongsTo(fields: ["userId"])
+  item: Item @belongsTo(fields: ["itemId"])
 }
 
 enum Category {
@@ -90,11 +95,25 @@ enum Category {
   LIVING_AREA
 }
 
+enum LogType {
+  # GROUP LOG TYPES
+  USER_JOINED
+  # USER LOG TYPES
+
+  # ITEM LOG TYPES
+  ITEM_CREATD
+  ITEM_DELETED
+  ITEM_COMPLETED
+  ITEM_UNCOMPLETED
+}
+
 enum GroupType {
   HOUSE_SHARE
   DIGS
   FAMILY
   COMMUNE
+  CAMPING_TRIP
+  BEACH_TRIP
 }
 
 enum ItemStatus {
@@ -106,6 +125,14 @@ input InviteDetails {
   email: String
   phoneNumber: String
 }
+
+input ItemInput {
+  id: ID
+  status: ItemStatus
+  isArchived: Boolean
+  completedById: ID
+}
+
 type Mutation {
   inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group
     @function(name: "customFunction-${env}")
@@ -114,6 +141,9 @@ type Mutation {
     @function(name: "customFunction-${env}")
     @auth(rules: [{ allow: groups, groups: ["User"] }])
   removeGroup(groupId: String): String
+    @function(name: "customFunction-${env}")
+    @auth(rules: [{ allow: groups, groups: ["User"] }])
+  syncItems(items: [ItemInput], groupId: String): String
     @function(name: "customFunction-${env}")
     @auth(rules: [{ allow: groups, groups: ["User"] }])
 }
