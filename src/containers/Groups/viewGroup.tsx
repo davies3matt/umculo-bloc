@@ -17,7 +17,7 @@ import GroupItem from "../../components/GroupItem"
 import {
   Item,
   useGetGroupQuery,
-  useUpdateItemMutation,
+  useSyncItemsMutation,
 } from "../../generated/graphql"
 import { NavigationProps } from "../Authentication/Login"
 import { GroupRouteProps } from "./addItem"
@@ -56,7 +56,7 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
   )
 
   // item mutation
-  const [updatedItem, { loading: updatingItem }] = useUpdateItemMutation({
+  const [postSyncItems, { loading: updatingItem }] = useSyncItemsMutation({
     onError: (err) => console.log("ERROR UPDATING ITEM", err),
   })
 
@@ -139,21 +139,20 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
         }
       }
     })
-    // map through changed items and mutate accordingly
-    // TODO - write a custom mutation that takes the updated list as an argument and handles updates on the backend
-    await Promise.all([
-      ...items.map((item) => {
-        return updatedItem({
-          variables: {
-            input: {
-              id: item.id,
-              status: item.status,
-              isArchived: item.isArchived,
-            },
-          },
-        })
-      }),
-    ])
+    // use sync items mutation
+    await postSyncItems({
+      variables: {
+        items: items.map((item) => {
+          return {
+            id: item.id,
+            status: item.status,
+            isArchived: item.isArchived,
+            completedById: item.isCompletedBy,
+          }
+        }),
+        groupId: groupId,
+      },
+    })
     Toast.show({ title: "Items Synced!" })
     refetch()
   }

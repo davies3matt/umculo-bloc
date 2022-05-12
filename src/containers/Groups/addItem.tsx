@@ -59,7 +59,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
       variables: {
         input: {
           id: id,
-          itemGroupId: groupId,
+          groupId: groupId,
           status: ItemStatus.Pending,
           ...input,
         },
