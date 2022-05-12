@@ -62,7 +62,7 @@ type Item
   addedBy: User @belongsTo(fields: ["addedById"])
   assignedTo: User @belongsTo(fields: ["userId"])
   completedBy: User @belongsTo(fields: ["completedById"])
-  logs: [Items] @hasMany(indexName: "ItemLogs", fields: ["id"])
+  logs: [Log] @hasMany(indexName: "ItemLogs", fields: ["id"])
   status: ItemStatus!
   isArchived: Boolean
 }
@@ -99,6 +99,7 @@ enum LogType {
   # GROUP LOG TYPES
   USER_JOINED
   # USER LOG TYPES
+  # JAJA
 
   # ITEM LOG TYPES
   ITEM_CREATD

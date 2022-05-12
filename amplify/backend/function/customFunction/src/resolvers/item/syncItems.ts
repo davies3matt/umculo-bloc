@@ -4,7 +4,7 @@ import { ItemStatus } from "../../utils/constants"
 export default async (event, context) => {
   /**
    *
-   * TODO - Remove Console Logs Once Succesfully Tested
+   * TODO - Remove Console Logs Once Succesfully Tested!
    *
    */
   const { items, groupId } = event.arguments
