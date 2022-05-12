@@ -12,7 +12,7 @@ type User
   email: String
   name: String
   image: String
-  groups: [Group] @manyToMany(relationName: "UsersGroups")
+  groups: [Group] @manyToMany(relationName: "UserGroup")
   items: [Item] @hasMany(indexName: "UserItems", fields: ["id"])
   pendingGroups: [ID]
 }
@@ -31,7 +31,7 @@ type Group
   id: ID!
   name: String
   type: GroupType
-  users: [User] @manyToMany(relationName: "UsersGroups")
+  users: [User] @manyToMany(relationName: "UserGroup")
   pendingUsers: [ID]
   items: [Item] @hasMany(indexName: "GroupItems", fields: ["id"])
   image: String
@@ -50,18 +50,35 @@ type Item
     ]
   ) {
   id: ID!
-  itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
-  itemUserId: ID @index(name: "UserItems", sortKeyFields: ["id"])
+  groupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
+  userId: ID @index(name: "UserItems", sortKeyFields: ["id"])
   completedById: ID @index(name: "UserCompletedItems", sortKeyFields: ["id"])
   addedById: ID @index(name: "UserAddedItems", sortKeyFields: ["id"])
   name: String!
   category: Category!
-  group: Group! @belongsTo(fields: ["itemGroupId"])
+  group: Group! @belongsTo(fields: ["groupId"])
   addedBy: User @belongsTo(fields: ["addedById"])
-  assignedTo: User @belongsTo(fields: ["itemUserId"])
+  assignedTo: User @belongsTo(fields: ["userId"])
   completedBy: User @belongsTo(fields: ["completedById"])
   status: ItemStatus!
   isArchived: Boolean
+}
+
+type Log
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["User"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  groupId: ID! @index(name: "GroupLogs", sortKeyFields: ["id"])
+  userId: ID! @index(name: "UserLogs", sortKeyFields: ["id"])
+  group: Group @belongsTo(fields: ["groupId"])
+  user: User @belongsTo(fields: ["userId"])
 }
 
 enum Category {
