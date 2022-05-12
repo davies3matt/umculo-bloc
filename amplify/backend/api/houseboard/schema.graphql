@@ -52,10 +52,14 @@ type Item
   id: ID!
   itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
   itemUserId: ID @index(name: "UserItems", sortKeyFields: ["id"])
+  completedById: ID @index(name: "UserCompletedItems", sortKeyFields: ["id"])
+  addedById: ID @index(name: "UserAddedItems", sortKeyFields: ["id"])
   name: String!
   category: Category!
   group: Group! @belongsTo(fields: ["itemGroupId"])
+  addedBy: User @belongsTo(fields: ["addedById"])
   assignedTo: User @belongsTo(fields: ["itemUserId"])
+  completedBy: User @belongsTo(fields: ["completedById"])
   status: ItemStatus!
   isArchived: Boolean
 }
@@ -64,7 +68,6 @@ enum Category {
   KITCHEN
   BATHROOM
   LIVING_AREA
-  MISC
 }
 
 enum GroupType {
