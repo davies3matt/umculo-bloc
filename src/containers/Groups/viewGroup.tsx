@@ -58,6 +58,10 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
   // item mutation
   const [postSyncItems, { loading: updatingItem }] = useSyncItemsMutation({
     onError: (err) => console.log("ERROR UPDATING ITEM", err),
+    onCompleted: () => {
+      Toast.show({ title: "Items Synced!" })
+      refetch()
+    },
   })
 
   // this function will move the item to the arhived list locally
@@ -153,8 +157,6 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
         groupId: groupId,
       },
     })
-    Toast.show({ title: "Items Synced!" })
-    refetch()
   }
 
   return (
