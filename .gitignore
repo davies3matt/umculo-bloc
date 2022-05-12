@@ -9,6 +9,11 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+*.js
+*.js.*
+
+# Do Not Ignore
+!amplify/backend/function/cognitoPostConfirmation/src/index.js
 
 # macOS
 .DS_Store
