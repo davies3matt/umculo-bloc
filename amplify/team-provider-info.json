@@ -43,7 +43,7 @@
         },
         "customFunction": {
           "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
-          "s3Key": "amplify-builds/customFunction-3064306b67476f435973-build.zip"
+          "s3Key": "amplify-builds/customFunction-7a39534c652f3833764d-build.zip"
         }
       },
       "auth": {
