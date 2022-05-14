@@ -8,6 +8,7 @@ import {
 } from "../../generated/graphql"
 import uuid from "react-native-uuid"
 import { NavigationProps } from "../Authentication/Login"
+import { useAuthContext } from "../../contexts/AuthContext"
 
 export interface GroupRouteProps {
   route: {
@@ -25,6 +26,7 @@ interface ItemDetails {
   itemUserId?: String // <<---- userID
 }
 const AddItem = ({ navigation, route }: Props): JSX.Element => {
+  const { authData } = useAuthContext()
   const [item, setItem] = useState<ItemDetails>({})
 
   const groupId = route.params.groupId
@@ -52,15 +54,15 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
     }
     // if assigned to user add to input item
     if (item.itemUserId) {
-      input["itemUserId"] = item.itemUserId
+      input["userId"] = item.itemUserId
     }
-
     await postItem({
       variables: {
         input: {
           id: id,
-          itemGroupId: groupId,
+          groupId: groupId,
           status: ItemStatus.Pending,
+          addedById: authData.username,
           ...input,
         },
       },

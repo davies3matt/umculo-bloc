@@ -12,8 +12,9 @@ type User
   email: String
   name: String
   image: String
-  groups: [Group] @manyToMany(relationName: "UsersGroups")
+  groups: [Group] @manyToMany(relationName: "UserGroup")
   items: [Item] @hasMany(indexName: "UserItems", fields: ["id"])
+  logs: [Log] @hasMany(indexName: "UserLogs", fields: ["id"])
   pendingGroups: [ID]
 }
 
@@ -31,9 +32,10 @@ type Group
   id: ID!
   name: String
   type: GroupType
-  users: [User] @manyToMany(relationName: "UsersGroups")
+  users: [User] @manyToMany(relationName: "UserGroup")
   pendingUsers: [ID]
   items: [Item] @hasMany(indexName: "GroupItems", fields: ["id"])
+  logs: [Log] @hasMany(indexName: "GroupLogs", fields: ["id"])
   image: String
   description: String
 }
@@ -50,21 +52,60 @@ type Item
     ]
   ) {
   id: ID!
-  itemGroupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
-  itemUserId: ID @index(name: "UserItems", sortKeyFields: ["id"])
+  groupId: ID! @index(name: "GroupItems", sortKeyFields: ["id"])
+  userId: ID @index(name: "UserItems", sortKeyFields: ["id"])
+  completedById: ID @index(name: "UserCompletedItems", sortKeyFields: ["id"])
+  addedById: ID @index(name: "UserAddedItems", sortKeyFields: ["id"])
   name: String!
   category: Category!
-  group: Group! @belongsTo(fields: ["itemGroupId"])
-  assignedTo: User @belongsTo(fields: ["itemUserId"])
+  group: Group! @belongsTo(fields: ["groupId"])
+  addedBy: User @belongsTo(fields: ["addedById"])
+  assignedTo: User @belongsTo(fields: ["userId"])
+  completedBy: User @belongsTo(fields: ["completedById"])
+  logs: [Log] @hasMany(indexName: "ItemLogs", fields: ["id"])
   status: ItemStatus!
   isArchived: Boolean
+}
+
+type Log
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["User"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  description: String
+  type: LogType
+  groupId: ID! @index(name: "GroupLogs", sortKeyFields: ["id"])
+  userId: ID! @index(name: "UserLogs", sortKeyFields: ["id"])
+  itemId: ID! @index(name: "ItemLogs", sortKeyFields: ["id"])
+  group: Group @belongsTo(fields: ["groupId"])
+  user: User @belongsTo(fields: ["userId"])
+  item: Item @belongsTo(fields: ["itemId"])
 }
 
 enum Category {
   KITCHEN
   BATHROOM
   LIVING_AREA
-  MISC
+}
+
+enum LogType {
+  # GROUP LOG TYPES
+  USER_JOINED
+  # USER LOG TYPES
+  # JAJA
+
+  # ITEM LOG TYPES
+  ITEM_CREATD
+  ITEM_DELETED
+  ITEM_COMPLETED
+  ITEM_UNCOMPLETED
 }
 
 enum GroupType {
@@ -72,6 +113,8 @@ enum GroupType {
   DIGS
   FAMILY
   COMMUNE
+  CAMPING_TRIP
+  BEACH_TRIP
 }
 
 enum ItemStatus {
@@ -83,6 +126,14 @@ input InviteDetails {
   email: String
   phoneNumber: String
 }
+
+input ItemInput {
+  id: ID
+  status: ItemStatus
+  isArchived: Boolean
+  completedById: ID
+}
+
 type Mutation {
   inviteUsersToGroup(groupId: String, users: [InviteDetails]): Group
     @function(name: "customFunction-${env}")
@@ -91,6 +142,9 @@ type Mutation {
     @function(name: "customFunction-${env}")
     @auth(rules: [{ allow: groups, groups: ["User"] }])
   removeGroup(groupId: String): String
+    @function(name: "customFunction-${env}")
+    @auth(rules: [{ allow: groups, groups: ["User"] }])
+  syncItems(items: [ItemInput], groupId: String): String
     @function(name: "customFunction-${env}")
     @auth(rules: [{ allow: groups, groups: ["User"] }])
 }

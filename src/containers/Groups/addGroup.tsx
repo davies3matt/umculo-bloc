@@ -5,7 +5,7 @@ import { Formik } from "formik"
 import {
   GroupType,
   useCreateGroupMutation,
-  useCreateUsersGroupsMutation,
+  useCreateUserGroupMutation,
 } from "../../generated/graphql"
 import { formatEnums } from "../../utils/helpers"
 import { useAuthContext } from "../../contexts/AuthContext"
@@ -17,7 +17,7 @@ const AddGroup = ({ navigation }: NavigationProps): JSX.Element => {
   const { authData } = useAuthContext()
   // states
   const [addGroup] = useCreateGroupMutation()
-  const [addUserGroup] = useCreateUsersGroupsMutation()
+  const [addUserGroup] = useCreateUserGroupMutation()
 
   interface GroupProps {
     name: string

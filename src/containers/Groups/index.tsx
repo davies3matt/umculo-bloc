@@ -3,8 +3,8 @@ import { AntDesign } from "@expo/vector-icons"
 import React, { useState } from "react"
 import SlideRightView from "../../components/SlideRightView"
 import {
-  useListUsersGroupsQuery,
-  UsersGroups,
+  useListUserGroupsQuery,
+  UserGroup,
   useGetUserProfileQuery,
   useRemoveGroupMutation,
 } from "../../generated/graphql"
@@ -15,11 +15,11 @@ import ConfirmationModal from "../../components/ConfirmationModal"
 
 const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   const { authData } = useAuthContext()
-  const [groups, setGroups] = useState<UsersGroups[]>()
+  const [groups, setGroups] = useState<UserGroup[]>()
   const [pendingGroups, setPendingGroups] = useState<String[]>()
   const [deleteConfirmationModalVisible, setDeleteConfirmationModalVisible] =
     useState(false)
-  const [selectedGroup, setSelectedGroup] = useState<UsersGroups>()
+  const [selectedGroup, setSelectedGroup] = useState<UserGroup>()
 
   // user profile query
   const { data: userProfileData } = useGetUserProfileQuery({
@@ -33,7 +33,7 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   }, [userProfileData])
 
   // user-groups query
-  const { data, refetch } = useListUsersGroupsQuery({
+  const { data, refetch } = useListUserGroupsQuery({
     variables: {
       filter: {
         userID: { eq: authData.username },
@@ -44,8 +44,8 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
   })
   React.useEffect(() => {
     console.log(authData.username)
-    if (data?.listUsersGroups?.items) {
-      setGroups(data.listUsersGroups.items as UsersGroups[])
+    if (data?.listUserGroups?.items) {
+      setGroups(data.listUserGroups.items as UserGroup[])
     }
   }, [data])
 
