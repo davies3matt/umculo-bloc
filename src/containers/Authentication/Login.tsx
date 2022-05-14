@@ -14,6 +14,7 @@ import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native"
 import { useAuthContext } from "../../contexts/AuthContext"
 import { formatPhoneNumber } from "../../utils/helpers"
 import SlideRightView from "../../components/SlideRightView"
+import { images } from "../../theme"
 
 export interface NavigationProps {
   navigation: any
@@ -59,11 +60,11 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
           <Image
             width={500}
             height={100}
-            source={require("../../../assets/Images/house-board.png")}
+            source={images.logo}
             alt="house-board-logo"
           />
           <Center>
-            <Heading textAlign="center" mb="10">
+            <Heading textAlign="center" mb="10" color="primary.200">
               Login
             </Heading>
           </Center>
