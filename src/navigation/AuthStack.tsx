@@ -9,6 +9,7 @@ import AddUser from "../containers/Groups/addUser"
 import ViewInvite from "../containers/Groups/viewInvite"
 import AddItem from "../containers/Groups/addItem"
 import { createDrawerNavigator } from "@react-navigation/drawer"
+import GroupLogs from "../containers/GroupContainers/GroupLogs"
 
 const Stack = createNativeStackNavigator()
 
@@ -72,6 +73,11 @@ const AuthStack = (): JSX.Element => {
       <Stack.Screen
         name="AddItem"
         component={AddItem}
+        options={{ headerTitle: () => <LogoTitle /> }}
+      />
+      <Stack.Screen
+        name="GroupLogs"
+        component={GroupLogs}
         options={{ headerTitle: () => <LogoTitle /> }}
       />
     </Stack.Navigator>
