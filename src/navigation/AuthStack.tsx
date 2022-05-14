@@ -8,6 +8,7 @@ import ViewGroup from "../containers/Groups/viewGroup"
 import AddUser from "../containers/Groups/addUser"
 import ViewInvite from "../containers/Groups/viewInvite"
 import AddItem from "../containers/Groups/addItem"
+import { createDrawerNavigator } from "@react-navigation/drawer"
 
 const Stack = createNativeStackNavigator()
 
@@ -21,19 +22,32 @@ const LogoTitle = (): JSX.Element => {
     />
   )
 }
+const Drawer = createDrawerNavigator()
+
+const AuthRoot = (): JSX.Element => {
+  return (
+    <Drawer.Navigator useLegacyImplementation>
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerTitle: () => <LogoTitle /> }}
+      />
+      <Drawer.Screen
+        name="Groups"
+        component={Groups}
+        options={{ headerTitle: () => <LogoTitle /> }}
+      />
+    </Drawer.Navigator>
+  )
+}
 
 const AuthStack = (): JSX.Element => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{ headerTitle: () => <LogoTitle /> }}
-      />
-      <Stack.Screen
-        name="Groups"
-        component={Groups}
-        options={{ headerTitle: () => <LogoTitle /> }}
+        name="AuthRoot"
+        component={AuthRoot}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="AddGroup"
