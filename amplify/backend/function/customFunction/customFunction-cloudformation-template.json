@@ -556,7 +556,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
-                          "Fn::Sub": "${apihouseboardGraphQLAPIIdOutput}:GetAtt:UsersGroupsTable:Name"
+                          "Fn::Sub": "${apihouseboardGraphQLAPIIdOutput}:GetAtt:UserGroupTable:Name"
                         }
                       }
                     ]

@@ -19,11 +19,11 @@ export default async (event, context) => {
       }),
     ])
     // get users-groups records
-    const usersGroups = await list("UsersGroups", { groupID: group.id })
+    const userGroups = await list("UserGroup", { groupID: group.id })
     // map through and remove all records affiliated with group
     await Promise.all([
-      ...usersGroups.map((item) => {
-        return remove("UsersGroups", item.id)
+      ...userGroups.map((item) => {
+        return remove("UserGroup", item.id)
       }),
     ])
     // remove group
