@@ -13,7 +13,6 @@ import React, { useState } from "react"
 import { Item } from "../../generated/graphql"
 import GroupItem from "../GroupItem"
 import { EvilIcons, FontAwesome } from "@expo/vector-icons"
-import { Animated } from "react-native"
 import { NavigationProps } from "../../containers/Authentication/Login"
 
 interface ItemListProps extends NavigationProps {
@@ -96,22 +95,13 @@ const ItemList: React.FC<ItemListProps> = ({
           (item, index) =>
             item &&
             index > 4 && (
-              <Animated.View
-                style={{
-                  alignItems: "center",
-                  width: "100%",
-                  justifyContent: "center",
-                  //   height: expandAnimation,
-                }}
-              >
-                <GroupItem
-                  item={item as Item}
-                  index={index}
-                  key={item.id}
-                  updateIsArchived={updateIsArchived}
-                  onChange={updateItemstatus}
-                />
-              </Animated.View>
+              <GroupItem
+                item={item as Item}
+                index={index}
+                key={item.id}
+                updateIsArchived={updateIsArchived}
+                onChange={updateItemstatus}
+              />
             )
         )
       ) : (
