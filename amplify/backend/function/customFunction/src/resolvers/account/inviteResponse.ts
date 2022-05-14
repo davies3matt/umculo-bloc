@@ -19,10 +19,10 @@ export default async (event, context) => {
   const userGroupId = uuidv4()
   if (accept) {
     // add user to group
-    await create("UsersGroups", {
+    await create("UserGroup", {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      __typename: "UsersGroups",
+      __typename: "UserGroup",
       id: userGroupId,
       userID: user.id,
       groupID: groupId,

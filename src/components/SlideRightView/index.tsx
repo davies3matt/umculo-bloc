@@ -19,7 +19,6 @@ const SlideRightView: React.FC = ({ children }) => {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#fff",
-
         transform: [{ translateX: translateAnim }],
       }}
     >

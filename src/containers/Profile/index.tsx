@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import LottieView from "lottie-react-native"
-import { Button, Spacer } from "native-base"
+import { Button } from "native-base"
 import SlideRightView from "../../components/SlideRightView"
 import { useAuthContext } from "../../contexts/AuthContext"
 
