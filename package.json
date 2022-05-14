@@ -17,7 +17,7 @@
     "@graphql-codegen/typescript": "^2.4.2",
     "@graphql-codegen/typescript-operations": "^2.2.2",
     "@graphql-codegen/typescript-react-apollo": "^3.2.3",
-    "@react-native-async-storage/async-storage": "^1.15.14",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/netinfo": "^7.1.7",
     "@react-navigation/native": "^6.0.6",
