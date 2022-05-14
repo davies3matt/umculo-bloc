@@ -88,14 +88,34 @@ $ git clone https://github.com/davies3matt/house-board-app.git
 
 ### 2. - Setting Up Amplify
 
-> Using your AWS access key & secret access key
+Run this from the project root
 
 ```
 $ amplify init
 ```
 
-- Select `eu-west-1` Region
+Follow the prompts:
+
+> Do you want to use an existing environment?
+
+- Select `yes`
+
+> Choose the environment you would like to use:
+
 - Select the `dev` Environment
+
+> Choose your default editor:
+
+- Select your favorite code editor
+
+> Select the authentication method you want to use:
+
+- Select `AWS access keys`
+- Enter your `accessKeyId` & `secretAccessKey`
+
+> region:
+
+- Select `eu-west-1` Region
 
 ### 3. - Downloading Dependencies
 
@@ -123,4 +143,4 @@ $ yarn generate
 $ yarn start
 ```
 
-> let's gooo 🇵🇰
+> let's gooo 🇵🇰 🇿🇦

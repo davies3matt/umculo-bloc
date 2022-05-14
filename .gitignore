@@ -39,6 +39,7 @@ amplifyconfiguration.json
 amplifyconfiguration.dart
 amplify-build-config.json
 amplify-gradle-config.json
+amplify-dependent-resources-ref.d.ts
 amplifytools.xcconfig
 .secret-*
 **.sample
