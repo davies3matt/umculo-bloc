@@ -43,13 +43,14 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
   })
 
   // mutation
-  const [postItem, { loading: loadingCreateItem }] = useCreateItemMutation({
-    // onCompleted: () => ,
+  const [loadingCreateItem, setLoadingCreateItem] = useState(false)
+  const [postItem, { loading }] = useCreateItemMutation({
+    onCompleted: () => setLoadingCreateItem(false),
     onError: (err) => console.log(err),
   })
   // create item function
-  const createItem = async (item: ItemDetails) => {
-    console.log(item)
+  const createItem = (item: ItemDetails) => {
+    setLoadingCreateItem(true)
     const id = uuid.v4().toString()
     let input = {
       name: item.name,
@@ -59,7 +60,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
     if (item.itemUserId) {
       input["userId"] = item.itemUserId
     }
-    await postItem({
+    postItem({
       variables: {
         input: {
           id: id,
@@ -72,51 +73,80 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
     })
   }
 
+  const playCheckAnimation = () => {
+    checkAnimation.play(() => {
+      if (loading) {
+        checkAnimation.play(playCheckAnimation())
+      } else {
+        setLoadingCreateItem(false)
+      }
+    })
+  }
+
+  React.useEffect(() => {
+    console.log(loadingCreateItem)
+    if (loadingCreateItem && checkAnimation) {
+      console.log("Playing check animation...")
+      playCheckAnimation()
+    }
+  }, [loadingCreateItem])
+
+  React.useEffect(() => {}, [loading])
+
   const [animation, setAnimation] = useState<any>()
+  const [checkAnimation, setCheckAnimation] = useState<any>()
   React.useEffect(() => {
     if (animation) {
       animation.play()
     }
   }, [animation])
+  React.useEffect(() => {
+    if (checkAnimation) {
+      checkAnimation.play()
+    }
+  })
   return (
     <Center>
-      {loadingCreateItem ? (
-        <LottieView
-          ref={(anim) => setAnimation(anim)}
-          style={{
-            width: "50%",
-            height: "50%",
-          }}
-          source={require("../../../assets/animations/done-check.json")}
-        />
-      ) : (
-        <Box marginTop={"20px"} w={"80%"}>
-          <Center>
+      <Box marginTop={"20px"} w={"80%"}>
+        <Center>
+          {!loadingCreateItem ? (
             <LottieView
               ref={(anim) => setAnimation(anim)}
               style={{
                 width: "50%",
+                height: 200,
               }}
               source={require("../../../assets/animations/girl-with-list.json")}
             />
-            <Divider my={2} />
-            <ItemBox
-              item={item}
-              setItem={setItem}
-              users={data?.getGroup?.users?.items || []}
+          ) : (
+            <LottieView
+              ref={(anim) => setCheckAnimation(anim)}
+              style={{
+                width: "25%",
+                height: 200,
+              }}
+              source={require("../../../assets/animations/done-check.json")}
             />
-            <Button
-              marginTop={"20px"}
-              isLoading={loadingCreateItem}
-              onPress={() =>
-                navigation.navigate("ViewGroup", { groupId: groupId })
-              }
-            >
-              Done
-            </Button>
-          </Center>
-        </Box>
-      )}
+          )}
+          <Divider my={2} />
+          <ItemBox
+            item={item}
+            setItem={setItem}
+            createItem={createItem}
+            loading={loadingCreateItem}
+            users={data?.getGroup?.users?.items || []}
+          />
+          <Button
+            marginTop={"20px"}
+            isLoading={loadingCreateItem}
+            onPress={() =>
+              navigation.navigate("ViewGroup", { groupId: groupId })
+            }
+          >
+            Done
+          </Button>
+        </Center>
+      </Box>
     </Center>
   )
 }
