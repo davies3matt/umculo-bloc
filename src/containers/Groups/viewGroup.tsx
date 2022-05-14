@@ -9,19 +9,20 @@ import {
   Divider,
   ScrollView,
   Flex,
-  IconButton,
   useToast,
 } from "native-base"
 import React, { useState } from "react"
 import GroupItem from "../../components/GroupItem"
 import {
   Item,
+  ItemStatus,
   useGetGroupQuery,
   useSyncItemsMutation,
 } from "../../generated/graphql"
 import { NavigationProps } from "../Authentication/Login"
 import { GroupRouteProps } from "./addItem"
-import { EvilIcons } from "@expo/vector-icons"
+import ItemList from "../../components/ItemList"
+import moment from "moment"
 
 interface Props extends NavigationProps, GroupRouteProps {}
 
@@ -42,7 +43,20 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
   // watch query and set states
   React.useEffect(() => {
     if (data?.getGroup?.items?.items) {
-      setItemList(data.getGroup.items.items.filter((item) => !item.isArchived))
+      setItemList(
+        data.getGroup.items.items
+          .filter((item) => !item.isArchived)
+          .sort((a, b) => {
+            if (moment(a.createdAt).isAfter(b.createdAt)) {
+              return 1
+            } else return -1
+          })
+          .sort((a, b) => {
+            if (a.status === ItemStatus.Done && b.status !== ItemStatus.Done) {
+              return 1
+            } else return -1
+          })
+      )
       setArchiveList(
         data.getGroup.items.items.filter((item) => item.isArchived)
       )
@@ -167,49 +181,15 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
             <Center>
               <Heading>{data?.getGroup?.name}</Heading>
               {/***************************** ITEM LIST **************************************/}
-              <Box padding={"20px"}>
-                <Flex
-                  alignItems="center"
-                  flexDirection="row"
-                  justifyContent="space-between"
-                >
-                  <Heading>Item List</Heading>
-                  {!updatingItem ? (
-                    <IconButton
-                      variant="solid"
-                      size="sm"
-                      _icon={{
-                        as: EvilIcons,
-                        name: "refresh",
-                      }}
-                      onPress={syncItemList}
-                    />
-                  ) : (
-                    <Spinner />
-                  )}
-                </Flex>
-                <Divider my={2} />
-                {itemList.map(
-                  (item, index) =>
-                    item && (
-                      <GroupItem
-                        item={item as Item}
-                        index={index}
-                        key={item.id}
-                        updateIsArchived={updateIsArchived}
-                        onChange={updateItemStatus}
-                      />
-                    )
-                )}
-                {/***************************** ADD ITEM **************************************/}
-                <Button
-                  onPress={() =>
-                    navigation.navigate("AddItem", { groupId: groupId })
-                  }
-                >
-                  Add Item
-                </Button>
-              </Box>
+              <ItemList
+                groupId={data?.getGroup?.id}
+                items={itemList}
+                syncItemList={syncItemList}
+                updateIsArchived={updateIsArchived}
+                updateItemstatus={updateItemStatus}
+                loading={updatingItem}
+                navigation={navigation}
+              />
               {/***************************** ARCHIVED ITEM LIST **************************************/}
               <Box padding={"20px"}>
                 <Flex
@@ -241,6 +221,15 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
                 }
               >
                 Add User
+              </Button>
+              {/***************************** Group Logs **************************************/}
+              <Heading marginTop={"50px"}>View Group Logs</Heading>
+              <Button
+                onPress={() =>
+                  navigation.navigate("GroupLogs", { groupId: groupId })
+                }
+              >
+                View Logs
               </Button>
             </Center>
           </VStack>
