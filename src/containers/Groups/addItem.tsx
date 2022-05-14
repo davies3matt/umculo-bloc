@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, FormControl, Input, Select, Button, Center } from "native-base"
+import { Box, Button, Center, Divider } from "native-base"
 import {
   Category,
   ItemStatus,
@@ -9,6 +9,8 @@ import {
 import uuid from "react-native-uuid"
 import { NavigationProps } from "../Authentication/Login"
 import { useAuthContext } from "../../contexts/AuthContext"
+import LottieView from "lottie-react-native"
+import ItemBox from "../../components/ItemBox"
 
 export interface GroupRouteProps {
   route: {
@@ -28,6 +30,7 @@ interface ItemDetails {
 const AddItem = ({ navigation, route }: Props): JSX.Element => {
   const { authData } = useAuthContext()
   const [item, setItem] = useState<ItemDetails>({})
+  // const [itemList, setItemList] = useState<ItemDetails[]>([])
 
   const groupId = route.params.groupId
   // get group query
@@ -41,7 +44,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
 
   // mutation
   const [postItem, { loading: loadingCreateItem }] = useCreateItemMutation({
-    onCompleted: () => navigation.navigate("ViewGroup", { groupId: groupId }),
+    // onCompleted: () => ,
     onError: (err) => console.log(err),
   })
   // create item function
@@ -68,51 +71,52 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
       },
     })
   }
+
+  const [animation, setAnimation] = useState<any>()
+  React.useEffect(() => {
+    if (animation) {
+      animation.play()
+    }
+  }, [animation])
   return (
     <Center>
-      <Box marginTop={"20px"} backgroundColor="pink.100" w={"200px"}>
-        <FormControl>
-          <FormControl.Label>Name</FormControl.Label>
-          <Input
-            placeholder="Milk"
-            onChangeText={(val) => setItem({ ...item, name: val })}
-            value={item?.name as string}
-          />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Category</FormControl.Label>
-          <Select
-            onValueChange={(val) =>
-              setItem({ ...item, category: val as Category })
-            }
-            placeholder="Select Category"
-          >
-            {Object.values(Category).map((cat) => {
-              return <Select.Item key={cat} value={cat} label={cat} />
-            })}
-          </Select>
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Assigned To</FormControl.Label>
-          <Select
-            onValueChange={(val) => setItem({ ...item, itemUserId: val })}
-            placeholder="Select User"
-          >
-            {data?.getGroup?.users?.items?.map((user) => {
-              return (
-                <Select.Item
-                  key={user.id}
-                  value={user.id}
-                  label={user.user.email}
-                />
-              )
-            })}
-          </Select>
-        </FormControl>
-        <Button isLoading={loadingCreateItem} onPress={() => createItem(item)}>
-          Add Item
-        </Button>
-      </Box>
+      {loadingCreateItem ? (
+        <LottieView
+          ref={(anim) => setAnimation(anim)}
+          style={{
+            width: "50%",
+            height: "50%",
+          }}
+          source={require("../../../assets/animations/done-check.json")}
+        />
+      ) : (
+        <Box marginTop={"20px"} w={"80%"}>
+          <Center>
+            <LottieView
+              ref={(anim) => setAnimation(anim)}
+              style={{
+                width: "50%",
+              }}
+              source={require("../../../assets/animations/girl-with-list.json")}
+            />
+            <Divider my={2} />
+            <ItemBox
+              item={item}
+              setItem={setItem}
+              users={data?.getGroup?.users?.items || []}
+            />
+            <Button
+              marginTop={"20px"}
+              isLoading={loadingCreateItem}
+              onPress={() =>
+                navigation.navigate("ViewGroup", { groupId: groupId })
+              }
+            >
+              Done
+            </Button>
+          </Center>
+        </Box>
+      )}
     </Center>
   )
 }
