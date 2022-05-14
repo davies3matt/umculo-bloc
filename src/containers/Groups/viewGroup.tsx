@@ -222,6 +222,15 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
               >
                 Add User
               </Button>
+              {/***************************** Group Logs **************************************/}
+              <Heading marginTop={"50px"}>View Group Logs</Heading>
+              <Button
+                onPress={() =>
+                  navigation.navigate("GroupLogs", { groupId: groupId })
+                }
+              >
+                View Logs
+              </Button>
             </Center>
           </VStack>
         ) : (

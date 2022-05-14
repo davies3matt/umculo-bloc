@@ -12,22 +12,32 @@ Amplify Params - DO NOT EDIT */
 import { DynamoDB } from "aws-sdk"
 import { itemAdded } from "./handlers"
 const { unmarshall } = DynamoDB.Converter
-exports.handler = (event) => {
+exports.handler = (event, context, callback) => {
   console.log(`EVENT: ${JSON.stringify(event)}`)
-  event.Records.forEach((record) => {
-    const unmarshalledRecord = unmarshall(record)
-    console.log("DynamoDB Record: %j", unmarshalledRecord)
-    const eventType = `${record.eventName} - ${unmarshalledRecord.__typename}`
-    switch (eventType) {
-      case "INSERT - ITEM": {
-        itemAdded(unmarshalledRecord)
-        break
+  try {
+    event.Records.forEach(async (record) => {
+      let oldRecord
+      if (record.eventName !== "INSERT") {
+        const oldRecord = unmarshall(record.dynamodb.OldImage)
       }
-      default: {
-        console.log(`No handler for ${eventType}`)
-        break
+      const newRecord = unmarshall(record.dynamodb.NewImage)
+      console.log("Old Record", oldRecord)
+      console.log("New Record", newRecord)
+      const eventType = `${record.eventName} - ${newRecord.__typename}`
+      switch (eventType) {
+        case "INSERT - Item": {
+          await itemAdded(newRecord, context)
+          break
+        }
+        default: {
+          console.log(`No handler for ${eventType}`)
+          break
+        }
       }
-    }
-  })
+    })
+    callback(null, "Ok")
+  } catch (err) {
+    console.log("ERROR", err)
+  }
   return Promise.resolve("Successfully processed DynamoDB record")
 }
