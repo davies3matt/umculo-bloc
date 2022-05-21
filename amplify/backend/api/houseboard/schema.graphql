@@ -81,9 +81,9 @@ type Log
   id: ID!
   description: String
   type: LogType
-  groupId: ID! @index(name: "GroupLogs", sortKeyFields: ["id"])
-  userId: ID! @index(name: "UserLogs", sortKeyFields: ["id"])
-  itemId: ID! @index(name: "ItemLogs", sortKeyFields: ["id"])
+  groupId: ID @index(name: "GroupLogs", sortKeyFields: ["id"])
+  userId: ID @index(name: "UserLogs", sortKeyFields: ["id"])
+  itemId: ID @index(name: "ItemLogs", sortKeyFields: ["id"])
   group: Group @belongsTo(fields: ["groupId"])
   user: User @belongsTo(fields: ["userId"])
   item: Item @belongsTo(fields: ["itemId"])
@@ -99,13 +99,12 @@ enum LogType {
   # GROUP LOG TYPES
   USER_JOINED
   # USER LOG TYPES
-  # JAJA
 
   # ITEM LOG TYPES
   ITEM_ADDED
   ITEM_REMOVED
   ITEM_COMPLETED
-  ITEM_UNCOMPLETED
+  ITEM_INCOMPLETED
 }
 
 enum GroupType {

@@ -12,7 +12,9 @@ export const itemAdded = async (record, context) => {
       id: logId,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      description: `${record.name} Added by ${addedByUser.email}`,
+      description: `${record.name} Added by ${
+        addedByUser.name ? addedByUser.name : addedByUser.email
+      }`,
       type: LogType.ITEM_ADDED,
       groupId: record.groupId,
       itemId: record.id,

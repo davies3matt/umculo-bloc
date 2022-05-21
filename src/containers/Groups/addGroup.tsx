@@ -63,7 +63,6 @@ const AddGroup = ({ navigation }: NavigationProps): JSX.Element => {
               <VStack width="80%" space={4}>
                 <FormControl isRequired>
                   <FormControl.Label>Group Name</FormControl.Label>
-                  {console.log("errors")}
                   <Input
                     onBlur={handleBlur("name")}
                     placeholder="Huis Woes"
