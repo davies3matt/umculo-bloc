@@ -8,9 +8,9 @@ import {
   Text,
   VStack,
 } from "native-base"
-import React from "react"
+import React, { useState } from "react"
 import SlideRightView from "../../../components/SlideRightView"
-import { useListLogsQuery } from "../../../generated/graphql"
+import { Log, useListLogsQuery } from "../../../generated/graphql"
 import { formatEnums } from "../../../utils/helpers"
 import { NavigationProps } from "../../Authentication/Login"
 import { GroupRouteProps } from "../../Groups/addItem"
@@ -18,6 +18,7 @@ import { GroupRouteProps } from "../../Groups/addItem"
 interface GroupLogsProps extends NavigationProps, GroupRouteProps {}
 const GroupLogs: React.FC<GroupLogsProps> = ({ route }) => {
   const groupId = route.params.groupId
+  const [logs, setLogs] = useState<Log[]>()
   const { data, loading } = useListLogsQuery({
     fetchPolicy: "network-only",
     variables: {
@@ -29,12 +30,22 @@ const GroupLogs: React.FC<GroupLogsProps> = ({ route }) => {
     },
     onError: (err) => console.log("ERROR LISTING LOGS", err),
   })
+  React.useEffect(() => {
+    if (data?.listLogs?.items) {
+      const sortedLogs = data.listLogs.items.sort((a, b) => {
+        if (moment(a.createdAt).isBefore(moment(b.createdAt))) {
+          return -1
+        } else return 1
+      })
+      setLogs(sortedLogs as Log[])
+    }
+  }, [data])
   return (
     <SlideRightView>
       <Heading>Group Logs</Heading>
       {data?.listLogs?.items && (
         <FlatList
-          data={data.listLogs.items}
+          data={logs}
           renderItem={(item) => {
             return (
               <Box
