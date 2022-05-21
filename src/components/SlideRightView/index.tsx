@@ -1,5 +1,6 @@
 import React, { useRef } from "react"
 import { Animated } from "react-native"
+import { theme } from "../../theme"
 
 const SlideRightView: React.FC = ({ children }) => {
   const translateAnim = useRef(new Animated.Value(-100)).current
@@ -18,7 +19,7 @@ const SlideRightView: React.FC = ({ children }) => {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#fff",
+        backgroundColor: theme.colors.secondary[400],
         transform: [{ translateX: translateAnim }],
       }}
     >
