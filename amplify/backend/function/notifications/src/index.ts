@@ -10,7 +10,8 @@ Amplify Params - DO NOT EDIT */
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
 import { DynamoDB } from "aws-sdk"
-import { itemAdded } from "./handlers"
+import { itemAdded } from "./handlers/itemAdded"
+import { itemUpdated } from "./handlers/itemUpdated"
 const { unmarshall } = DynamoDB.Converter
 exports.handler = (event, context, callback) => {
   console.log(`EVENT: ${JSON.stringify(event)}`)
@@ -18,7 +19,7 @@ exports.handler = (event, context, callback) => {
     event.Records.forEach(async (record) => {
       let oldRecord
       if (record.eventName !== "INSERT") {
-        const oldRecord = unmarshall(record.dynamodb.OldImage)
+        oldRecord = unmarshall(record.dynamodb.OldImage)
       }
       const newRecord = unmarshall(record.dynamodb.NewImage)
       console.log("Old Record", oldRecord)
@@ -27,6 +28,10 @@ exports.handler = (event, context, callback) => {
       switch (eventType) {
         case "INSERT - Item": {
           await itemAdded(newRecord, context)
+          break
+        }
+        case "MODIFY - Item": {
+          await itemUpdated(newRecord, oldRecord, context)
           break
         }
         default: {
