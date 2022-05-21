@@ -3,11 +3,12 @@ import LottieView from "lottie-react-native"
 import { Button } from "native-base"
 import SlideRightView from "../../components/SlideRightView"
 import { useAuthContext } from "../../contexts/AuthContext"
+import { animations } from "../../theme"
 
 interface Props {
   navigation: any
 }
-const Profile = ({ navigation }: Props): JSX.Element => {
+const Dashboard = ({ navigation }: Props): JSX.Element => {
   const [animation, setAnimation] = useState<any>()
   const { signOut } = useAuthContext()
 
@@ -24,7 +25,7 @@ const Profile = ({ navigation }: Props): JSX.Element => {
           width: 400,
           height: 400,
         }}
-        source={require("../../../assets/animations/boat-sailing.json")}
+        source={animations.paper_plane}
       />
 
       <Button onPress={() => navigation.navigate("Groups")}>Groups</Button>
@@ -34,4 +35,4 @@ const Profile = ({ navigation }: Props): JSX.Element => {
   )
 }
 
-export default Profile
+export default Dashboard
