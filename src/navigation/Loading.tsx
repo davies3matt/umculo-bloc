@@ -1,6 +1,7 @@
 import LottieView from "lottie-react-native"
 import React from "react"
 import SlideRightView from "../components/SlideRightView"
+import { animations } from "../theme"
 
 const Loading = (): JSX.Element => {
   const [animation, setAnimation] = React.useState<any>()
@@ -20,7 +21,7 @@ const Loading = (): JSX.Element => {
           width: 400,
           height: 400,
         }}
-        source={require("../../assets/animations/loading.json")}
+        source={animations.paper_plane}
       />
     </SlideRightView>
   )

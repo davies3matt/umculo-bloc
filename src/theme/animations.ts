@@ -33,3 +33,8 @@ export const gestureRight = (translateAnim) => {
     }),
   ]).start()
 }
+
+const animations = {
+  paper_plane: require("../../assets/animations/paper-plane.json"),
+}
+export default animations
