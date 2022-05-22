@@ -36,5 +36,10 @@ export const gestureRight = (translateAnim) => {
 
 const animations = {
   paper_plane: require("../../assets/animations/paper-plane.json"),
+  hi: require("../../assets/animations/girl-hi.json"),
+  girl: require("../../assets/animations/girl"),
+  check: require("../../assets/animations/done-check.json"),
+  list_girl: require("../../assets/animations/girl-with-list.json"),
+  phone_girl: require("../../assets/animations/girl-with-phone.json"),
 }
 export default animations
