@@ -8,6 +8,7 @@ import ViewInvite from "../containers/Groups/viewInvite"
 import AddItem from "../containers/Groups/addItem"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import GroupLogs from "../containers/GroupContainers/GroupLogs"
+import AdminAddItem from "../containers/AdminContainers/AddItem"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Profile from "../containers/Authentication/Profile"
 import { theme } from "../theme"
@@ -79,7 +80,6 @@ const AuthStack = (): JSX.Element => {
       />
       <Tab.Screen name="Dashboard" component={Dashboard} />
       <Tab.Screen name="Groups" component={Groups} />
-
       <Tab.Screen
         name="AddGroup"
         component={AddGroup}
@@ -108,6 +108,11 @@ const AuthStack = (): JSX.Element => {
       <Tab.Screen
         name="GroupLogs"
         component={GroupLogs}
+        options={{ ...defaultOptions }}
+      />
+      <Tab.Screen
+        name="Admin Add Item"
+        component={AdminAddItem}
         options={{ ...defaultOptions }}
       />
     </Tab.Navigator>

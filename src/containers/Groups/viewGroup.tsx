@@ -23,6 +23,7 @@ import { NavigationProps } from "../Authentication/Login"
 import { GroupRouteProps } from "./addItem"
 import ItemList from "../../components/ItemList"
 import moment from "moment"
+import SlideRightView from "../../components/SlideRightView"
 
 interface Props extends NavigationProps, GroupRouteProps {}
 
@@ -174,70 +175,72 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
   }
 
   return (
-    <ScrollView>
-      <Center>
-        {!loading ? (
-          <VStack>
-            <Center>
-              <Heading>{data?.getGroup?.name}</Heading>
-              {/***************************** ITEM LIST **************************************/}
-              <ItemList
-                groupId={data?.getGroup?.id}
-                items={itemList}
-                syncItemList={syncItemList}
-                updateIsArchived={updateIsArchived}
-                updateItemstatus={updateItemStatus}
-                loading={updatingItem}
-                navigation={navigation}
-              />
-              {/***************************** ARCHIVED ITEM LIST **************************************/}
-              <Box padding={"20px"}>
-                <Flex
-                  alignItems="center"
-                  flexDirection="row"
-                  justifyContent="space-between"
+    <SlideRightView>
+      <ScrollView>
+        <Center>
+          {!loading ? (
+            <VStack>
+              <Center>
+                <Heading>{data?.getGroup?.name}</Heading>
+                {/***************************** ITEM LIST **************************************/}
+                <ItemList
+                  groupId={data?.getGroup?.id}
+                  items={itemList}
+                  syncItemList={syncItemList}
+                  updateIsArchived={updateIsArchived}
+                  updateItemstatus={updateItemStatus}
+                  loading={updatingItem}
+                  navigation={navigation}
+                />
+                {/***************************** ARCHIVED ITEM LIST **************************************/}
+                <Box padding={"20px"}>
+                  <Flex
+                    alignItems="center"
+                    flexDirection="row"
+                    justifyContent="space-between"
+                  >
+                    <Heading>Archived Item List</Heading>
+                  </Flex>
+                  <Divider my={2} />
+                  {archiveList.map(
+                    (item, index) =>
+                      item && (
+                        <GroupItem
+                          item={item as Item}
+                          key={item.id}
+                          index={index}
+                          updateIsArchived={updateIsArchived}
+                          onChange={updateItemStatus}
+                        />
+                      )
+                  )}
+                </Box>
+                {/***************************** INVITE USER **************************************/}
+                <Heading marginTop={"50px"}>Invite a User</Heading>
+                <Button
+                  onPress={() =>
+                    navigation.navigate("AddUser", { groupId: groupId })
+                  }
                 >
-                  <Heading>Archived Item List</Heading>
-                </Flex>
-                <Divider my={2} />
-                {archiveList.map(
-                  (item, index) =>
-                    item && (
-                      <GroupItem
-                        item={item as Item}
-                        key={item.id}
-                        index={index}
-                        updateIsArchived={updateIsArchived}
-                        onChange={updateItemStatus}
-                      />
-                    )
-                )}
-              </Box>
-              {/***************************** INVITE USER **************************************/}
-              <Heading marginTop={"50px"}>Invite a User</Heading>
-              <Button
-                onPress={() =>
-                  navigation.navigate("AddUser", { groupId: groupId })
-                }
-              >
-                Add User
-              </Button>
-              {/***************************** Group Logs **************************************/}
-              <Heading marginTop={"50px"}>View Group Logs</Heading>
-              <Button
-                onPress={() =>
-                  navigation.navigate("GroupLogs", { groupId: groupId })
-                }
-              >
-                View Logs
-              </Button>
-            </Center>
-          </VStack>
-        ) : (
-          <Spinner />
-        )}
-      </Center>
-    </ScrollView>
+                  Add User
+                </Button>
+                {/***************************** Group Logs **************************************/}
+                <Heading marginTop={"50px"}>View Group Logs</Heading>
+                <Button
+                  onPress={() =>
+                    navigation.navigate("GroupLogs", { groupId: groupId })
+                  }
+                >
+                  View Logs
+                </Button>
+              </Center>
+            </VStack>
+          ) : (
+            <Spinner />
+          )}
+        </Center>
+      </ScrollView>
+    </SlideRightView>
   )
 }
 

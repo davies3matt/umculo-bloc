@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import { Box, Button, Center, Divider } from "native-base"
+import { Box, Button, Center } from "native-base"
 import {
+  Area,
   Category,
   ItemStatus,
   useCreateItemMutation,
@@ -13,6 +14,7 @@ import LottieView from "lottie-react-native"
 import ItemBox from "../../components/ItemBox"
 import LottieAnimation from "../../components/LottieAnimation"
 import { animations } from "../../theme"
+import SlideRightView from "../../components/SlideRightView"
 
 export interface GroupRouteProps {
   route: {
@@ -25,13 +27,16 @@ export interface GroupRouteProps {
 interface Props extends NavigationProps, GroupRouteProps {}
 
 interface ItemDetails {
-  name?: string
+  name: string
+  area?: Area
   category?: Category
   itemUserId?: String // <<---- userID
 }
 const AddItem = ({ navigation, route }: Props): JSX.Element => {
   const { authData } = useAuthContext()
-  const [item, setItem] = useState<ItemDetails>({})
+  const [item, setItem] = useState<ItemDetails>({
+    name: "",
+  })
   // const [itemList, setItemList] = useState<ItemDetails[]>([])
 
   const groupId = route.params.groupId
@@ -57,6 +62,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
     const id = uuid.v4().toString()
     let input = {
       name: item.name,
+      area: item.area,
       category: item.category,
     }
     // if assigned to user add to input item
@@ -85,13 +91,23 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
       }
     })
   }
+
+  React.useEffect(() => {
+    if (loadingCreateItem && checkAnimation) {
+      playCheckAnimation()
+    }
+  }, [loadingCreateItem])
+
+  React.useEffect(() => {}, [loading])
+
   React.useEffect(() => {
     if (checkAnimation) {
       checkAnimation.play()
     }
   })
+
   return (
-    <Center>
+    <SlideRightView>
       <Box marginTop={"20px"} w={"80%"}>
         <Center>
           {!loadingCreateItem ? (
@@ -102,11 +118,11 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
               style={{
                 width: "25%",
                 height: 200,
+                marginBottom: 20,
               }}
               source={require("../../../assets/animations/done-check.json")}
             />
           )}
-          <Divider my={2} />
           <ItemBox
             item={item}
             setItem={setItem}
@@ -125,7 +141,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
           </Button>
         </Center>
       </Box>
-    </Center>
+    </SlideRightView>
   )
 }
 
