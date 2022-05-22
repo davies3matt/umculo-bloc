@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Box, Button, Center } from "native-base"
 import {
+  Area,
   Category,
   ItemStatus,
   useCreateItemMutation,
@@ -24,13 +25,16 @@ export interface GroupRouteProps {
 interface Props extends NavigationProps, GroupRouteProps {}
 
 interface ItemDetails {
-  name?: string
+  name: string
+  area?: Area
   category?: Category
   itemUserId?: String // <<---- userID
 }
 const AddItem = ({ navigation, route }: Props): JSX.Element => {
   const { authData } = useAuthContext()
-  const [item, setItem] = useState<ItemDetails>({})
+  const [item, setItem] = useState<ItemDetails>({
+    name: "",
+  })
   // const [itemList, setItemList] = useState<ItemDetails[]>([])
 
   const groupId = route.params.groupId
@@ -55,6 +59,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
     const id = uuid.v4().toString()
     let input = {
       name: item.name,
+      area: item.area,
       category: item.category,
     }
     // if assigned to user add to input item

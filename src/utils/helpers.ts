@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode"
 import { Category } from "../generated/graphql"
-import { MEAT_TYPES, MILK_TYPES } from "./constants"
+import { FRUIT_TYPES, MEAT_TYPES, MILK_TYPES } from "./constants"
 
 // format to south african international mobile number
 export const formatPhoneNumber = (phoneNum: any) => {
@@ -77,7 +77,7 @@ export const getCategorySelectOptions = (category: Category) => {
     return list.map((item, index) => {
       return {
         id: index,
-        name: item,
+        name: toTitleCase(item),
       }
     })
   }
@@ -86,6 +86,8 @@ export const getCategorySelectOptions = (category: Category) => {
       return mapCategoryType(MILK_TYPES)
     case Category.Meat:
       return mapCategoryType(MEAT_TYPES)
+    case Category.Fruits:
+      return mapCategoryType(FRUIT_TYPES)
     default:
       return []
   }

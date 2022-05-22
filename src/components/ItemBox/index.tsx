@@ -2,11 +2,11 @@ import { Box, Center, FormControl, Select, useToast } from "native-base"
 import React, { useRef } from "react"
 import { Animated, Dimensions } from "react-native"
 import GestureRecognizer from "react-native-swipe-gestures"
-import { Category } from "../../generated/graphql"
+import { Area, Category } from "../../generated/graphql"
 import { gestureRight, invalidShake } from "../../theme/animations"
 import SearchableDropdown from "react-native-searchable-dropdown"
 import { theme } from "../../theme"
-import { getCategorySelectOptions } from "../../utils/helpers"
+import { formatEnums, getCategorySelectOptions } from "../../utils/helpers"
 
 interface ItemProps {
   item: ItemDetails
@@ -16,7 +16,8 @@ interface ItemProps {
   users: any
 }
 interface ItemDetails {
-  name?: string
+  name: string
+  area?: Area
   category?: Category
   itemUserId?: String // <<---- userID
 }
@@ -31,7 +32,9 @@ const ItemBox: React.FC<ItemProps> = ({
   const translateAnim = useRef(new Animated.Value(0)).current
   const swipeCallback = () => {
     // reset item state
-    setItem({})
+    setItem({
+      name: "",
+    })
     Animated.timing(translateAnim, {
       toValue: 0,
       duration: 150,
@@ -101,6 +104,28 @@ const ItemBox: React.FC<ItemProps> = ({
               padding={"20px"}
             >
               <FormControl>
+                <FormControl.Label>Area</FormControl.Label>
+                <Select
+                  onValueChange={(val) => {
+                    setItem({
+                      ...item,
+                      area: val as Area,
+                    })
+                  }}
+                  placeholder="Select an Area"
+                  borderColor={theme.colors.accent[100]}
+                  color={theme.colors.accent[100]}
+                >
+                  {Object.values(Area).map((area) => (
+                    <Select.Item
+                      key={area}
+                      value={area}
+                      label={formatEnums(area)}
+                    />
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl marginTop={"20px"}>
                 <FormControl.Label>Category</FormControl.Label>
                 <Select
                   onValueChange={(val) => {
@@ -110,12 +135,18 @@ const ItemBox: React.FC<ItemProps> = ({
                     }
                   }}
                   placeholder="Select Category"
-                  selectedValue={item.category || ""}
+                  selectedValue={item.category ? item.category : undefined}
                   borderColor={theme.colors.accent[100]}
                   color={theme.colors.accent[100]}
                 >
                   {Object.values(Category).map((cat) => {
-                    return <Select.Item key={cat} value={cat} label={cat} />
+                    return (
+                      <Select.Item
+                        key={cat}
+                        value={cat}
+                        label={formatEnums(cat)}
+                      />
+                    )
                   })}
                 </Select>
               </FormControl>
@@ -144,7 +175,7 @@ const ItemBox: React.FC<ItemProps> = ({
                   placeholder={"Help"}
                   placeholderTextColor={theme.colors.accent[300]}
                   textInputStyle={{ padding: 2 }}
-                  itemsContainerStyle={{ padding: 5 }}
+                  itemsContainerStyle={{ padding: 5, maxHeight: 110 }}
                   itemStyle={{
                     padding: 5,
                     borderColor: theme.colors.accent[300],
