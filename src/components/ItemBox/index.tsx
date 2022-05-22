@@ -1,9 +1,12 @@
-import { Box, Center, FormControl, Input, Select, useToast } from "native-base"
+import { Box, Center, FormControl, Select, useToast } from "native-base"
 import React, { useRef } from "react"
 import { Animated, Dimensions } from "react-native"
 import GestureRecognizer from "react-native-swipe-gestures"
 import { Category } from "../../generated/graphql"
 import { gestureRight, invalidShake } from "../../theme/animations"
+import SearchableDropdown from "react-native-searchable-dropdown"
+import { theme } from "../../theme"
+import { getCategorySelectOptions } from "../../utils/helpers"
 
 interface ItemProps {
   item: ItemDetails
@@ -36,6 +39,8 @@ const ItemBox: React.FC<ItemProps> = ({
     }).start()
   }
 
+  // this is used within the NAME input to avoid updating the state on every text change for better performance
+  let itemName = ""
   /**
    *  check if the item is ready to be posted and gesture the user to swipe right
    */
@@ -52,9 +57,12 @@ const ItemBox: React.FC<ItemProps> = ({
   const onSwipe = (gestureName) => {
     switch (gestureName) {
       case "SWIPE_RIGHT": {
-        if (item.name && item.category) {
+        if ((item.name || itemName) && item.category) {
           // create item and trigger swipe animation
-          createItem(item)
+          createItem({
+            ...item,
+            name: item.name ? item.name : itemName,
+          })
           Animated.timing(translateAnim, {
             toValue: 350,
             duration: 250,
@@ -93,19 +101,6 @@ const ItemBox: React.FC<ItemProps> = ({
               padding={"20px"}
             >
               <FormControl>
-                <FormControl.Label>Name</FormControl.Label>
-                <Input
-                  placeholder="Milk"
-                  onChangeText={(val) => setItem({ ...item, name: val })}
-                  onEndEditing={() => {
-                    if (item.category && item.name) {
-                      showItemReady()
-                    }
-                  }}
-                  value={item?.name as string}
-                />
-              </FormControl>
-              <FormControl marginTop={"20px"}>
                 <FormControl.Label>Category</FormControl.Label>
                 <Select
                   onValueChange={(val) => {
@@ -116,6 +111,8 @@ const ItemBox: React.FC<ItemProps> = ({
                   }}
                   placeholder="Select Category"
                   selectedValue={item.category || ""}
+                  borderColor={theme.colors.accent[100]}
+                  color={theme.colors.accent[100]}
                 >
                   {Object.values(Category).map((cat) => {
                     return <Select.Item key={cat} value={cat} label={cat} />
@@ -123,10 +120,63 @@ const ItemBox: React.FC<ItemProps> = ({
                 </Select>
               </FormControl>
               <FormControl marginTop={"20px"}>
+                <FormControl.Label>Name</FormControl.Label>
+                <SearchableDropdown
+                  items={
+                    item.category ? getCategorySelectOptions(item.category) : []
+                  }
+                  onItemSelect={(itm) => {
+                    itemName = itm.name
+                    setItem({
+                      ...item,
+                      name: itm.name,
+                    })
+                  }}
+                  onTextChange={(text) => {
+                    itemName = text
+                  }}
+                  containerStyle={{
+                    padding: 5,
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    borderColor: theme.colors.accent[100],
+                  }}
+                  placeholder={"Help"}
+                  placeholderTextColor={theme.colors.accent[300]}
+                  textInputStyle={{ padding: 2 }}
+                  itemsContainerStyle={{ padding: 5 }}
+                  itemStyle={{
+                    padding: 5,
+                    borderColor: theme.colors.accent[300],
+                    borderTopWidth: 1,
+                  }}
+                  itemTextStyle={{
+                    color: theme.colors.accent[200],
+                    fontWeight: "bold",
+                  }}
+                  textInputProps={{
+                    value: item.name ? item.name : undefined,
+                    style: { color: theme.colors.accent[100] },
+                    onEndEditing: () => {
+                      if (itemName) {
+                        setItem({
+                          ...item,
+                          name: itemName,
+                        })
+                      }
+                      if (item.category && item.name) {
+                        showItemReady()
+                      }
+                    },
+                  }}
+                />
+              </FormControl>
+              <FormControl marginTop={"20px"}>
                 <FormControl.Label>Assigned To</FormControl.Label>
                 <Select
                   onValueChange={(val) => setItem({ ...item, itemUserId: val })}
                   placeholder="Select User"
+                  borderColor={theme.colors.accent[100]}
                 >
                   {users.map((user) => {
                     return (
