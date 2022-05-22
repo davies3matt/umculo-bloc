@@ -5,6 +5,8 @@ import { Keyboard, TouchableWithoutFeedback } from "react-native"
 import { useAuthContext } from "../../contexts/AuthContext"
 import { formatPhoneNumber } from "../../utils/helpers"
 import SlideRightView from "../../components/SlideRightView"
+import LottieAnimation from "../../components/LottieAnimation"
+import { animations } from "../../theme"
 
 export interface NavigationProps {
   navigation: any
@@ -47,9 +49,7 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
           }}
         >
           <Center>
-            <Heading textAlign="center" mb="10" color="primary.200">
-              Check.it
-            </Heading>
+            <LottieAnimation source={animations.phone_girl} boxSize={200} />
           </Center>
           <Input
             variant="rounded"

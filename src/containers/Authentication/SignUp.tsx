@@ -6,9 +6,8 @@ import {
   Icon,
   Button,
   Link,
-  InputLeftAddon,
-  InputGroup,
   Text,
+  Flex,
 } from "native-base"
 import { MaterialIcons } from "@expo/vector-icons"
 import React from "react"
@@ -18,6 +17,8 @@ import { Auth } from "aws-amplify"
 // import { formatPhoneNumber } from "../../utils/helpers"
 import { NavigationProps } from "./Login"
 import SlideRightView from "../../components/SlideRightView"
+import { animations, theme } from "../../theme"
+import LottieAnimation from "../../components/LottieAnimation"
 
 interface SignUpProps {
   phoneNumber: string
@@ -62,34 +63,33 @@ const SignUp = ({ navigation }: NavigationProps): JSX.Element => {
             }}
           >
             <Center>
-              <Heading textAlign="center" mb="10" color="primary.200">
-                Sign Up
-              </Heading>
+              <LottieAnimation source={animations.hi} boxSize={200} />
             </Center>
-            <InputGroup>
-              <InputLeftAddon
-                children={<Text color="primary.700">🇿🇦 +27</Text>}
-                backgroundColor="primary.200"
-                color="white"
-              />
-              <Input
-                w={{
-                  base: "80%",
-                  md: "100%",
-                }}
-                color="accent.200"
-                size="2xl"
-                placeholder="Mobile Number"
-                textContentType="telephoneNumber"
-                keyboardType="phone-pad"
-                onChangeText={(text) => {
-                  setUserDetails({
-                    ...userDetails,
-                    phoneNumber: text.replace(/[1-9][^0-9+]/g, ""),
-                  })
-                }}
-              />
-            </InputGroup>
+            <Input
+              leftElement={
+                <Flex
+                  backgroundColor={theme.colors.primary[200]}
+                  height={10}
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Text color="accent.700" paddingX={2}>
+                    🇿🇦 +27
+                  </Text>
+                </Flex>
+              }
+              color="accent.200"
+              size="2xl"
+              placeholder="Mobile Number"
+              textContentType="telephoneNumber"
+              keyboardType="phone-pad"
+              onChangeText={(text) => {
+                setUserDetails({
+                  ...userDetails,
+                  phoneNumber: text.replace(/[1-9][^0-9+]/g, ""),
+                })
+              }}
+            />
             <Input
               size="2xl"
               color="accent.200"
@@ -147,9 +147,7 @@ const SignUp = ({ navigation }: NavigationProps): JSX.Element => {
               }
             />
 
-            <Button variant="subtle" onPress={() => handleSignUp(userDetails)}>
-              Sign Up
-            </Button>
+            <Button onPress={() => handleSignUp(userDetails)}>Sign Up</Button>
           </Stack>
           <Link
             onPress={() => navigation.navigate("Login")}
