@@ -40,6 +40,7 @@ type Group
   description: String
 }
 
+# ITEMS ADDED TO GROUPS BY USERS
 type Item
   @model
   @auth(
@@ -57,7 +58,8 @@ type Item
   completedById: ID @index(name: "UserCompletedItems", sortKeyFields: ["id"])
   addedById: ID @index(name: "UserAddedItems", sortKeyFields: ["id"])
   name: String!
-  category: Category!
+  category: Category
+  area: Area
   group: Group! @belongsTo(fields: ["groupId"])
   addedBy: User @belongsTo(fields: ["addedById"])
   assignedTo: User @belongsTo(fields: ["userId"])
@@ -65,6 +67,24 @@ type Item
   logs: [Log] @hasMany(indexName: "ItemLogs", fields: ["id"])
   status: ItemStatus!
   isArchived: Boolean
+}
+
+# PRE-EXISTING ITEMS THAT CAN BE LINKED TO ITEMS ADDED TO GROUPS
+type StoreItem
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["User"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  categories: [Category]
+  areas: [Area]
+  name: String
 }
 
 type Log
@@ -90,9 +110,36 @@ type Log
 }
 
 enum Category {
+  # KITCHEN CATEGORIES
+  FRUITS
+  VEGETABLES
+  MILK
+  CHEESE
+  DAIRY
+  TEA_AND_COFFEE
+  MEAT
+  SEAFOOD
+  FROZEN_GOODS
+  BAKED_GOODS
+  SPICES
+  SAUCES
+  DRINKS
+  LIQOUR
+  CANNED_GOODS
+  JAMS_AND_SPREADS
+  EASY_MEALS
+  BAKINGS_GOODS
+  SNACKS_AND_CANDY
+  VEGAN
+  CLEANING_SUPPLIES
+}
+
+enum Area {
   KITCHEN
   BATHROOM
-  LIVING_AREA
+  WASHING_ROOM
+  HOUSE
+  GARDEN
 }
 
 enum LogType {
