@@ -10,7 +10,7 @@ import {
 } from "native-base"
 import { MaterialIcons } from "@expo/vector-icons"
 import React from "react"
-import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native"
+import { Keyboard, TouchableWithoutFeedback } from "react-native"
 import { useAuthContext } from "../../contexts/AuthContext"
 import { formatPhoneNumber } from "../../utils/helpers"
 import SlideRightView from "../../components/SlideRightView"
