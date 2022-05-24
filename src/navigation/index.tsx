@@ -8,7 +8,6 @@ import Loading from "./Loading"
 
 const AppNavigation = (): JSX.Element => {
   const { authData, isAuthenticating } = useAuthContext()
-
   if (isAuthenticating) {
     return <Loading />
   }

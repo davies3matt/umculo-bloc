@@ -34,6 +34,14 @@ export const gestureRight = (translateAnim) => {
   ]).start()
 }
 
+export const slideOut = (translateAnim, callback) => {
+  Animated.timing(translateAnim, {
+    toValue: 500,
+    duration: 300,
+    useNativeDriver: true,
+  }).start(callback)
+}
+
 const animations = {
   paper_plane: require("../../assets/animations/paper-plane.json"),
   hi: require("../../assets/animations/girl-hi.json"),
