@@ -120,7 +120,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
                 height: 200,
                 marginBottom: 20,
               }}
-              source={require("../../../assets/animations/done-check.json")}
+              source={animations.check}
             />
           )}
           <ItemBox
