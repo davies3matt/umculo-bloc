@@ -8,9 +8,9 @@ import {
   Button,
   Center,
 } from "native-base"
-import { useInviteUsersToGroupMutation } from "../../generated/graphql"
-import { NavigationProps } from "../Authentication/Login"
-import { GroupRouteProps } from "./addItem"
+import { useInviteUsersToGroupMutation } from "../../../generated/graphql"
+import { NavigationProps } from "../../Authentication/Login"
+import { GroupRouteProps } from "../AddItem"
 
 // interfaces
 interface Props extends NavigationProps, GroupRouteProps {}

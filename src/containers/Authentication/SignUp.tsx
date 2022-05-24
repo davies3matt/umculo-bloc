@@ -2,7 +2,6 @@ import {
   Input,
   Stack,
   Center,
-  Heading,
   Icon,
   Button,
   Link,
@@ -54,7 +53,7 @@ const SignUp = ({ navigation }: NavigationProps): JSX.Element => {
   return (
     <SlideRightView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <>
+        <Center>
           <Stack
             space={4}
             w={{
@@ -155,7 +154,7 @@ const SignUp = ({ navigation }: NavigationProps): JSX.Element => {
           >
             Login
           </Link>
-        </>
+        </Center>
       </TouchableWithoutFeedback>
     </SlideRightView>
   )

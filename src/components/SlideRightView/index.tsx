@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { Animated } from "react-native"
+import { Animated, KeyboardAvoidingView } from "react-native"
 import { theme } from "../../theme"
 
 const SlideRightView: React.FC = ({ children }) => {
@@ -23,7 +23,14 @@ const SlideRightView: React.FC = ({ children }) => {
         transform: [{ translateX: translateAnim }],
       }}
     >
-      {children}
+      <KeyboardAvoidingView
+        style={{
+          width: "100%",
+        }}
+        behavior="padding"
+      >
+        {children}
+      </KeyboardAvoidingView>
     </Animated.View>
   )
 }

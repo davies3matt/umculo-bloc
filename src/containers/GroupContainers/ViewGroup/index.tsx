@@ -12,22 +12,23 @@ import {
   useToast,
 } from "native-base"
 import React, { useState } from "react"
-import GroupItem from "../../components/GroupItem"
+import GroupItem from "../../../components/GroupItem"
 import {
   Item,
   ItemStatus,
   useGetGroupQuery,
   useSyncItemsMutation,
-} from "../../generated/graphql"
-import { NavigationProps } from "../Authentication/Login"
-import { GroupRouteProps } from "./addItem"
-import ItemList from "../../components/ItemList"
+} from "../../../generated/graphql"
+import { NavigationProps } from "../../Authentication/Login"
+import { GroupRouteProps } from "../AddItem"
+import ItemList from "../../../components/ItemList"
 import moment from "moment"
-import SlideRightView from "../../components/SlideRightView"
+import SlideRightView from "../../../components/SlideRightView"
 
 interface Props extends NavigationProps, GroupRouteProps {}
 
 const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
+  console.log(route)
   const groupId = route.params.groupId
   const Toast = useToast()
   const [itemList, setItemList] = useState([])
@@ -219,7 +220,12 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
                 <Heading marginTop={"50px"}>Invite a User</Heading>
                 <Button
                   onPress={() =>
-                    navigation.navigate("AddUser", { groupId: groupId })
+                    navigation.navigate("AuthScreens", {
+                      screen: "AddUser",
+                      params: {
+                        groupId: groupId,
+                      },
+                    })
                   }
                 >
                   Add User
@@ -228,7 +234,12 @@ const ViewGroup = ({ navigation, route }: Props): JSX.Element => {
                 <Heading marginTop={"50px"}>View Group Logs</Heading>
                 <Button
                   onPress={() =>
-                    navigation.navigate("GroupLogs", { groupId: groupId })
+                    navigation.navigate("AuthScreens", {
+                      screen: "GroupLogs",
+                      params: {
+                        groupId: groupId,
+                      },
+                    })
                   }
                 >
                   View Logs

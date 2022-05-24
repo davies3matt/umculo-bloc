@@ -73,7 +73,11 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
           size="lg"
           variant="solid"
           rightIcon={<AntDesign name="addusergroup" size={24} color="white" />}
-          onPress={() => navigation.navigate("AddGroup")}
+          onPress={() =>
+            navigation.navigate("AuthScreens", {
+              screen: "AddGroup",
+            })
+          }
         >
           Add Group
         </Button>
@@ -83,7 +87,12 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
               <Heading>Pending Group Invite</Heading>
               <Button
                 onPress={() =>
-                  navigation.navigate("ViewInvite", { groupId: group })
+                  navigation.navigate("AuthScreens", {
+                    screen: "ViewInvite",
+                    params: {
+                      groupId: group,
+                    },
+                  })
                 }
               >
                 View Invite
@@ -96,7 +105,12 @@ const Groups = ({ navigation }: NavigationProps): JSX.Element => {
             <Heading>{item.group.name}</Heading>
             <Button
               onPress={() =>
-                navigation.navigate("ViewGroup", { groupId: item.groupID })
+                navigation.navigate("AuthScreens", {
+                  screen: "ViewGroup",
+                  params: {
+                    groupId: item.groupID,
+                  },
+                })
               }
             >
               View Group

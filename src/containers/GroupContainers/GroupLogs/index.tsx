@@ -13,7 +13,7 @@ import SlideRightView from "../../../components/SlideRightView"
 import { Log, useListLogsQuery } from "../../../generated/graphql"
 import { formatEnums } from "../../../utils/helpers"
 import { NavigationProps } from "../../Authentication/Login"
-import { GroupRouteProps } from "../../Groups/addItem"
+import { GroupRouteProps } from "../AddItem"
 
 interface GroupLogsProps extends NavigationProps, GroupRouteProps {}
 const GroupLogs: React.FC<GroupLogsProps> = ({ route }) => {

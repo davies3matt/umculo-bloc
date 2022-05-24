@@ -1,16 +1,16 @@
 import { Box, Button, FormControl, Input, Select, VStack } from "native-base"
 import React from "react"
-import SlideRightView from "../../components/SlideRightView"
+import SlideRightView from "../../../components/SlideRightView"
 import { Formik } from "formik"
 import {
   GroupType,
   useCreateGroupMutation,
   useCreateUserGroupMutation,
-} from "../../generated/graphql"
-import { formatEnums } from "../../utils/helpers"
-import { useAuthContext } from "../../contexts/AuthContext"
+} from "../../../generated/graphql"
+import { formatEnums } from "../../../utils/helpers"
+import { useAuthContext } from "../../../contexts/AuthContext"
 import uuid from "react-native-uuid"
-import { NavigationProps } from "../Authentication/Login"
+import { NavigationProps } from "../../Authentication/Login"
 
 const AddGroup = ({ navigation }: NavigationProps): JSX.Element => {
   // context

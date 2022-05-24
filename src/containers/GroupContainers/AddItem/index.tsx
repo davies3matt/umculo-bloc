@@ -6,15 +6,15 @@ import {
   ItemStatus,
   useCreateItemMutation,
   useGetGroupQuery,
-} from "../../generated/graphql"
+} from "../../../generated/graphql"
 import uuid from "react-native-uuid"
-import { NavigationProps } from "../Authentication/Login"
-import { useAuthContext } from "../../contexts/AuthContext"
+import { NavigationProps } from "../../Authentication/Login"
+import { useAuthContext } from "../../../contexts/AuthContext"
 import LottieView from "lottie-react-native"
-import ItemBox from "../../components/ItemBox"
-import LottieAnimation from "../../components/LottieAnimation"
-import { animations } from "../../theme"
-import SlideRightView from "../../components/SlideRightView"
+import ItemBox from "../../../components/ItemBox"
+import LottieAnimation from "../../../components/LottieAnimation"
+import { animations } from "../../../theme"
+import SlideRightView from "../../../components/SlideRightView"
 
 export interface GroupRouteProps {
   route: {

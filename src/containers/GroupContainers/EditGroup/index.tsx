@@ -10,9 +10,9 @@ import {
   ScrollView,
 } from "native-base"
 import React from "react"
-import { useGetGroupQuery } from "../../generated/graphql"
-import { NavigationProps } from "../Authentication/Login"
-import { GroupRouteProps } from "./addItem"
+import { useGetGroupQuery } from "../../../generated/graphql"
+import { NavigationProps } from "../../Authentication/Login"
+import { GroupRouteProps } from "../AddItem"
 
 interface Props extends NavigationProps, GroupRouteProps {}
 

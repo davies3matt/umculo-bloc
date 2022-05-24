@@ -3,9 +3,9 @@ import React from "react"
 import {
   useGetGroupQuery,
   useInviteResponseMutation,
-} from "../../generated/graphql"
-import { NavigationProps } from "../Authentication/Login"
-import { GroupRouteProps } from "./addItem"
+} from "../../../generated/graphql"
+import { NavigationProps } from "../../Authentication/Login"
+import { GroupRouteProps } from "../AddItem"
 
 interface Props extends NavigationProps, GroupRouteProps {}
 

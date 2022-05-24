@@ -1,10 +1,10 @@
 import { Auth } from "aws-amplify"
 import React, { createContext, useState, useContext } from "react"
 import { useToast } from "native-base"
-import { ServerError } from "@apollo/client"
 
 interface ContextType {
   isAuthenticating: boolean
+  updateIsAuthenticating: (b: boolean) => void
   authData: AuthData
   signIn: (d: LoginDetails) => Promise<void>
   signOut(): Promise<void>
@@ -17,6 +17,7 @@ interface AuthData {
 
 const DEFAULT_STATE: ContextType = {
   isAuthenticating: false,
+  updateIsAuthenticating: (b: boolean) => null,
   authData: {
     username: "",
     token: "",
@@ -46,8 +47,8 @@ const AuthProvider: React.FC = ({ children }) => {
       updateIsAuthenticating(true)
       // sign in user
       const user = await Auth.signIn(values.username, values.password)
-      // update auth loading state
-      updateIsAuthenticating(false)
+      // // update auth loading state
+      // updateIsAuthenticating(false)
       // set auth context
       updateAuthData({
         token: user.signInUserSession.accessToken.jwtToken,
@@ -75,6 +76,7 @@ const AuthProvider: React.FC = ({ children }) => {
       value={{
         authData,
         isAuthenticating,
+        updateIsAuthenticating,
         signIn,
         signOut,
       }}
