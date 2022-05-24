@@ -40,12 +40,6 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
 
   return (
     <SlideRightView>
-      {/* <KeyboardAvoidingView
-        style={{
-          width: "100%",
-        }}
-        behavior="padding"
-      > */}
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <Center>
           <Stack
@@ -135,7 +129,6 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
           </Link>
         </Center>
       </TouchableWithoutFeedback>
-      {/* </KeyboardAvoidingView> */}
     </SlideRightView>
   )
 }
