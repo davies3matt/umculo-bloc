@@ -1,20 +1,12 @@
-import {
-  Input,
-  Stack,
-  Center,
-  Heading,
-  Icon,
-  Button,
-  Link,
-  Image,
-} from "native-base"
+import { Input, Stack, Center, Heading, Icon, Button, Link } from "native-base"
 import { MaterialIcons } from "@expo/vector-icons"
 import React from "react"
 import { Keyboard, TouchableWithoutFeedback } from "react-native"
 import { useAuthContext } from "../../contexts/AuthContext"
 import { formatPhoneNumber } from "../../utils/helpers"
 import SlideRightView from "../../components/SlideRightView"
-import { images } from "../../theme"
+import LottieAnimation from "../../components/LottieAnimation"
+import { animations } from "../../theme"
 
 export interface NavigationProps {
   navigation: any
@@ -46,7 +38,6 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
     }
   }, [isLoading])
 
-  // screen
   return (
     <SlideRightView>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -57,19 +48,12 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
             md: "25%",
           }}
         >
-          <Image
-            width={500}
-            height={100}
-            source={images.logo}
-            alt="house-board-logo"
-          />
           <Center>
-            <Heading textAlign="center" mb="10" color="primary.200">
-              Login
-            </Heading>
+            <LottieAnimation source={animations.phone_girl} boxSize={200} />
           </Center>
           <Input
             variant="rounded"
+            color="accent.200"
             size="2xl"
             placeholder="Mobile Number"
             onChangeText={(text) =>
@@ -89,6 +73,7 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
           />
           <Input
             variant="rounded"
+            color="accent.200"
             size="2xl"
             placeholder="Password"
             onChangeText={(text) =>
@@ -122,7 +107,6 @@ const Login = ({ navigation }: NavigationProps): JSX.Element => {
             }
           />
           <Button
-            variant="subtle"
             onPress={() => setIsLoading(true)}
             isLoading={isLoading}
             isLoadingText="Submitting"

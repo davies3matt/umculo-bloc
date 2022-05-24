@@ -12,6 +12,8 @@ import { NavigationProps } from "../Authentication/Login"
 import { useAuthContext } from "../../contexts/AuthContext"
 import LottieView from "lottie-react-native"
 import ItemBox from "../../components/ItemBox"
+import LottieAnimation from "../../components/LottieAnimation"
+import { animations } from "../../theme"
 import SlideRightView from "../../components/SlideRightView"
 
 export interface GroupRouteProps {
@@ -49,6 +51,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
 
   // mutation
   const [loadingCreateItem, setLoadingCreateItem] = useState(false)
+  // TODO: use loading
   const [postItem, { loading }] = useCreateItemMutation({
     onCompleted: () => setLoadingCreateItem(false),
     onError: (err) => console.log(err),
@@ -78,7 +81,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
       },
     })
   }
-
+  const [checkAnimation, setCheckAnimation] = useState<any>()
   const playCheckAnimation = () => {
     checkAnimation.play(() => {
       if (loading) {
@@ -97,13 +100,6 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
 
   React.useEffect(() => {}, [loading])
 
-  const [animation, setAnimation] = useState<any>()
-  const [checkAnimation, setCheckAnimation] = useState<any>()
-  React.useEffect(() => {
-    if (animation) {
-      animation.play()
-    }
-  }, [animation])
   React.useEffect(() => {
     if (checkAnimation) {
       checkAnimation.play()
@@ -115,15 +111,7 @@ const AddItem = ({ navigation, route }: Props): JSX.Element => {
       <Box marginTop={"20px"} w={"80%"}>
         <Center>
           {!loadingCreateItem ? (
-            <LottieView
-              ref={(anim) => setAnimation(anim)}
-              style={{
-                width: "50%",
-                height: 200,
-                marginBottom: 20,
-              }}
-              source={require("../../../assets/animations/girl-with-list.json")}
-            />
+            <LottieAnimation source={animations.list_girl} boxSize={200} />
           ) : (
             <LottieView
               ref={(anim) => setCheckAnimation(anim)}

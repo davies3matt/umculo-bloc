@@ -6,30 +6,19 @@ import {
   Icon,
   Button,
   Link,
-  InputLeftAddon,
-  InputGroup,
-  Image,
+  Text,
+  Flex,
 } from "native-base"
 import { MaterialIcons } from "@expo/vector-icons"
 import React from "react"
-import {
-  View,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native"
+import { TouchableWithoutFeedback, Keyboard } from "react-native"
 import { Auth } from "aws-amplify"
-import { formatPhoneNumber } from "../../utils/helpers"
+// TODO: implement
+// import { formatPhoneNumber } from "../../utils/helpers"
 import { NavigationProps } from "./Login"
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-})
+import SlideRightView from "../../components/SlideRightView"
+import { animations, theme } from "../../theme"
+import LottieAnimation from "../../components/LottieAnimation"
 
 interface SignUpProps {
   phoneNumber: string
@@ -63,33 +52,33 @@ const SignUp = ({ navigation }: NavigationProps): JSX.Element => {
   })
   const [visibility, setVisibility] = React.useState(false)
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <Stack
-          space={4}
-          w={{
-            base: "75%",
-            md: "25%",
-          }}
-        >
-          <Image
-            width={500}
-            height={100}
-            source={require("../../../assets/Images/house-board.png")}
-            alt="house-board-logo"
-          />
-          <Center>
-            <Heading textAlign="center" mb="10">
-              Sign Up
-            </Heading>
-          </Center>
-          <InputGroup>
-            <InputLeftAddon children={`🇿🇦 +27`} />
+    <SlideRightView>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <>
+          <Stack
+            space={4}
+            w={{
+              base: "75%",
+              md: "25%",
+            }}
+          >
+            <Center>
+              <LottieAnimation source={animations.hi} boxSize={200} />
+            </Center>
             <Input
-              w={{
-                base: "80%",
-                md: "100%",
-              }}
+              leftElement={
+                <Flex
+                  backgroundColor={theme.colors.primary[200]}
+                  height={10}
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <Text color="accent.700" paddingX={2}>
+                    🇿🇦 +27
+                  </Text>
+                </Flex>
+              }
+              color="accent.200"
               size="2xl"
               placeholder="Mobile Number"
               textContentType="telephoneNumber"
@@ -101,100 +90,74 @@ const SignUp = ({ navigation }: NavigationProps): JSX.Element => {
                 })
               }}
             />
-          </InputGroup>
-          <Input
-            size="2xl"
-            placeholder="Email"
-            textContentType="emailAddress"
-            autoCapitalize="none"
-            onChangeText={(text) => {
-              setUserDetails({
-                ...userDetails,
-                email: text,
-              })
-            }}
-            InputLeftElement={
-              <Icon
-                as={<MaterialIcons name="email" />}
-                size={5}
-                ml="2"
-                color="muted.400"
-              />
-            }
-          />
-          <Input
-            size="2xl"
-            placeholder="Password"
-            textContentType="password"
-            onChangeText={(text) =>
-              setUserDetails({
-                ...userDetails,
-                password: text,
-              })
-            }
-            type={visibility ? "" : "password"}
-            InputLeftElement={
-              <Icon
-                as={<MaterialIcons name="lock" />}
-                size={5}
-                ml="2"
-                color="muted.400"
-              />
-            }
-            InputRightElement={
-              <Icon
-                style={{ marginRight: "5%" }}
-                onPress={() => setVisibility(!visibility)}
-                as={
-                  <MaterialIcons
-                    name={visibility ? "visibility" : "visibility-off"}
-                  />
-                }
-                size={5}
-                ml="2"
-                color="muted.400"
-              />
-            }
-          />
-          <Input
-            size="2xl"
-            placeholder="Confirm Password"
-            type={visibility ? "" : "password"}
-            InputLeftElement={
-              <Icon
-                as={<MaterialIcons name="lock" />}
-                size={5}
-                ml="2"
-                color="muted.400"
-              />
-            }
-            InputRightElement={
-              <Icon
-                style={{ marginRight: "5%" }}
-                onPress={() => setVisibility(!visibility)}
-                as={
-                  <MaterialIcons
-                    name={visibility ? "visibility" : "visibility-off"}
-                  />
-                }
-                size={5}
-                ml="2"
-                color="muted.400"
-              />
-            }
-          />
-          <Button variant="subtle" onPress={() => handleSignUp(userDetails)}>
-            Sign Up
-          </Button>
-        </Stack>
-        <Link
-          onPress={() => navigation.navigate("Login")}
-          style={{ marginTop: "5%" }}
-        >
-          Login
-        </Link>
-      </View>
-    </TouchableWithoutFeedback>
+            <Input
+              size="2xl"
+              color="accent.200"
+              placeholder="Email"
+              textContentType="emailAddress"
+              autoCapitalize="none"
+              onChangeText={(text) => {
+                setUserDetails({
+                  ...userDetails,
+                  email: text,
+                })
+              }}
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="email" />}
+                  size={5}
+                  ml="2"
+                  color="muted.400"
+                />
+              }
+            />
+            <Input
+              size="2xl"
+              color="accent.200"
+              placeholder="Password"
+              textContentType="password"
+              onChangeText={(text) =>
+                setUserDetails({
+                  ...userDetails,
+                  password: text,
+                })
+              }
+              type={visibility ? "" : "password"}
+              InputLeftElement={
+                <Icon
+                  as={<MaterialIcons name="lock" />}
+                  size={5}
+                  ml="2"
+                  color="muted.400"
+                />
+              }
+              InputRightElement={
+                <Icon
+                  style={{ marginRight: "5%" }}
+                  onPress={() => setVisibility(!visibility)}
+                  as={
+                    <MaterialIcons
+                      name={visibility ? "visibility" : "visibility-off"}
+                    />
+                  }
+                  size={5}
+                  ml="2"
+                  color="muted.400"
+                />
+              }
+            />
+
+            <Button onPress={() => handleSignUp(userDetails)}>Sign Up</Button>
+          </Stack>
+          <Link
+            onPress={() => navigation.navigate("Login")}
+            style={{ marginTop: "5%" }}
+          >
+            Login
+          </Link>
+        </>
+      </TouchableWithoutFeedback>
+    </SlideRightView>
   )
 }
 
