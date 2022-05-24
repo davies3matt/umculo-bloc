@@ -64,6 +64,7 @@ const AppStack = (): JSX.Element => {
         },
         tabBarIndicatorStyle: { backgroundColor: theme.colors.accent[200] },
       })}
+      sceneContainerStyle={{ backgroundColor: theme.colors.secondary[400] }}
     >
       <Tab.Screen name="Login" component={Login} />
       <Tab.Screen name="SignUp" component={SignUpRoot} />
