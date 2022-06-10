@@ -35,7 +35,7 @@ const Links = [
   },
   {
     name: "Profile",
-    url: "/profile",
+    url: "/artists/",
   },
 ]
 

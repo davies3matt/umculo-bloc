@@ -9,8 +9,18 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import Navbar from "../components/Navbar";
+import React from "react";
+import { useGetUserQuery } from "../src/generated/graphql";
 
 const Profile: React.FC = () => {
+  const { data } = useGetUserQuery({
+    variables: {
+      id: localStorage.getItem('userId')
+    }
+  })
+  React.useEffect(() => {
+    console.log(data)
+  }, [data])
   return (
     <>
     <Navbar/>
@@ -53,7 +63,7 @@ const Profile: React.FC = () => {
               fontFamily={"body"}
               color={"white"}
             >
-              John Doe
+              {data?.getUser?.email}
             </Heading>
             <Text color={"white"} fontSize={"2xl"}>
               johndoe@umculobloc.co.za

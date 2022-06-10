@@ -24,6 +24,7 @@ import Hero from "../components/Landing/Hero";
 import Feature  from "../components/Landing/Feature"
 import { Main } from "../components/Main";
 import Navbar from "../components/Navbar";
+import ArtistProfile from "./artistProfile";
 
 const DAI_TOKEN_ADDRESS = "0x6b175474e89094c44da98b954eedeac495271d0f";
 
@@ -60,6 +61,7 @@ function Home() {
         <Hero />
         <Main>
           <Feature/>
+          <ArtistProfile />
         </Main>
         <Footer/>
       </Container>
