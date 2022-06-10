@@ -8,9 +8,12 @@ import {
   Text,
   Stack,
 } from "@chakra-ui/react";
+import Navbar from "../components/Navbar";
 
 const Profile: React.FC = () => {
   return (
+    <>
+    <Navbar/>
     <Center py={6}>
       <Box
         maxW={"1024px"}
@@ -36,7 +39,6 @@ const Profile: React.FC = () => {
             src={
               "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
             }
-            alt={"Author"}
             css={{
               border: "2px solid white",
             }}
@@ -81,6 +83,7 @@ const Profile: React.FC = () => {
         </Box>
       </Box>
     </Center>
+    </>
   );
 };
 export default Profile;
