@@ -19,29 +19,8 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons"
 import { colors } from "../../src/theme"
 import { useRouter } from "next/router"
-
-const Links = [
-  {
-    name: "Dashboard",
-    url: "/dashboard",
-  },
-  {
-    name: "About",
-    url: "/about",
-  },
-  {
-    name: "Resources",
-    url: "/resources",
-  },
-  {
-    name: "Profile",
-    url: "/profile/",
-  },
-  {
-    name: "Artist Profile",
-    url: "/artistProfile/",
-  },
-]
+import React from "react"
+import { useAuthContext } from "../../src/context/AuthProvider"
 
 const NavLink = (props) => {
   const router = useRouter()
@@ -64,6 +43,27 @@ const NavLink = (props) => {
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
+  const { user } = useAuthContext()
+
+  React.useEffect(() => {
+    let profileLink = "profile"
+    if (user?.username) {
+      profileLink = "artistProfile"
+    }
+    const Links = [
+      {
+        name: "Marketplace",
+        url: "/marketplace",
+      },
+      {
+        name: "Profile",
+        url: `/${profileLink}/`,
+      },
+    ]
+    setLinks(Links)
+  }, [user])
+
+  const [links, setLinks] = React.useState([])
 
   return (
     <>
@@ -92,7 +92,7 @@ export default function Navbar() {
               display={{ base: "none", md: "flex" }}
               color={colors.white}
             >
-              {Links.map((link) => (
+              {links.map((link) => (
                 <NavLink key={link.name} name={link.name} url={link.url}>
                   {link.name}
                 </NavLink>
@@ -104,7 +104,7 @@ export default function Navbar() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
+              {links.map((link) => (
                 <NavLink name={link.name} url={link.url}>
                   {link.name}
                 </NavLink>

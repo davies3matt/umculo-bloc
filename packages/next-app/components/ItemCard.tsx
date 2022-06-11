@@ -106,6 +106,10 @@ const ItemCard = ({ item }) => {
                 : require("../public/assets/animations/x.json"),
               loop: false,
             }}
+            width={item.tier2 ? "100%" : "35%"}
+            style={{
+              minHeight: 150,
+            }}
           />
           <Text
             position={"absolute"}
@@ -125,7 +129,7 @@ const ItemCard = ({ item }) => {
                 : require("../public/assets/animations/x.json"),
               loop: false,
             }}
-            width="35%"
+            width={item.tier3 ? "100%" : "35%"}
           />
           <Text
             position={"absolute"}
