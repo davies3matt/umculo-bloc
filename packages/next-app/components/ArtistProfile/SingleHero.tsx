@@ -31,7 +31,6 @@ import {
           <Avatar
             size={'xl'}
             src={artistImg}
-            alt={'Avatar Alt'}
             mb={4}
             pos={'relative'}
             _after={{

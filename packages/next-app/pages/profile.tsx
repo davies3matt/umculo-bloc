@@ -12,14 +12,19 @@ import React from "react";
 import { useGetUserQuery } from "../src/generated/graphql";
 
 const Profile: React.FC = () => {
-  const { data } = useGetUserQuery({
-    variables: {
-      id: localStorage.getItem('userId')
-    }
-  })
-  React.useEffect(() => {
-    console.log(data)
-  }, [data])
+  const ISSERVER = typeof window === "undefined"; 
+  let data = null;
+  if(!ISSERVER) { 
+   data = useGetUserQuery({
+      variables: {
+        id: localStorage ? localStorage.getItem('userId') : null
+      }
+    }).data
+
+    React.useEffect(() => {
+      console.log(data)
+    }, [data])
+  }
   return (
     <Center py={6}>
       <Box
@@ -46,7 +51,6 @@ const Profile: React.FC = () => {
             src={
               "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
             }
-            alt={"Author"}
             css={{
               border: "2px solid white",
             }}
