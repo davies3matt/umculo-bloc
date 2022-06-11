@@ -65,6 +65,44 @@ const Tiers = ({ artistUser }) => {
   const [tier, setTier] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
   const [getArtist, { data, loading }] = useListArtistsLazyQuery()
+  
+  const [tierOwnership, setTierOwnership] = useState({
+    tier1:false,
+    tier2:false,
+    tier3:false
+  })
+
+  React.useEffect(() => {
+    console.log('UseEffectAccount', account)
+    console.log('UseEffectArtist', artist)
+    const getBalances =async ()=>{
+      let balance1 = 0
+      let balance2 = 0
+      let balance3 = 0
+      if(artist.tier1){
+         balance1 = await getBalance(artist.tier1,1)
+         balance1 = Number(balance1)
+
+      }
+      if(artist.tier2){
+         balance2 = await getBalance(artist.tier2,2)
+         balance2 = Number(balance2)
+
+      }
+      if(artist.tier3){
+         balance3 = await getBalance(artist.tier3,3)
+         balance3 = Number(balance3)
+      }
+      setTierOwnership({
+        tier1:balance1,
+        tier2:balance2,
+        tier3:balance3,
+      })
+    } 
+    getBalances()
+  }, [account, artist])
+
+
   React.useEffect(() => {
     if (data?.listArtists?.items?.length > 0) {
       setArtist(data.listArtists.items[0])
@@ -160,7 +198,8 @@ const Tiers = ({ artistUser }) => {
     setIsOpen(false)
     //store in db
   }
-  const buyNft = async (address, tier) => {
+
+  const buyNft = async (address,tier)=>{
     console.log(address)
     let abi
     let value
@@ -187,7 +226,21 @@ const Tiers = ({ artistUser }) => {
   //     await router.push('/login')
   //   }
   // }
-  console.log(artist)
+  const getBalance = async (add,tier)=>{
+    let abi;
+    if(tier == 1){
+      abi = tier1.abi;
+    }else if(tier == 2){
+      abi = tier2.abi;
+    }else{
+      abi = tier3.abi
+    }
+    let contract =  new Contract(add, abi, library.getSigner(account));
+  return contract.balanceOf(account).then((res)=>{
+    return res
+   })
+  }
+  console.log(tierOwnership)
   return (
     <Box py={12} padding={10}>
       <VStack spacing={2} textAlign="center">
@@ -244,32 +297,40 @@ const Tiers = ({ artistUser }) => {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
-              {artist?.tier1 ? (
-                <Button
-                  w="full"
-                  colorScheme="red"
-                  variant="outline"
-                  isLoading={loading}
-                  onClick={() => {
-                    buyNft(artist.tier1, 1)
-                  }}
-                >
-                  Buy
-                </Button>
-              ) : (
-                <Button
-                  w="full"
-                  colorScheme="red"
-                  variant="outline"
-                  isLoading={loading}
-                  onClick={() => {
-                    setTier(1)
-                    setIsOpen(true)
-                  }}
-                >
-                  Enable
-                </Button>
-              )}
+            {artist?.tier1 ? tierOwnership.tier1 ? 
+                          <Button
+                          w="full"
+                          colorScheme="red"
+                          variant="outline"
+                          disabled
+                        >
+                          Already Owned
+                        </Button> 
+            :
+              <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  buyNft(artist.tier1, 1)
+                }}
+              >
+                Buy
+              </Button> :             
+               <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  setTier(1)
+                  setIsOpen(true)
+                }}
+              >
+                Enable
+              </Button> }
+
             </Box>
           </VStack>
         </PriceWrapper>
@@ -336,32 +397,39 @@ const Tiers = ({ artistUser }) => {
                 </ListItem>
               </List>
               <Box w="80%" pt={7}>
-                {artist?.tier2 ? (
-                  <Button
-                    w="full"
-                    colorScheme="red"
-                    variant="outline"
-                    isLoading={loading}
-                    onClick={() => {
-                      buyNft(artist.tier2, 2)
-                    }}
-                  >
-                    Buy
-                  </Button>
-                ) : (
-                  <Button
-                    w="full"
-                    colorScheme="red"
-                    variant="outline"
-                    isLoading={loading}
-                    onClick={() => {
-                      setTier(2)
-                      setIsOpen(true)
-                    }}
-                  >
-                    Enable
-                  </Button>
-                )}
+              {artist?.tier2 ?     tierOwnership.tier2 ? 
+                          <Button
+                          w="full"
+                          colorScheme="red"
+                          variant="outline"
+                          disabled
+                        >
+                          Already Owned
+                        </Button> 
+            :        
+              <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  buyNft(artist.tier2,2)
+                }}
+              >
+                Buy
+              </Button> :             
+               <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  setTier(2)
+                  setIsOpen(true)
+                }}
+              >
+                Enable
+              </Button> }
               </Box>
             </VStack>
           </Box>
@@ -400,32 +468,40 @@ const Tiers = ({ artistUser }) => {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
-              {artist?.tier3 ? (
-                <Button
-                  w="full"
-                  colorScheme="red"
-                  variant="outline"
-                  isLoading={loading}
-                  onClick={() => {
-                    buyNft(artist.tier3, 3)
-                  }}
-                >
-                  Buy
-                </Button>
-              ) : (
-                <Button
-                  w="full"
-                  colorScheme="red"
-                  variant="outline"
-                  isLoading={loading}
-                  onClick={() => {
-                    setTier(3)
-                    setIsOpen(true)
-                  }}
-                >
-                  Enable
-                </Button>
-              )}
+            {artist?.tier3 ?    
+            tierOwnership.tier3 ?
+            <Button
+            w="full"
+            colorScheme="red"
+            variant="outline"
+            disabled
+          >
+            Already Owned
+          </Button> 
+:               
+              <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  buyNft(artist.tier3,3)
+                }}
+              >
+                Buy
+              </Button> :             
+               <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  setTier(3)
+                  setIsOpen(true)
+                }}
+              >
+                Enable
+              </Button> }
             </Box>
           </VStack>
         </PriceWrapper>
