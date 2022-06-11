@@ -7,7 +7,7 @@ import {
 import { Auth } from "aws-amplify"
 import { AUTH_TYPE, createAuthLink } from "aws-appsync-auth-link"
 import { createSubscriptionHandshakeLink } from "aws-appsync-subscription-link"
-import appSyncConfig from "./../src/aws-exports"
+import appSyncConfig from "../aws-exports"
 import { cloneDeep, forOwn, isEmpty, isObject, isString } from "lodash"
 
 function cleanObject<T extends { [key: string]: any }>(obj: T) {
