@@ -79,9 +79,12 @@ const ItemCard = ({ item }) => {
         <Box textAlign={"center"} position="relative">
           <Lottie
             options={{
-              animationData: require("../public/assets/animations/check.json"),
+              animationData: item.tier1
+                ? require("../public/assets/animations/check.json")
+                : require("../public/assets/animations/x.json"),
               loop: false,
             }}
+            width={item.tier1 ? "100%" : "35%"}
           />
           <Text
             position={"absolute"}
@@ -96,7 +99,9 @@ const ItemCard = ({ item }) => {
         <Box textAlign={"center"} position="relative">
           <Lottie
             options={{
-              animationData: require("../public/assets/animations/check.json"),
+              animationData: item.tier2
+                ? require("../public/assets/animations/check.json")
+                : require("../public/assets/animations/x.json"),
               loop: false,
             }}
           />
@@ -113,7 +118,9 @@ const ItemCard = ({ item }) => {
         <Box textAlign={"center"} position="relative">
           <Lottie
             options={{
-              animationData: require("../public/assets/animations/x.json"),
+              animationData: item.tier3
+                ? require("../public/assets/animations/check.json")
+                : require("../public/assets/animations/x.json"),
               loop: false,
             }}
             width="35%"

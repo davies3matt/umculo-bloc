@@ -7,6 +7,7 @@ import { useListArtistsQuery } from "../src/generated/graphql"
 const MarketPlace = () => {
   const [artistList, setArtistList] = useState([])
   const { data } = useListArtistsQuery({
+    fetchPolicy: "network-only",
     onCompleted: (list) => setArtistList(list.listArtists.items),
     onError: (err) => console.log("ERROR 🙈 ", err),
   })
