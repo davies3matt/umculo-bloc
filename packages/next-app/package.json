@@ -47,6 +47,7 @@
     "react-feather": "^2.0.10",
     "react-icons": "4.4.0",
     "styled-system": "^5.1.5",
+    "react-paystack": "^3.0.5",
     "swr": "^1.2.0",
     "yup": "^0.32.11"
   },

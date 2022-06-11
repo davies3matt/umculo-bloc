@@ -93,7 +93,7 @@ export default function Navbar() {
               color={colors.white}
             >
               {Links.map((link) => (
-                <NavLink name={link.name} url={link.url}>
+                <NavLink key={link.name} name={link.name} url={link.url}>
                   {link.name}
                 </NavLink>
               ))}

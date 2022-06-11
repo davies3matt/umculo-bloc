@@ -128,8 +128,15 @@ const Tiers = () => {
     //store in db
   }
 
+  // const checkRoute = async () => {
+  //   const path = router.pathname;
+  //   if (path === '/') {
+  //     await router.push('/login')
+  //   }
+  // }
+
   return (
-    <Box py={12}>
+    <Box py={12} padding={10}>
       <VStack spacing={2} textAlign="center">
         \
         <Heading as="h1" fontSize="4xl">
@@ -198,7 +205,7 @@ const Tiers = () => {
           </VStack>
         </PriceWrapper>
 
-        <PriceWrapper>
+        <PriceWrapper key={2}>
           <Box position="relative">
             <Box
               position="absolute"
@@ -267,7 +274,7 @@ const Tiers = () => {
             </VStack>
           </Box>
         </PriceWrapper>
-        <PriceWrapper>
+        <PriceWrapper key={3}>
           <Box py={4} px={12}>
             <Text fontWeight="500" fontSize="2xl">
               Tier 3

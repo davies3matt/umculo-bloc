@@ -14,8 +14,10 @@ import React from "react"
 import { CheckCircleIcon } from "@chakra-ui/icons"
 import { colors } from "../src/theme"
 import Lottie from "lottie-react-web"
+import { useRouter } from "next/router"
 
 const ItemCard = ({ item }) => {
+  const router = useRouter()
   return (
     <Box
       backgroundColor={colors.grey}
@@ -145,7 +147,11 @@ const ItemCard = ({ item }) => {
         marginTop={5}
       />
       <Flex marginBottom={5} justifyContent="center" alignContent={"center"}>
-        <Button backgroundColor={colors.blue} boxShadow="3px 3px #780EDC">
+        <Button
+          onClick={() => router.push(`/artists/${item.id}`)}
+          backgroundColor={colors.blue}
+          boxShadow="3px 3px #780EDC"
+        >
           Read More
         </Button>
       </Flex>

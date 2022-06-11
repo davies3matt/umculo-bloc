@@ -8,9 +8,11 @@ import {
     Text,
     useBreakpointValue,
   } from '@chakra-ui/react';
+import { useState } from 'react';
 import { IoArrowForward } from 'react-icons/io5';
   
   export default function Hero() {
+    const [open, setOpen] = useState(false);
     return (
       <Stack background={'linear-gradient(261.63deg,  #0B0B0D 4.87%, #FB03F5 87.02%)'} minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
         <Flex p={8} flex={1} align={'center'} justify={'center'}>
@@ -43,6 +45,9 @@ import { IoArrowForward } from 'react-icons/io5';
                 by creating a marketplace that is driven by Web3 technologies such as 
                 Blockchain, Ethereum and upliftment plans that are funded through UmculoBloc.
             </Text>
+            <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
+              <Button cursor='pointer'>Discover More <Icon left={3} as={IoArrowForward} color={'black.500'} w={5} h={5} rounded={'full'}></Icon></Button>
+            </Stack>
           </Stack>
         </Flex>
         <Flex flex={1}>

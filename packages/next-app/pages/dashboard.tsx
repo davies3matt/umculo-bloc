@@ -113,7 +113,7 @@ const Dashboard = () => {
       >
         <SimpleGrid columns={3} spacing={10} marginTop={20} marginBottom={20}>
           {data.map((item) => (
-            <ItemCard item={item} />
+            <ItemCard key={item.id} item={item} />
           ))}
         </SimpleGrid>
       </Flex>
