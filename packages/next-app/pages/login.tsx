@@ -58,7 +58,7 @@ const Login: FC = () => {
 
               await login(values.email, values.password)
 
-              await router.push("/dashboard")
+              await router.push("/marketplace")
 
               /**
                * Redirect to relevant page
