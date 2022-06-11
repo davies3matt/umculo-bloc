@@ -7,6 +7,7 @@ import Hero from "../components/Landing/Hero";
 import Feature  from "../components/Landing/Feature"
 import { Main } from "../components/Main";
 import Navbar from "../components/Navbar";
+import ArtistProfile from "./artistProfile";
 
 function Home() {
   return (
@@ -24,6 +25,7 @@ function Home() {
         <Hero />
         <Main>
           <Feature/>
+          <ArtistProfile />
         </Main>
         <Footer/>
       </Container>

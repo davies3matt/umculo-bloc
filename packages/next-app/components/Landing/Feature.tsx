@@ -45,40 +45,14 @@ import {
       <Container maxW={'5xl'} py={12}>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
           <Stack spacing={4}>
-            <Heading>How do Music NFTs work?</Heading>
+            <Heading>Why Music NFTs?</Heading>
             <Text color={'gray.500'} fontSize={'lg'}>
-                NFTs are unique assets stored and tradable on a blockchain.
-                They are, immutable, scarce and publicly verifiable.
-                In the music world, artistes get to sell limited digital content to their fans who pay via crypto.
-                 You can now produce any music content that cannot be counterfeited.
+             There are too many underprivileged musicians in Africa that don't
+             have access to opportunities, whether it be tutoring, musical education,
+             production and sound engineering exposure - UmculoBloc aims to disrupt this by creating a
+             marketplace in the Web3 space. Too many times have we heard of someone who is so talented and
+             nothing comes of it, enough is enough let Umculo Bloc change this in Africa and then the world.
             </Text>
-            {/* <Stack
-              spacing={4}
-              divider={
-                <StackDivider
-                  borderColor={useColorModeValue('gray.100', 'gray.700')}
-                />
-              }>
-              <Single
-                icon={
-                  <Icon as={IoAnalyticsSharp} color={'yellow.500'} w={5} h={5} />
-                }
-                iconBg={useColorModeValue('yellow.100', 'yellow.900')}
-                text={'Business Planning'}
-              />
-              <Single
-                icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
-                iconBg={useColorModeValue('green.100', 'green.900')}
-                text={'Financial Planning'}
-              />
-              <Single
-                icon={
-                  <Icon as={IoSearchSharp} color={'purple.500'} w={5} h={5} />
-                }
-                iconBg={useColorModeValue('purple.100', 'purple.900')}
-                text={'Market Analysis'}
-              />
-            </Stack> */}
           </Stack>
           <Flex>
             <Image

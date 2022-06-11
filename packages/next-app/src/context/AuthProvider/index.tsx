@@ -44,7 +44,7 @@ const AuthProvider: React.FC = ({ children }) => {
       
       // sign in user
       const user = await Auth.signIn(email, password)
-      
+      localStorage.setItem('userId', user.attributes.sub)
       // set auth context
       setUser({
         token: user.signInUserSession.accessToken.jwtToken,

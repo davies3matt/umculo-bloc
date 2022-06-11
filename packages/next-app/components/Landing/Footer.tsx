@@ -40,10 +40,10 @@ import {
               <Link href={'https://www.facebook.com/Umculobloc-110125468393331'} target='_blank'>Facebook</Link>
             </Stack>
             <Stack align={'flex-start'}>
-              <Link href={'#'}>Twitter</Link>
+              <Link href={'https://www.instagram.com/umculobloc/'}>Instagram</Link>
             </Stack>
             <Stack align={'flex-start'}>
-              <Link href={'#'}>Medium</Link>
+              <Link href={'https://twitter.com/UmculoBloc'}>Twitter</Link>
             </Stack>
             <Stack align={'flex-start'}>
               <Link href={'#'}>Contact</Link>
