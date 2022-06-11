@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react"
 import { useWeb3React } from "@web3-react/core"
-
+import { Contract } from "@ethersproject/contracts";
 import { ContractFactory } from "@ethersproject/contracts"
 
 import {
@@ -36,6 +36,7 @@ import { useAuthContext } from "../../src/context/AuthProvider"
 import { Formik } from "formik"
 import useEagerConnect from "../../hooks/useEagerConnect"
 import Account from "../Account"
+import { add } from "lodash"
 
 function PriceWrapper({ children }: { children: ReactNode }) {
   return (
@@ -52,7 +53,8 @@ function PriceWrapper({ children }: { children: ReactNode }) {
   )
 }
 
-const Tiers = () => {
+const Tiers = ({artistUser}) => {
+  console.log('userar',artistUser)
   const { account, library } = useWeb3React()
   const triedToEagerConnect = useEagerConnect()
   const isConnected = typeof account === "string" && !!library
@@ -77,7 +79,17 @@ const Tiers = () => {
   React.useEffect(() => {
     console.log("USER", user)
     console.log("Artist", artist)
-    if (user?.username) {
+
+    if(artistUser && artistUser && artistUser.userId){
+      console.log(artistUser)
+      getArtist({
+        variables: {
+          filter: {
+            userId: { eq: artistUser.userId },
+          },
+        },
+      })
+    }else   if (user?.username) {
       getArtist({
         variables: {
           filter: {
@@ -86,7 +98,7 @@ const Tiers = () => {
         },
       })
     }
-  }, [user, artist])
+  }, [user, artist,artistUser])
   const deployContract = async (tier, { collectionName, symbol }) => {
     // ABI description as JSON structure
     let abi
@@ -148,14 +160,30 @@ const Tiers = () => {
     setIsOpen(false)
     //store in db
   }
-
+  const buyNft = async (address,tier)=>{
+    console.log(address)
+    let abi;
+    let value
+    if(tier == 1){
+      abi = tier1.abi;
+      value =  "50000000000000000"
+    }else if(tier == 2){
+      abi = tier2.abi;
+      value =  "100000000000000000"
+    }else{
+      abi = tier3.abi
+      value =  "350000000000000000"
+    }
+    let contract =  new Contract(address, abi, library.getSigner(account));
+    contract.safeMint(account,'ipfs://bafyreia3vtyh45uxw4mqms4hkxz4ws27tit7w6vzgsndqti62ggprhrjfm/metadata.json',{value: value});
+  }
   // const checkRoute = async () => {
   //   const path = router.pathname;
   //   if (path === '/') {
   //     await router.push('/login')
   //   }
   // }
-
+  console.log(artist)
   return (
     <Box py={12} padding={10}>
       <VStack spacing={2} textAlign="center">
@@ -212,19 +240,32 @@ const Tiers = () => {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
+              {artist?.tier1 ?             
               <Button
                 w="full"
                 colorScheme="red"
                 variant="outline"
                 isLoading={loading}
-                disabled={artist?.tier1}
+                onClick={() => {
+                  buyNft(artist.tier1, 1)
+                }}
+              >
+                Buy
+              </Button> :             
+               <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
                 onClick={() => {
                   setTier(1)
                   setIsOpen(true)
                 }}
               >
                 Enable
-              </Button>
+              </Button> }
+
+
             </Box>
           </VStack>
         </PriceWrapper>
@@ -291,17 +332,30 @@ const Tiers = () => {
                 </ListItem>
               </List>
               <Box w="80%" pt={7}>
-                <Button
-                  w="full"
-                  colorScheme="red"
-                  onClick={() => {
-                    setTier(2)
-                    setIsOpen(true)
-                  }}
-                  disabled={artist?.tier2}
-                >
-                  Enable
-                </Button>
+              {artist?.tier2 ?             
+              <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  buyNft(artist.tier2,2)
+                }}
+              >
+                Buy
+              </Button> :             
+               <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  setTier(2)
+                  setIsOpen(true)
+                }}
+              >
+                Enable
+              </Button> }
               </Box>
             </VStack>
           </Box>
@@ -340,18 +394,30 @@ const Tiers = () => {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
+            {artist?.tier3 ?             
               <Button
                 w="full"
                 colorScheme="red"
                 variant="outline"
+                isLoading={loading}
+                onClick={() => {
+                  buyNft(artist.tier3,3)
+                }}
+              >
+                Buy
+              </Button> :             
+               <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                isLoading={loading}
                 onClick={() => {
                   setTier(3)
                   setIsOpen(true)
                 }}
-                disabled={artist?.tier3}
               >
                 Enable
-              </Button>
+              </Button> }
             </Box>
           </VStack>
         </PriceWrapper>
