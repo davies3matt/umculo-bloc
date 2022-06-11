@@ -7,7 +7,7 @@ import {
 const ArtistProfile = () => {
   return (
     <Container maxW={'5xl'} py={12}>
-    <ThreeTierPricing />
+      <ThreeTierPricing />
     </Container>
   )
 }
