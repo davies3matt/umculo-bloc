@@ -60,6 +60,7 @@ const Tiers = () => {
   console.log(account)
   const { user } = useAuthContext()
   const [artist, setArtist] = useState<any>({})
+  const [tier, setTier] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
   const [getArtist, { data, loading }] = useListArtistsLazyQuery()
   React.useEffect(() => {
@@ -71,6 +72,7 @@ const Tiers = () => {
     onError: (err) => {
       console.log("ERROR ☁ ", err)
     },
+    onCompleted: (data) => setArtist(data.updateArtist),
   })
   React.useEffect(() => {
     console.log("USER", user)
@@ -111,20 +113,39 @@ const Tiers = () => {
     )
     const contract = await factory.deploy(collectionName, symbol)
     console.log("Contract ⬇ ", contract)
-    let list = artist.collections ? artist.collections : []
-    list.push(collectionName)
-    let input = {
-      id: artist.id,
-      collections: list,
+    try {
+      let input: any = {
+        id: artist.id,
+      }
+      if (tier === 1) {
+        input = {
+          ...input,
+          tier1: contract.address,
+        }
+      }
+      if (tier === 2) {
+        input = {
+          ...input,
+          tier2: contract.address,
+        }
+      }
+      if (tier === 3) {
+        input = {
+          ...input,
+          tier3: contract.address,
+        }
+      }
+      console.log("THIS IS THE INPUT", input)
+      console.log(contract.address)
+      await updateArtist({
+        variables: {
+          input: input,
+        },
+      })
+    } catch (err) {
+      console.log(err)
     }
-    if (tier === 1) {
-      input[`tier${tier}`] = contract.address
-    }
-    await updateArtist({
-      variables: {
-        input: input,
-      },
-    })
+    setIsOpen(false)
     //store in db
   }
 
@@ -197,7 +218,10 @@ const Tiers = () => {
                 variant="outline"
                 isLoading={loading}
                 disabled={artist?.tier1}
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                  setTier(1)
+                  setIsOpen(true)
+                }}
               >
                 Enable
               </Button>
@@ -267,7 +291,15 @@ const Tiers = () => {
                 </ListItem>
               </List>
               <Box w="80%" pt={7}>
-                <Button w="full" colorScheme="red">
+                <Button
+                  w="full"
+                  colorScheme="red"
+                  onClick={() => {
+                    setTier(2)
+                    setIsOpen(true)
+                  }}
+                  disabled={artist?.tier2}
+                >
                   Enable
                 </Button>
               </Box>
@@ -308,7 +340,16 @@ const Tiers = () => {
               </ListItem>
             </List>
             <Box w="80%" pt={7}>
-              <Button w="full" colorScheme="red" variant="outline">
+              <Button
+                w="full"
+                colorScheme="red"
+                variant="outline"
+                onClick={() => {
+                  setTier(3)
+                  setIsOpen(true)
+                }}
+                disabled={artist?.tier3}
+              >
                 Enable
               </Button>
             </Box>
@@ -330,7 +371,7 @@ const Tiers = () => {
               collectionName: "",
               symbol: "",
             }}
-            onSubmit={(vals) => deployContract(1, { ...vals })}
+            onSubmit={(vals) => deployContract(tier, { ...vals })}
           >
             {({ values, setFieldValue, isSubmitting, handleSubmit }) => (
               <Flex direction="column">
