@@ -7,15 +7,17 @@ import {
   List,
   ListIcon,
   ListItem,
+  SimpleGrid,
   Text,
 } from "@chakra-ui/react"
 import React from "react"
 import { CheckCircleIcon } from "@chakra-ui/icons"
 import { colors } from "../src/theme"
+import Lottie from "lottie-react-web"
 import { useRouter } from "next/router"
 
 const ItemCard = ({ item }) => {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <Box
       backgroundColor={colors.grey}
@@ -62,10 +64,10 @@ const ItemCard = ({ item }) => {
           // padding={5}
           textAlign="center"
         >
-          {item.artist}
+          {item.name}
         </Text>
       </Box>
-      <List spacing={3} paddingLeft={5} paddingTop={5} marginLeft={5}>
+      {/* <List spacing={3} paddingLeft={5} paddingTop={5} marginLeft={5}>
         {item?.perks?.map((perk) => {
           return (
             <ListItem fontWeight="bold" color={colors.blue}>
@@ -74,7 +76,68 @@ const ItemCard = ({ item }) => {
             </ListItem>
           )
         })}
-      </List>
+      </List> */}
+      <SimpleGrid columns={3}>
+        <Box textAlign={"center"} position="relative">
+          <Lottie
+            options={{
+              animationData: item.tier1
+                ? require("../public/assets/animations/check.json")
+                : require("../public/assets/animations/x.json"),
+              loop: false,
+            }}
+            width={item.tier1 ? "100%" : "35%"}
+          />
+          <Text
+            position={"absolute"}
+            left={"25%"}
+            color={colors.white}
+            fontWeight="bold"
+            bottom={"20px"}
+          >
+            Standard
+          </Text>
+        </Box>
+        <Box textAlign={"center"} position="relative">
+          <Lottie
+            options={{
+              animationData: item.tier2
+                ? require("../public/assets/animations/check.json")
+                : require("../public/assets/animations/x.json"),
+              loop: false,
+            }}
+          />
+          <Text
+            position={"absolute"}
+            left={"36%"}
+            color={colors.white}
+            fontWeight="bold"
+            bottom={"20px"}
+          >
+            Gold
+          </Text>
+        </Box>
+        <Box textAlign={"center"} position="relative">
+          <Lottie
+            options={{
+              animationData: item.tier3
+                ? require("../public/assets/animations/check.json")
+                : require("../public/assets/animations/x.json"),
+              loop: false,
+            }}
+            width="35%"
+          />
+          <Text
+            position={"absolute"}
+            left={"26%"}
+            color={colors.white}
+            fontWeight="bold"
+            bottom={"20px"}
+          >
+            Platinum
+          </Text>
+        </Box>
+      </SimpleGrid>
       <Divider
         width={"80%"}
         marginLeft="auto"
@@ -84,7 +147,11 @@ const ItemCard = ({ item }) => {
         marginTop={5}
       />
       <Flex marginBottom={5} justifyContent="center" alignContent={"center"}>
-        <Button onClick={() => router.push(`/artists/${item.id}`)} backgroundColor={colors.blue} boxShadow="3px 3px #780EDC">
+        <Button
+          onClick={() => router.push(`/artists/${item.id}`)}
+          backgroundColor={colors.blue}
+          boxShadow="3px 3px #780EDC"
+        >
           Read More
         </Button>
       </Flex>

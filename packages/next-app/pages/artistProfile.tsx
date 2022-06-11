@@ -1,16 +1,17 @@
-import ThreeTierPricing from "../components/Tiers"
-import React from "react";
-import {
-    Container
-  } from '@chakra-ui/react';
+import Tiers from "../components/Tiers"
+import React from "react"
+import { Container } from "@chakra-ui/react"
+import Navbar from "../components/Navbar"
 
 const ArtistProfile = () => {
   return (
-    <Container maxW={'5xl'} py={12}>
-      <ThreeTierPricing />
-    </Container>
+    <>
+      <Navbar />
+      <Container maxW={"5xl"} py={12}>
+        <Tiers />
+      </Container>
+    </>
   )
 }
 
 export default ArtistProfile
-
