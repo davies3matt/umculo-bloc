@@ -23,7 +23,7 @@ import {
     icon?: ReactElement;
   }
   
-  const Signle = ({ text, icon, iconBg }: FeatureProps) => {
+  const Single = ({ text, icon, iconBg }: FeatureProps) => {
     return (
       <Stack direction={'row'} align={'center'}>
         <Flex
@@ -47,8 +47,8 @@ import {
           <Stack spacing={4}>
             <Heading>How do Music NFTs work?</Heading>
             <Text color={'gray.500'} fontSize={'lg'}>
-                NFTs are unique assets stored and tradable on a blockchain. 
-                They are, immutable, scarce and publicly verifiable. 
+                NFTs are unique assets stored and tradable on a blockchain.
+                They are, immutable, scarce and publicly verifiable.
                 In the music world, artistes get to sell limited digital content to their fans who pay via crypto.
                  You can now produce any music content that cannot be counterfeited.
             </Text>
@@ -59,19 +59,19 @@ import {
                   borderColor={useColorModeValue('gray.100', 'gray.700')}
                 />
               }>
-              <Signle
+              <Single
                 icon={
                   <Icon as={IoAnalyticsSharp} color={'yellow.500'} w={5} h={5} />
                 }
                 iconBg={useColorModeValue('yellow.100', 'yellow.900')}
                 text={'Business Planning'}
               />
-              <Signle
+              <Single
                 icon={<Icon as={IoLogoBitcoin} color={'green.500'} w={5} h={5} />}
                 iconBg={useColorModeValue('green.100', 'green.900')}
                 text={'Financial Planning'}
               />
-              <Signle
+              <Single
                 icon={
                   <Icon as={IoSearchSharp} color={'purple.500'} w={5} h={5} />
                 }
