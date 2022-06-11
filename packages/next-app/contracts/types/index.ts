@@ -2,5 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ERC20 } from "./ERC20";
+export type { UmculoTier1 } from "./UmculoTier1";
+export type { UmculoTier2 } from "./UmculoTier2";
+export type { UmculoTier3 } from "./UmculoTier3";
 
 export { ERC20__factory } from "./factories/ERC20__factory";
+export { UmculoTier1__factory } from "./factories/UmculoTier1__factory";
+export { UmculoTier2__factory } from "./factories/UmculoTier2__factory";
+export { UmculoTier3__factory } from "./factories/UmculoTier3__factory";

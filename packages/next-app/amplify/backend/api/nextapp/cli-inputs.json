@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "nextapp",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/mattdavies/hatch22/team_3/packages/next-app/amplify/backend/api/nextapp/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authnextapp87c7f9c9"
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 365,
+        "apiKeyExpirationDate": "2023-06-10T14:01:55.444Z",
+        "keyDescription": "o6e5pw7lxzdxvk47mfvfq33soa"
+      }
+    ]
+  }
+}

@@ -5,6 +5,10 @@
     "lerna": "^5.0.0"
   },
   "scripts": {
-    "dev": "lerna run start --parallel"
+    "dev": "lerna run dev --parallel"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1152.0",
+    "moment": "^2.29.3"
   }
 }
