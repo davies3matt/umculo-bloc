@@ -6,5 +6,9 @@
   },
   "scripts": {
     "dev": "lerna run dev --parallel"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1152.0",
+    "moment": "^2.29.3"
   }
 }

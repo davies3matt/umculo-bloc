@@ -1,7 +1,7 @@
-import React, { useState, createContext, useContext, useEffect } from 'react'
-import { Auth } from "aws-amplify";
+import React, { useState, createContext, useContext, useEffect } from "react"
+import { Auth } from "aws-amplify"
 
-import { AuthData } from '../../../types'
+import { AuthData } from "../../../types"
 
 type AuthProviderProps = {
   isAuthenticated: boolean
@@ -16,41 +16,40 @@ type AuthProviderProps = {
 
 const AuthContext = createContext<Partial<AuthProviderProps>>({})
 
-export const useAuthContext = (): Partial<AuthProviderProps> => useContext(AuthContext)
+export const useAuthContext = (): Partial<AuthProviderProps> =>
+  useContext(AuthContext)
 
 const AuthProvider: React.FC = ({ children }) => {
-  
   const [isAuthenticating, setIsAuthenticating] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState<AuthData>()
-  
+
   useEffect(() => {
     if (user) {
       setIsAuthenticated(true)
       setIsAuthenticating(false)
     }
   }, [user])
-  
+
   const logout = async () => {
     await Auth.signOut()
     setUser(undefined)
     setIsAuthenticated(false)
   }
-  
+
   const login = async (email: string, password: string): Promise<void> => {
     try {
       // update auth loading state
       setIsAuthenticating(true)
-      
       // sign in user
       const user = await Auth.signIn(email, password)
-      localStorage.setItem('userId', user.attributes.sub)
+      localStorage.setItem("userId", user.attributes.sub)
       // set auth context
       setUser({
         token: user.signInUserSession.accessToken.jwtToken,
-        username: user.attributes.sub
+        username: user.attributes.sub,
       })
-      
+
       setIsAuthenticated(true)
       setIsAuthenticating(false)
     } catch (error) {
@@ -58,21 +57,21 @@ const AuthProvider: React.FC = ({ children }) => {
       throw error
     }
   }
-  
+
   const register = async (email: string, password: string): Promise<void> => {
     try {
       await Auth.signUp({
         username: email,
         password,
         attributes: {
-          email
+          email,
         },
       })
     } catch (error) {
       throw error
     }
   }
-  
+
   const confirm = async (email: string, code: string): Promise<void> => {
     try {
       await Auth.confirmSignUp(email, code)
@@ -80,7 +79,7 @@ const AuthProvider: React.FC = ({ children }) => {
       throw error
     }
   }
-  
+
   return (
     <AuthContext.Provider
       value={{
@@ -90,7 +89,7 @@ const AuthProvider: React.FC = ({ children }) => {
         confirm,
         isAuthenticated,
         isAuthenticating,
-        user
+        user,
       }}
     >
       {children}
