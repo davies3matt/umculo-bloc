@@ -8,7 +8,7 @@ const ArtistProfile = () => {
     <>
       <Navbar />
       <Container maxW={"5xl"} py={12}>
-        <Tiers />
+        <Tiers artistUser={""} />
       </Container>
     </>
   )
