@@ -23,7 +23,7 @@ import {
     icon?: ReactElement;
   }
   
-  const Signle = ({ text, icon, iconBg }: FeatureProps) => {
+  const Single = ({ text, icon, iconBg }: FeatureProps) => {
     return (
       <Stack direction={'row'} align={'center'}>
         <Flex
@@ -47,10 +47,10 @@ import {
           <Stack spacing={4}>
             <Heading>Why Music NFTs?</Heading>
             <Text color={'gray.500'} fontSize={'lg'}>
-             There are too many underprivileged musicians in Africa that don't 
+             There are too many underprivileged musicians in Africa that don't
              have access to opportunities, whether it be tutoring, musical education,
-             production and sound engineering exposure - UmculoBloc aims to disrupt this by creating a 
-             marketplace in the Web3 space. Too many times have we heard of someone who is so talented and 
+             production and sound engineering exposure - UmculoBloc aims to disrupt this by creating a
+             marketplace in the Web3 space. Too many times have we heard of someone who is so talented and
              nothing comes of it, enough is enough let Umculo Bloc change this in Africa and then the world.
             </Text>
           </Stack>
