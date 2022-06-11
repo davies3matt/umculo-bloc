@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react"
 import { useWeb3React } from "@web3-react/core"
-import { Contract } from "@ethersproject/contracts";
+import { Contract } from "@ethersproject/contracts"
 import { ContractFactory } from "@ethersproject/contracts"
 
 import {
@@ -53,8 +53,8 @@ function PriceWrapper({ children }: { children: ReactNode }) {
   )
 }
 
-const Tiers = ({artistUser}) => {
-  console.log('userar',artistUser)
+const Tiers = ({ artistUser }) => {
+  console.log("userar", artistUser)
   const { account, library } = useWeb3React()
   const triedToEagerConnect = useEagerConnect()
   const isConnected = typeof account === "string" && !!library
@@ -118,7 +118,7 @@ const Tiers = ({artistUser}) => {
     console.log("USER", user)
     console.log("Artist", artist)
 
-    if(artistUser && artistUser && artistUser.userId){
+    if (artistUser && artistUser && artistUser.userId) {
       console.log(artistUser)
       getArtist({
         variables: {
@@ -127,7 +127,7 @@ const Tiers = ({artistUser}) => {
           },
         },
       })
-    }else   if (user?.username) {
+    } else if (user?.username) {
       getArtist({
         variables: {
           filter: {
@@ -136,7 +136,7 @@ const Tiers = ({artistUser}) => {
         },
       })
     }
-  }, [user, artist,artistUser])
+  }, [user, artist, artistUser])
   const deployContract = async (tier, { collectionName, symbol }) => {
     // ABI description as JSON structure
     let abi
@@ -201,20 +201,24 @@ const Tiers = ({artistUser}) => {
 
   const buyNft = async (address,tier)=>{
     console.log(address)
-    let abi;
+    let abi
     let value
-    if(tier == 1){
-      abi = tier1.abi;
-      value =  "50000000000000000"
-    }else if(tier == 2){
-      abi = tier2.abi;
-      value =  "100000000000000000"
-    }else{
+    if (tier == 1) {
+      abi = tier1.abi
+      value = "50000000000000000"
+    } else if (tier == 2) {
+      abi = tier2.abi
+      value = "100000000000000000"
+    } else {
       abi = tier3.abi
-      value =  "350000000000000000"
+      value = "350000000000000000"
     }
-    let contract =  new Contract(address, abi, library.getSigner(account));
-    contract.safeMint(account,'ipfs://bafyreia3vtyh45uxw4mqms4hkxz4ws27tit7w6vzgsndqti62ggprhrjfm/metadata.json',{value: value});
+    let contract = new Contract(address, abi, library.getSigner(account))
+    contract.safeMint(
+      account,
+      "ipfs://bafyreia3vtyh45uxw4mqms4hkxz4ws27tit7w6vzgsndqti62ggprhrjfm/metadata.json",
+      { value: value }
+    )
   }
   // const checkRoute = async () => {
   //   const path = router.pathname;
