@@ -5,6 +5,7 @@ import ThreeTierPricing from "../../components/Tiers"
 import SocialProfileSimple from "../../components/ArtistProfile/SingleHero"
 
 import { useGetUserQuery } from "../../src/generated/graphql";
+import Navbar from "../../components/Navbar";
 
 
 const artistDetails = [
@@ -34,6 +35,7 @@ const Artist : React.FC = () => {
   
   return (
     <div>
+      <Navbar/>
       <SocialProfileSimple 
         id= "1"
         handle =  "@osees"
