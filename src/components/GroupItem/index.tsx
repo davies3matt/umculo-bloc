@@ -52,7 +52,7 @@ const GroupItem = ({
         }}
         // onPress={handleChange}
       >
-        {item.name} | {item.category.toUpperCase()}
+        {item.name} | {item.area.toUpperCase()}
       </Text>
       <IconButton
         size="sm"

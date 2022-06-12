@@ -1,0 +1,112 @@
+{
+  "Fruits & Vegetables": [
+    "Fruits",
+    "Vegetables",
+    "Packaged Salad & Dressing",
+    "Herbs",
+    "Fresh Cut Fruits and Vegetables",
+    "Dried Fruits & Nuts",
+    "Fresh Juice & Smoothies"
+  ],
+  "Dairy & Eggs": [
+    "Milk & Cream",
+    "Butter & Spreads",
+    "Cheese",
+    "Yogurt",
+    "Desserts & Doughs",
+    "Sour Cream & Dips",
+    "Lactose Free"
+  ],
+  "Pantry": [
+    "Canned & Pickled",
+    "Baking Essentials",
+    "Pasta & Past Sauce",
+    "Easy Meals & Sides",
+    "Cereal & Breakfast",
+    "Honey, Syrups & Spreads",
+    "Rice",
+    "Oils & Vinegar",
+    "Condiments",
+    "Sprices & Seasonings",
+    "Dried Beans, Vegetables & Grains",
+    "Internation Foods"
+  ],
+  "Meat": [
+    "Chicken & Turkey",
+    "Beef",
+    "Bacon, Sausage & Hot Dog",
+    "Port",
+    "Lamb & Veal",
+    "Keababs & Marinated Meat",
+    "Offals, Game Meat & Fowl"
+  ],
+  "Fish & Seafood": [
+    "Shrimp",
+    "Salmon",
+    "Fish ",
+    "Smoked Fish",
+    "Seafood Appetizers",
+    "Shellfish",
+    "Squid & Octopus"
+  ],
+  "Snack, Chips & Candy": [
+    "Chips & Snacks",
+    "Crackers & Cookies",
+    "Candy & Chocolate"
+  ],
+  "Drinks": [
+    "Juice",
+    "Coffee",
+    "Tea & Hot Drinks",
+    "Soft Drinks",
+    "Water",
+    "Soy, Rice & Almond Drinks",
+    "Sports & Energy",
+    "Drink Mixes",
+    "Non-alcoholic drinks",
+    "Wine",
+    "Beer",
+    "Spirits"
+  ],
+  "Frozen": [
+    "Ice Cream & Desserts",
+    "Frozen Fruit & Vegetables",
+    "Frozen Meat, Entrees & Sides",
+    "Frozen Pizza",
+    "Frozen Appetizers & Snacks",
+    "Frozen Bakery & Breakfast",
+    "Frozen Beverages & Ice",
+    "Frozen Meatless Alternatives"
+  ],
+  "Deli": [
+    "Deli Meat",
+    "Deli Cheese",
+    "Antipasto, Dips & Spreads",
+    "Crackers & Condiments",
+    "Vegan & Vegetarian",
+    "Lunch & Snack Kits",
+    "Party Trays"
+  ],
+  "Bakery": [
+    "Bread",
+    "Bagels, Buns & Rolls",
+    "Cakes & Desserts",
+    "Breakfast",
+    "Wraps, Pitas & Flatbread",
+    "Pizza Crusts & Crumbs"
+  ],
+  "Prepared Meal": [
+    "Rotisserie & Fried Chicken",
+    "Fresh Pasta & Sauce",
+    "Entrees & Appetizers",
+    "Salads & Soups",
+    "Sandwiches",
+    "Sushi",
+    "Fries & Sides",
+    "Pizza",
+    "Quiches & Pies",
+    "Desserts",
+    "Beverages",
+    "Snacks & Dips"
+  ]
+}

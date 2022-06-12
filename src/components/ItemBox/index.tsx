@@ -2,11 +2,11 @@ import { Box, Center, FormControl, Select, useToast } from "native-base"
 import React, { useRef } from "react"
 import { Animated, Dimensions } from "react-native"
 import GestureRecognizer from "react-native-swipe-gestures"
-import { Area, Category } from "../../generated/graphql"
+import { Area, FoodCategory, DrinkCategory } from "../../generated/graphql"
 import { gestureRight, invalidShake } from "../../theme/animations"
 import SearchableDropdown from "react-native-searchable-dropdown"
 import { theme } from "../../theme"
-import { formatEnums, getCategorySelectOptions } from "../../utils/helpers"
+import { formatEnums, getAreaSelectOptions } from "../../utils/helpers"
 
 interface ItemProps {
   item: ItemDetails
@@ -18,8 +18,8 @@ interface ItemProps {
 interface ItemDetails {
   name: string
   area?: Area
-  category?: Category
-  itemUserId?: String // <<---- userID
+  subCategory?: string
+  itemUserId?: string // <<---- userID
 }
 const ItemBox: React.FC<ItemProps> = ({
   item,
@@ -60,7 +60,7 @@ const ItemBox: React.FC<ItemProps> = ({
   const onSwipe = (gestureName) => {
     switch (gestureName) {
       case "SWIPE_RIGHT": {
-        if ((item.name || itemName) && item.category) {
+        if ((item.name || itemName) && item.subCategory) {
           // create item and trigger swipe animation
           createItem({
             ...item,
@@ -125,36 +125,42 @@ const ItemBox: React.FC<ItemProps> = ({
                   ))}
                 </Select>
               </FormControl>
-              <FormControl marginTop={"20px"}>
-                <FormControl.Label>Category</FormControl.Label>
-                <Select
-                  onValueChange={(val) => {
-                    setItem({ ...item, category: val as Category })
-                    if (val && item.name) {
-                      showItemReady()
+              {(item.area === Area.Food || item.area === Area.Drinks) && (
+                <FormControl marginTop={"20px"}>
+                  <FormControl.Label>Category</FormControl.Label>
+                  <Select
+                    onValueChange={(val) => {
+                      setItem({ ...item, subCategory: val })
+                      if (val && item.name) {
+                        showItemReady()
+                      }
+                    }}
+                    placeholder="Select Category"
+                    selectedValue={
+                      item.subCategory ? item.subCategory : undefined
                     }
-                  }}
-                  placeholder="Select Category"
-                  selectedValue={item.category ? item.category : undefined}
-                  borderColor={theme.colors.accent[100]}
-                  color={theme.colors.accent[100]}
-                >
-                  {Object.values(Category).map((cat) => {
-                    return (
-                      <Select.Item
-                        key={cat}
-                        value={cat}
-                        label={formatEnums(cat)}
-                      />
-                    )
-                  })}
-                </Select>
-              </FormControl>
+                    borderColor={theme.colors.accent[100]}
+                    color={theme.colors.accent[100]}
+                  >
+                    {Object.values(
+                      item.area === Area.Food ? FoodCategory : DrinkCategory
+                    ).map((cat) => {
+                      return (
+                        <Select.Item
+                          key={cat}
+                          value={cat}
+                          label={formatEnums(cat)}
+                        />
+                      )
+                    })}
+                  </Select>
+                </FormControl>
+              )}
               <FormControl marginTop={"20px"}>
                 <FormControl.Label>Name</FormControl.Label>
                 <SearchableDropdown
                   items={
-                    item.category ? getCategorySelectOptions(item.category) : []
+                    item.subCategory ? getAreaSelectOptions(item.area) : []
                   }
                   onItemSelect={(itm) => {
                     itemName = itm.name
@@ -195,7 +201,7 @@ const ItemBox: React.FC<ItemProps> = ({
                           name: itemName,
                         })
                       }
-                      if (item.category && item.name) {
+                      if (item.subCategory && item.name) {
                         showItemReady()
                       }
                     },

@@ -16,7 +16,9 @@
         "cognitoPostConfirmation": {
           "deploymentBucketName": "amplify-houseboard-staging-174025-deployment",
           "s3Key": "amplify-builds/cognitoPostConfirmation-32624f3648494d36667a-build.zip"
-        }
+        },
+        "customFunction": {},
+        "notifications": {}
       },
       "auth": {
         "houseboard52ff8a69": {}
@@ -25,33 +27,33 @@
   },
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-houseboard-dev-125248-authRole",
-      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-125248-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-125248-authRole",
+      "AuthRoleName": "amplify-houseboard-dev-91835-authRole",
+      "UnauthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-91835-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::463756154765:role/amplify-houseboard-dev-91835-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-houseboard-dev-125248-deployment",
-      "UnauthRoleName": "amplify-houseboard-dev-125248-unauthRole",
-      "StackName": "amplify-houseboard-dev-125248",
-      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-dev-125248/dfca4a80-c93c-11ec-9a5f-0ab720d385df",
+      "DeploymentBucketName": "amplify-houseboard-dev-91835-deployment",
+      "UnauthRoleName": "amplify-houseboard-dev-91835-unauthRole",
+      "StackName": "amplify-houseboard-dev-91835",
+      "StackId": "arn:aws:cloudformation:eu-west-1:463756154765:stack/amplify-houseboard-dev-91835/e16bd8f0-ea1f-11ec-99f6-02985a8cea15",
       "AmplifyAppId": "d3u0wbebujmtc0"
     },
     "categories": {
+      "auth": {
+        "houseboard52ff8a69": {}
+      },
       "function": {
         "cognitoPostConfirmation": {
-          "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
-          "s3Key": "amplify-builds/cognitoPostConfirmation-67307439655048576f6b-build.zip"
+          "deploymentBucketName": "amplify-houseboard-dev-91835-deployment",
+          "s3Key": "amplify-builds/cognitoPostConfirmation-394d6b666576612f3855-build.zip"
         },
         "customFunction": {
-          "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
+          "deploymentBucketName": "amplify-houseboard-dev-91835-deployment",
           "s3Key": "amplify-builds/customFunction-4a7634465050332b5278-build.zip"
         },
         "notifications": {
-          "deploymentBucketName": "amplify-houseboard-dev-125248-deployment",
+          "deploymentBucketName": "amplify-houseboard-dev-91835-deployment",
           "s3Key": "amplify-builds/notifications-42373262744c74446930-build.zip"
         }
-      },
-      "auth": {
-        "houseboard52ff8a69": {}
       }
     }
   }

@@ -1,6 +1,11 @@
 import jwtDecode from "jwt-decode"
-import { Category } from "../generated/graphql"
-import { FRUIT_TYPES, MEAT_TYPES, MILK_TYPES } from "./constants"
+import { Area } from "../generated/graphql"
+import {
+  FRUIT_TYPES,
+  MEAT_TYPES,
+  MILK_TYPES,
+  VEGETABLE_TYPES,
+} from "./constants"
 
 // format to south african international mobile number
 export const formatPhoneNumber = (phoneNum: any) => {
@@ -67,12 +72,12 @@ export const randomHexCode = () => {
 }
 
 /**
- * helper function that returns a list of possible options based on selected category
+ * helper function that returns a list of possible options based on selected area
  *
- * @param {Category} category
+ * @param {Area} area
  * @returns {string}
  */
-export const getCategorySelectOptions = (category: Category) => {
+export const getAreaSelectOptions = (area: Area) => {
   const mapCategoryType = (list: string[]) => {
     return list.map((item, index) => {
       return {
@@ -81,13 +86,17 @@ export const getCategorySelectOptions = (category: Category) => {
       }
     })
   }
-  switch (category) {
-    case Category.Milk:
+  switch (area) {
+    case Area.Drinks:
       return mapCategoryType(MILK_TYPES)
-    case Category.Meat:
-      return mapCategoryType(MEAT_TYPES)
-    case Category.Fruits:
-      return mapCategoryType(FRUIT_TYPES)
+    case Area.Food:
+      return mapCategoryType([
+        ...VEGETABLE_TYPES,
+        ...MEAT_TYPES,
+        ...FRUIT_TYPES,
+      ])
+    case Area.Drinks:
+      return mapCategoryType(MILK_TYPES)
     default:
       return []
   }

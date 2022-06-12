@@ -12,6 +12,7 @@ type User
   email: String
   name: String
   image: String
+  balance: Float
   groups: [Group] @manyToMany(relationName: "UserGroup")
   items: [Item] @hasMany(indexName: "UserItems", fields: ["id"])
   logs: [Log] @hasMany(indexName: "UserLogs", fields: ["id"])
@@ -57,34 +58,18 @@ type Item
   userId: ID @index(name: "UserItems", sortKeyFields: ["id"])
   completedById: ID @index(name: "UserCompletedItems", sortKeyFields: ["id"])
   addedById: ID @index(name: "UserAddedItems", sortKeyFields: ["id"])
-  name: String!
-  category: Category
-  area: Area
   group: Group! @belongsTo(fields: ["groupId"])
   addedBy: User @belongsTo(fields: ["addedById"])
   assignedTo: User @belongsTo(fields: ["userId"])
   completedBy: User @belongsTo(fields: ["completedById"])
   logs: [Log] @hasMany(indexName: "ItemLogs", fields: ["id"])
+  name: String!
+  subCategory: String # pre-typed categories should always take priority although we allow custom types
+  area: Area
+  quantity: Float
+  paymentTerms: PaymentTerms
   status: ItemStatus!
   isArchived: Boolean
-}
-
-# PRE-EXISTING ITEMS THAT CAN BE LINKED TO ITEMS ADDED TO GROUPS
-type StoreItem
-  @model
-  @auth(
-    rules: [
-      {
-        allow: groups
-        groups: ["User"]
-        operations: [create, read, update, delete]
-      }
-    ]
-  ) {
-  id: ID!
-  categories: [Category]
-  areas: [Area]
-  name: String
 }
 
 type Log
@@ -109,49 +94,70 @@ type Log
   item: Item @belongsTo(fields: ["itemId"])
 }
 
-enum Category {
-  # KITCHEN CATEGORIES
+type PaymentTerms {
+  purchaseDate: AWSDateTime
+  price: Float
+  paidBy: String # user ID
+  splitType: SplitType
+  splitBy: [String] # Array of user IDs
+  settled: Boolean
+}
+
+enum SplitType {
+  SINGLE
+  EQUAL
+  CUSTOM
+}
+
+enum FoodCategory {
   FRUITS
   VEGETABLES
-  MILK
   CHEESE
   DAIRY
-  TEA_AND_COFFEE
   MEAT
   SEAFOOD
   FROZEN_GOODS
   BAKED_GOODS
   SPICES
   SAUCES
-  DRINKS
-  LIQOUR
   CANNED_GOODS
   JAMS_AND_SPREADS
   EASY_MEALS
   BAKINGS_GOODS
   SNACKS_AND_CANDY
   VEGAN
-  CLEANING_SUPPLIES
+}
+
+enum DrinkCategory {
+  MILK
+  TEA_AND_COFFEE
+  LIQOUR
+  MIXERS
+  SODA
+  WATER
 }
 
 enum Area {
-  KITCHEN
-  BATHROOM
-  WASHING_ROOM
-  HOUSE
-  GARDEN
+  FOOD
+  DRINKS
+  UTILITIES
+  DETERGENTS
+  PETS
+  SERVICES
 }
 
 enum LogType {
   # GROUP LOG TYPES
   USER_JOINED
   # USER LOG TYPES
-
   # ITEM LOG TYPES
   ITEM_ADDED
   ITEM_REMOVED
   ITEM_COMPLETED
   ITEM_INCOMPLETED
+  # PAYMENT LOG TYPES
+  PAYMENT_SPLIT
+  PAYMENT_SETTLED
 }
 
 enum GroupType {
